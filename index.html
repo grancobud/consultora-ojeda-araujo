@@ -57,15 +57,9 @@ footer{background:var(--oscuro);border-top:1px solid var(--borde);padding:2.5rem
 </head>
 <body>
 <nav>
-  <a href="https://www.oa-consultora.com" class="nav-logo">
-    <div class="nav-dot"></div>
-    <div><div class="nav-brand">Ojeda Araujo & Asociados</div><div class="nav-sub">Agro · Regulación · Sustentabilidad</div></div>
-  </a>
+  <a href="#" class="nav-logo"><div class="nav-dot"></div><div><div class="nav-brand">Ojeda Araujo & Asociados</div><div class="nav-sub">Agro · Regulación · Sustentabilidad</div></div></a>
   <ul class="nav-links">
-    <li><a href="#cursos">Cursos</a></li>
-    <li><a href="#vivo">Sesiones</a></li>
-    <li><a href="#nosotros">Nosotros</a></li>
-    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="#cursos">Cursos</a></li><li><a href="#vivo">Sesiones</a></li><li><a href="#nosotros">Nosotros</a></li><li><a href="#contacto">Contacto</a></li>
   </ul>
   <a href="#cursos" class="nav-cta">Ver Cursos</a>
 </nav>
@@ -75,10 +69,7 @@ footer{background:var(--oscuro);border-top:1px solid var(--borde);padding:2.5rem
     <div class="hero-eyebrow">Plataforma de Formación Profesional</div>
     <h1>Conocimiento que <em>transforma</em> el sector</h1>
     <p class="hero-desc">Formación especializada en agronegocios, cannabis medicinal, mercados de carbono, regulación normativa y gestión de organizaciones — desarrollada por consultores activos en el sector bioeconómico latinoamericano.</p>
-    <div class="hero-btns">
-      <a href="#cursos" class="btn-oro">Explorar Cursos →</a>
-      <a href="#vivo" class="btn-ghost">Consultoría Directa</a>
-    </div>
+    <div class="hero-btns"><a href="#cursos" class="btn-oro">Explorar Cursos →</a><a href="#vivo" class="btn-ghost">Consultoría Directa</a></div>
   </div>
   <div class="hero-stats">
     <div class="hstat"><div class="hstat-num">500+</div><div class="hstat-lbl">Alumnos</div></div>
@@ -90,8 +81,8 @@ footer{background:var(--oscuro);border-top:1px solid var(--borde);padding:2.5rem
 <div class="dif-wrap">
   <div class="dif-grid">
     <div class="dif-item fu"><div class="dif-num">+5</div><div class="dif-lbl">Años de trayectoria</div><div class="dif-desc">Consultores en actividad permanente en el sector.</div></div>
-    <div class="dif-item fu" style="transition-delay:.1s"><div class="dif-num">AL</div><div class="dif-lbl">Presencia regional</div><div class="dif-desc">Argentina, Uruguay, Paraguay, Colombia y más. Conocimiento normativo por jurisdicción.</div></div>
-    <div class="dif-item fu" style="transition-delay:.2s"><div class="dif-num">360°</div><div class="dif-lbl">Enfoque integral</div><div class="dif-desc">Desde la viabilidad técnica hasta la implementación, certificación y acceso a mercados.</div></div>
+    <div class="dif-item fu" style="transition-delay:.1s"><div class="dif-num">AL</div><div class="dif-lbl">Presencia regional</div><div class="dif-desc">Argentina, Uruguay, Paraguay, Colombia y más.</div></div>
+    <div class="dif-item fu" style="transition-delay:.2s"><div class="dif-num">360°</div><div class="dif-lbl">Enfoque integral</div><div class="dif-desc">Desde la viabilidad técnica hasta la implementación y acceso a mercados.</div></div>
     <div class="dif-item fu" style="transition-delay:.3s"><div class="dif-num">100%</div><div class="dif-lbl">Casos reales</div><div class="dif-desc">Cada curso nace de proyectos reales ejecutados en el sector.</div></div>
   </div>
 </div>
@@ -102,17 +93,8 @@ footer{background:var(--oscuro);border-top:1px solid var(--borde);padding:2.5rem
     <h2 class="sec-title fu">Nuestros <em>Cursos</em></h2>
     <div class="goldbar fu"></div>
     <p class="sec-sub fu">Materiales PDF descargables, acceso permanente y contenido actualizado por profesionales activos en el sector bioeconómico hispanoamericano.</p>
-    <div class="filter-bar fu">
-      <button class="fbtn active" onclick="filtrar('todos',this)">Todos</button>
-      <button class="fbtn" onclick="filtrar('agro',this)">Agronegocios</button>
-      <button class="fbtn" onclick="filtrar('cannabis',this)">Cannabis</button>
-      <button class="fbtn" onclick="filtrar('carbono',this)">Carbono & ESG</button>
-      <button class="fbtn" onclick="filtrar('regulacion',this)">Regulación</button>
-      <button class="fbtn" onclick="filtrar('cert',this)">Certificaciones</button>
-      <button class="fbtn" onclick="filtrar('inv',this)">Inversiones</button>
-      <button class="fbtn" onclick="filtrar('gestion',this)">Gestión & Trabajo</button>
-    </div>
-    <div class="cursos-grid"><!-- cursos generados dinámicamente desde LocalStorage --></div>
+    <div class="filter-bar fu" id="filter-bar"></div>
+    <div class="cursos-grid" id="cursos-grid"></div>
   </div>
 </section>
 <div class="divline"></div>
@@ -123,17 +105,16 @@ footer{background:var(--oscuro);border-top:1px solid var(--borde);padding:2.5rem
         <div class="eyebrow">Consultoría personalizada</div>
         <h2 class="sec-title">¿Necesitás una <em>sesión específica</em>?</h2>
         <div class="goldbar"></div>
-        <p style="color:var(--gris2);line-height:1.9;font-weight:300;font-size:.95rem;margin-bottom:1.5rem;">Si tu proyecto o situación requiere un abordaje particular — regulatorio, técnico, de inversión o de gestión — podés solicitar una sesión de trabajo directamente con nuestros consultores.</p>
-        <p style="color:var(--gris2);line-height:1.9;font-weight:300;font-size:.95rem;margin-bottom:2.5rem;">Nos adaptamos a tu caso concreto. Escribinos y coordinamos el encuentro.</p>
+        <p style="color:var(--gris2);line-height:1.9;font-weight:300;font-size:.95rem;margin-bottom:1.5rem;">Si tu proyecto requiere un abordaje particular — regulatorio, técnico, de inversión o de gestión — podés solicitar una sesión directamente con nuestros consultores.</p>
         <div style="display:flex;gap:1rem;flex-wrap:wrap;">
           <a href="https://wa.me/5493794058223?text=Hola%2C%20quisiera%20coordinar%20una%20sesion%20con%20un%20consultor." target="_blank" class="btn-oro">Escribinos por WhatsApp →</a>
           <a href="mailto:contactos@oa-consultora.com" class="btn-ghost">Enviar un email</a>
         </div>
       </div>
       <div class="fu" style="transition-delay:.15s;display:flex;flex-direction:column;gap:1rem;">
-        <div style="background:var(--card);border:1px solid var(--borde);border-radius:3px;padding:1.5rem;display:flex;align-items:flex-start;gap:1rem;" onmouseover="this.style.borderColor='#1D9E75'" onmouseout="this.style.borderColor='#1c2620'"><div style="width:42px;height:42px;flex-shrink:0;background:rgba(15,110,86,.12);border:1px solid rgba(93,202,165,.2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">📋</div><div><div style="font-weight:500;font-size:.88rem;margin-bottom:.3rem;">Diagnóstico regulatorio</div><div style="color:var(--gris);font-size:.78rem;line-height:1.6;font-weight:300;">Revisión de tu situación normativa y hoja de ruta para regularizarla.</div></div></div>
-        <div style="background:var(--card);border:1px solid var(--borde);border-radius:3px;padding:1.5rem;display:flex;align-items:flex-start;gap:1rem;" onmouseover="this.style.borderColor='#1D9E75'" onmouseout="this.style.borderColor='#1c2620'"><div style="width:42px;height:42px;flex-shrink:0;background:rgba(15,110,86,.12);border:1px solid rgba(93,202,165,.2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🌿</div><div><div style="font-weight:500;font-size:.88rem;margin-bottom:.3rem;">Asesoría técnica específica</div><div style="color:var(--gris);font-size:.78rem;line-height:1.6;font-weight:300;">Cannabis, carbono, certificaciones o agronegocios según tu necesidad concreta.</div></div></div>
-        <div style="background:var(--card);border:1px solid var(--borde);border-radius:3px;padding:1.5rem;display:flex;align-items:flex-start;gap:1rem;" onmouseover="this.style.borderColor='#1D9E75'" onmouseout="this.style.borderColor='#1c2620'"><div style="width:42px;height:42px;flex-shrink:0;background:rgba(15,110,86,.12);border:1px solid rgba(93,202,165,.2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">💼</div><div><div style="font-weight:500;font-size:.88rem;margin-bottom:.3rem;">Evaluación de inversión</div><div style="color:var(--gris);font-size:.78rem;line-height:1.6;font-weight:300;">Análisis técnico-regulatorio de proyectos antes de tomar decisiones de inversión.</div></div></div>
+        <div style="background:var(--card);border:1px solid var(--borde);border-radius:3px;padding:1.5rem;display:flex;align-items:flex-start;gap:1rem;"><div style="width:42px;height:42px;flex-shrink:0;background:rgba(15,110,86,.12);border:1px solid rgba(93,202,165,.2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">📋</div><div><div style="font-weight:500;font-size:.88rem;margin-bottom:.3rem;">Diagnóstico regulatorio</div><div style="color:var(--gris);font-size:.78rem;line-height:1.6;font-weight:300;">Revisión de tu situación normativa y hoja de ruta para regularizarla.</div></div></div>
+        <div style="background:var(--card);border:1px solid var(--borde);border-radius:3px;padding:1.5rem;display:flex;align-items:flex-start;gap:1rem;"><div style="width:42px;height:42px;flex-shrink:0;background:rgba(15,110,86,.12);border:1px solid rgba(93,202,165,.2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🌿</div><div><div style="font-weight:500;font-size:.88rem;margin-bottom:.3rem;">Asesoría técnica específica</div><div style="color:var(--gris);font-size:.78rem;line-height:1.6;font-weight:300;">Cannabis, carbono, certificaciones o agronegocios según tu necesidad.</div></div></div>
+        <div style="background:var(--card);border:1px solid var(--borde);border-radius:3px;padding:1.5rem;display:flex;align-items:flex-start;gap:1rem;"><div style="width:42px;height:42px;flex-shrink:0;background:rgba(15,110,86,.12);border:1px solid rgba(93,202,165,.2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">💼</div><div><div style="font-weight:500;font-size:.88rem;margin-bottom:.3rem;">Evaluación de inversión</div><div style="color:var(--gris);font-size:.78rem;line-height:1.6;font-weight:300;">Análisis técnico-regulatorio de proyectos antes de tomar decisiones.</div></div></div>
       </div>
     </div>
   </div>
@@ -147,8 +128,7 @@ footer{background:var(--oscuro);border-top:1px solid var(--borde);padding:2.5rem
         <div class="eyebrow">Quiénes somos</div>
         <h2 class="sec-title">El equipo <em>Ojeda & Araujo</em></h2>
         <div class="goldbar"></div>
-        <p style="color:var(--gris2);line-height:1.9;margin-bottom:1.2rem;font-weight:300;font-size:.93rem;">Consultora especializada en servicios técnicos y estratégicos para empresas, productores e inversores del sector bioeconómico latinoamericano. Nos enfocamos donde la regulación, la innovación y la sustentabilidad generan valor real.</p>
-        <p style="color:var(--gris2);line-height:1.9;margin-bottom:1.8rem;font-weight:300;font-size:.93rem;">Cada curso nace de proyectos reales ejecutados en el sector bioeconómico de la región.</p>
+        <p style="color:var(--gris2);line-height:1.9;margin-bottom:1.2rem;font-weight:300;font-size:.93rem;">Consultora especializada en servicios técnicos y estratégicos para empresas, productores e inversores del sector bioeconómico latinoamericano.</p>
         <div class="team-cards">
           <div class="tcard"><div class="tav">O</div><div><div class="tname">Ojeda</div><div class="trole">Co-fundador · Consultor Senior</div></div></div>
           <div class="tcard"><div class="tav">A</div><div><div class="tname">Araujo</div><div class="trole">Co-fundador · Consultor Senior</div></div></div>
@@ -193,11 +173,7 @@ footer{background:var(--oscuro);border-top:1px solid var(--borde);padding:2.5rem
 <footer>
   <div class="flogo">Ojeda Araujo & Asociados</div>
   <div class="fcopy">© 2025 · Agro · Regulación · Sustentabilidad</div>
-  <div class="flinks">
-    <a href="https://www.oa-consultora.com">Web principal</a>
-    <a href="https://wa.me/5493794058223">WhatsApp</a>
-    <a href="#cursos">Cursos</a>
-  </div>
+  <div class="flinks"><a href="#">Web principal</a><a href="https://wa.me/5493794058223">WhatsApp</a><a href="#cursos">Cursos</a></div>
 </footer>
 <div class="modal-ov" id="modal">
   <div class="modal-box">
@@ -210,130 +186,89 @@ footer{background:var(--oscuro);border-top:1px solid var(--borde);padding:2.5rem
   </div>
 </div>
 <script>
-// ── IMÁGENES POR CATEGORÍA ──────────────────────────────────────
-// Imagen única por ID de curso — ninguna se repite
-const CURSO_IMG = {
-  c01: 'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=600&q=80&auto=format&fit=crop', // campo latinoamérica, surcos aéreos
-  c02: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&q=80&auto=format&fit=crop', // tecnología agrícola, tablet en campo
-  c03: 'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=600&q=80&auto=format&fit=crop', // planta cannabis macro profesional
-  c04: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?w=600&q=80&auto=format&fit=crop', // laboratorio farmacéutico, BPF manufactura
-  c05: 'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=600&q=80&auto=format&fit=crop', // bosque aéreo denso, carbono
-  c06: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&q=80&auto=format&fit=crop', // energía solar y viento, ESG
-  c07: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80&auto=format&fit=crop', // documentos y escritorio regulatorio
-  c08: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=600&q=80&auto=format&fit=crop', // contenedores puerto, comercio internacional
-  c09: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80&auto=format&fit=crop', // campo verde aéreo, producción primaria
-  c10: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80&auto=format&fit=crop', // reunión técnica, ISO calidad
-  c11: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80&auto=format&fit=crop', // análisis financiero, datos inversión
-  c12: 'https://images.unsplash.com/photo-1444653614773-995cb1ef9efa?w=600&q=80&auto=format&fit=crop', // construcción agroindustrial, proyecto
-  c13: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80&auto=format&fit=crop', // reunión de trabajo equipo oficina
-  c14: 'https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=600&q=80&auto=format&fit=crop', // sala de gobierno, burocracia estatal
-  c15: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80&auto=format&fit=crop', // mujer profesional, perspectiva género
-  c16: 'img/ia-curso.jpg',
+var CURSOS = [
+  {id:'c01',nombre:'Fundamentos de Agronegocios en América Latina',categoria:'agronegocios',desc:'Cadenas de valor, planificación estratégica y análisis de mercados para el sector primario y agroindustrial de la región.',precio:15000,mp:''},
+  {id:'c02',nombre:'Digitalización del Agro: Herramientas Prácticas',categoria:'agronegocios',desc:'Tecnologías aplicadas al campo: precisión, trazabilidad digital y toma de decisiones basada en datos.',precio:18000,mp:''},
+  {id:'c03',nombre:'Marco Regulatorio Cannabis Medicinal — Argentina',categoria:'cannabis',desc:'Normativa vigente, licencias ANMAT, trámites de habilitación y cumplimiento para cultivo, procesamiento y exportación.',precio:22000,mp:''},
+  {id:'c04',nombre:'GMP/BPM y BPF para Cannabis: Implementación Práctica',categoria:'cannabis',desc:'Buenas Prácticas de Manufactura aplicadas a instalaciones cannábicas: documentación, procesos, auditorías y certificación.',precio:25000,mp:''},
+  {id:'c05',nombre:'Introducción a los Mercados de Carbono Voluntarios',categoria:'carbono',desc:'Funcionamiento de los mercados VCM, créditos de carbono, certificadoras internacionales y acceso para proyectos agropecuarios.',precio:20000,mp:''},
+  {id:'c06',nombre:'Estrategias ESG para el Sector Agroindustrial',categoria:'carbono',desc:'Diseño e implementación de estrategias ambientales, sociales y de gobernanza. Reporte de impacto y acceso a financiamiento verde.',precio:20000,mp:''},
+  {id:'c07',nombre:'Habilitaciones y Cumplimiento Sanitario en Argentina',categoria:'regulacion',desc:'SENASA, ANMAT y organismos provinciales: requisitos, procedimientos y gestión para establecimientos agroindustriales.',precio:18000,mp:''},
+  {id:'c08',nombre:'Acceso a Mercados Internacionales: Barreras Regulatorias',categoria:'regulacion',desc:'Normativa comparada en Argentina, Uruguay y Colombia. Requisitos de exportación, trazabilidad y estrategias de cumplimiento.',precio:22000,mp:''},
+  {id:'c09',nombre:'GlobalG.A.P.: Implementación Paso a Paso',categoria:'certificaciones',desc:'Guía práctica para la certificación en producción primaria: requisitos, checklist, auditorías y mantenimiento del estándar.',precio:18000,mp:''},
+  {id:'c10',nombre:'ISO 9001 para Agroindustria',categoria:'certificaciones',desc:'Implementación del sistema de gestión de calidad ISO 9001:2015 en organizaciones agroindustriales.',precio:20000,mp:''},
+  {id:'c11',nombre:'Due Diligence Técnico-Regulatorio en Activos Agro',categoria:'inversiones',desc:'Metodología para evaluación integral de inversiones en activos agropecuarios y bioindustriales.',precio:28000,mp:''},
+  {id:'c12',nombre:'Estructuración de Proyectos Agroindustriales',categoria:'inversiones',desc:'De la idea al plan de negocios: factibilidad, estructuración financiera y acceso a financiamiento verde.',precio:25000,mp:''},
+  {id:'c13',nombre:'Cuando el Recurso Humano Tiene Nombre',categoria:'gestion',desc:'Aspectos ético-políticos de la gestión de personas en el empleo estatal. Selección, capacitación y desvinculación con dimensión humana.',precio:15000,mp:''},
+  {id:'c14',nombre:'Modernización del Estado y Empleo Público',categoria:'gestion',desc:'Revisión crítica del discurso modernizador. Cultura organizacional y agenda en clave de derechos para administraciones provinciales.',precio:15000,mp:''},
+  {id:'c15',nombre:'Gestión con Perspectiva de Género en el Estado',categoria:'gestion',desc:'Trabajo estatal, tareas de cuidado y agenda de género. Impacto en productividad, clima laboral y cultura organizacional.',precio:15000,mp:''},
+  {id:'c16',nombre:'Introducción a la IA',categoria:'agronegocios',desc:'Descubrí qué es la Inteligencia Artificial, cómo funciona y cómo podés usarla en tu trabajo y vida cotidiana. Sin conocimientos previos.',precio:50000,mp:''}
+];
+var IMGS = {
+  c01:'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=600&q=80&auto=format&fit=crop',
+  c02:'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&q=80&auto=format&fit=crop',
+  c03:'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=600&q=80&auto=format&fit=crop',
+  c04:'https://images.unsplash.com/photo-1576086213369-97a306d36557?w=600&q=80&auto=format&fit=crop',
+  c05:'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=600&q=80&auto=format&fit=crop',
+  c06:'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&q=80&auto=format&fit=crop',
+  c07:'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80&auto=format&fit=crop',
+  c08:'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=600&q=80&auto=format&fit=crop',
+  c09:'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80&auto=format&fit=crop',
+  c10:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80&auto=format&fit=crop',
+  c11:'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80&auto=format&fit=crop',
+  c12:'https://images.unsplash.com/photo-1444653614773-995cb1ef9efa?w=600&q=80&auto=format&fit=crop',
+  c13:'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80&auto=format&fit=crop',
+  c14:'https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=600&q=80&auto=format&fit=crop',
+  c15:'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80&auto=format&fit=crop',
+  c16:'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80&auto=format&fit=crop'
 };
-// Fallback por categoría si el curso no tiene ID reconocido
-const CAT_IMG = {
-  agronegocios:     'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=600&q=80&auto=format&fit=crop',
-  cannabis:         'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=600&q=80&auto=format&fit=crop',
-  carbono:          'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=600&q=80&auto=format&fit=crop',
-  regulacion:       'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80&auto=format&fit=crop',
-  certificaciones:  'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80&auto=format&fit=crop',
-  inversiones:      'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80&auto=format&fit=crop',
-  gestion:          'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80&auto=format&fit=crop',
-};
-
-const CAT_LABEL = {
-  agronegocios: 'Agronegocios', cannabis: 'Cannabis Medicinal',
-  carbono: 'Carbono & ESG', regulacion: 'Regulación',
-  certificaciones: 'Certificaciones', inversiones: 'Inversiones',
-  gestion: 'Gestión & Trabajo',
-};
-
-// ── LEER CURSOS DEL LOCALSTORAGE (shared con dashboard) ──────────
-function getCursosLS() {
-  try { return JSON.parse(localStorage.getItem('oa_cursos') || 'null'); } catch(e) { return null; }
+var CAT_LABEL = {agronegocios:'Agronegocios',cannabis:'Cannabis Medicinal',carbono:'Carbono & ESG',regulacion:'Regulación',certificaciones:'Certificaciones',inversiones:'Inversiones',gestion:'Gestión & Trabajo'};
+var filtroActual = 'todos';
+function pagar(nombre,precio,mp){
+  document.getElementById('mtit').textContent=nombre;
+  document.getElementById('mprec').textContent='$'+precio.toLocaleString('es-AR');
+  var link=mp&&mp.length>5?mp:'#';
+  document.getElementById('btn-mp').href=link;
+  document.getElementById('btn-mp').style.opacity=link==='#'?'0.5':'1';
+  document.getElementById('modal').style.display='flex';
 }
-
-// ── MODAL MERCADOPAGO ────────────────────────────────────────────
-function pagar(nombre, precio, mp) {
-  document.getElementById('mtit').textContent = nombre;
-  document.getElementById('mprec').textContent = '$' + precio.toLocaleString('es-AR');
-  var link = mp && mp.indexOf('mpago.la/TU') === -1 ? mp : '#';
-  document.getElementById('btn-mp').href = link;
-  document.getElementById('btn-mp').style.opacity = link === '#' ? '0.5' : '1';
-  document.getElementById('modal').style.display = 'flex';
-}
-function cerrarModal() { document.getElementById('modal').style.display = 'none'; }
-document.getElementById('modal').addEventListener('click', function(e) {
-  if (e.target === document.getElementById('modal')) cerrarModal();
-});
-
-// ── FILTRO ───────────────────────────────────────────────────────
-function filtrar(cat, btn) {
-  document.querySelectorAll('.fbtn').forEach(function(b) { b.classList.remove('active'); });
+function cerrarModal(){document.getElementById('modal').style.display='none';}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)cerrarModal();});
+function filtrar(cat,btn){
+  filtroActual=cat;
+  document.querySelectorAll('.fbtn').forEach(function(b){b.classList.remove('active');});
   btn.classList.add('active');
-  document.querySelectorAll('.ccard').forEach(function(c) {
-    (cat === 'todos' || c.dataset.cat === cat) ? c.classList.remove('hidden') : c.classList.add('hidden');
+  document.querySelectorAll('.ccard').forEach(function(c){
+    (cat==='todos'||c.dataset.cat===cat)?c.classList.remove('hidden'):c.classList.add('hidden');
   });
 }
-
-// ── RENDER CURSOS DESDE LOCALSTORAGE ────────────────────────────
-function renderCursos() {
-  var cursos = getCursosLS();
-  if (!cursos || cursos.length === 0) return; // si no hay datos, deja el HTML estático
-
-  var grid = document.querySelector('.cursos-grid');
-  if (!grid) return;
-
-  // Regenerar filtros dinámicamente
-  var cats = ['todos'];
-  cursos.forEach(function(c) { if (c.estado === 'activo' && cats.indexOf(c.categoria) === -1) cats.push(c.categoria); });
-  var filterBar = document.querySelector('.filter-bar');
-  if (filterBar) {
-    filterBar.innerHTML = cats.map(function(cat, i) {
-      var lbl = cat === 'todos' ? 'Todos' : (CAT_LABEL[cat] || cat);
-      return '<button class="fbtn' + (i === 0 ? ' active' : '') + '" onclick="filtrar(\'' + cat + '\',this)">' + lbl + '</button>';
-    }).join('');
-  }
-
-  // Renderizar tarjetas
-  var activos = cursos.filter(function(c) { return c.estado === 'activo'; });
-  grid.innerHTML = activos.map(function(c, i) {
-    var img = CURSO_IMG[c.id] || CAT_IMG[c.categoria] || CAT_IMG.agronegocios;
-    var cat = CAT_LABEL[c.categoria] || c.categoria;
-    var precio = '$' + (c.precio || 0).toLocaleString('es-AR');
-    var num = String(i + 1).padStart(2, '0');
-    var delay = (i * 0.05).toFixed(2);
-    return '<div class="ccard fu" data-cat="' + c.categoria + '" style="transition-delay:' + delay + 's">' +
-      '<img class="cimg" src="' + img + '" alt="">' +
-      '<div class="ccat-bar"><span class="ccat">' + cat + '</span><span class="cnum">' + num + '</span></div>' +
-      '<div class="cbody">' +
-        '<h3 class="ctitle">' + c.nombre + '</h3>' +
-        '<p class="cdesc">' + (c.desc || '') + '</p>' +
-      '</div>' +
-      '<div class="cfoot">' +
-        '<div class="cprecio">' + precio + '</div>' +
-        '<button onclick="pagar(\'' + c.nombre.replace(/'/g,"\\'")+'\','+ c.precio +',\'' + (c.mp||'') + '\')" class="btn-c">Comprar</button>' +
-      '</div>' +
-    '</div>';
+function renderCursos(){
+  var cats=['todos'];
+  CURSOS.forEach(function(c){if(cats.indexOf(c.categoria)===-1)cats.push(c.categoria);});
+  var fb=document.getElementById('filter-bar');
+  fb.innerHTML=cats.map(function(cat,i){
+    var lbl=cat==='todos'?'Todos':(CAT_LABEL[cat]||cat);
+    return '<button class="fbtn'+(i===0?' active':'')+'" onclick="filtrar(\''+cat+'\',this)">'+lbl+'</button>';
   }).join('');
-
-  // Re-observar elementos nuevos para animaciones
-  var obs2 = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('vis'); });
-  }, { threshold: 0.1 });
-  grid.querySelectorAll('.fu').forEach(function(el) { obs2.observe(el); });
+  var grid=document.getElementById('cursos-grid');
+  grid.innerHTML=CURSOS.map(function(c,i){
+    var img=IMGS[c.id]||IMGS.c01;
+    var cat=CAT_LABEL[c.categoria]||c.categoria;
+    var num=String(i+1).padStart(2,'0');
+    var delay=(i*0.05).toFixed(2);
+    return '<div class="ccard fu" data-cat="'+c.categoria+'" style="transition-delay:'+delay+'s">'+
+      '<img class="cimg" src="'+img+'" alt="">'+
+      '<div class="ccat-bar"><span class="ccat">'+cat+'</span><span class="cnum">'+num+'</span></div>'+
+      '<div class="cbody"><h3 class="ctitle">'+c.nombre+'</h3><p class="cdesc">'+c.desc+'</p></div>'+
+      '<div class="cfoot"><div class="cprecio">$'+c.precio.toLocaleString('es-AR')+'</div>'+
+      '<button onclick="pagar(\''+c.nombre.replace(/'/g,"\\'")+"',"+c.precio+',\''+c.mp+'\')" class="btn-c">Comprar</button></div></div>';
+  }).join('');
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.1});
+  grid.querySelectorAll('.fu').forEach(function(el){obs.observe(el);});
 }
-
-// ── SCROLL ANIMATIONS ────────────────────────────────────────────
-var obs = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('vis'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fu').forEach(function(el) { obs.observe(el); });
-
-// ── BOOT ─────────────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded', function() {
-  renderCursos();
-});
+var obs2=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.1});
+document.querySelectorAll('.fu').forEach(function(el){obs2.observe(el);});
+window.addEventListener('DOMContentLoaded',renderCursos);
 </script>
 </body>
 </html>
