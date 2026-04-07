@@ -249,6 +249,51 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 
 @media(max-width:1180px){.metrics{grid-template-columns:repeat(2,1fr);}.g2{grid-template-columns:1fr;}.al-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:860px){.sb{transform:translateX(-100%);}.main{margin-left:0;}}
+/* ── MEJORAS ─── */
+.nf-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;}
+.nf-card{background:var(--s2);border:1px solid var(--border);border-radius:var(--r2);padding:1.2rem 1.3rem;display:flex;gap:1rem;align-items:flex-start;transition:border-color .25s;}
+.nf-card:hover{border-color:var(--borderb);}
+.nf-ico{width:36px;height:36px;border-radius:var(--r);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.nf-ico.g{background:rgba(78,196,140,0.1);}.nf-ico.b{background:var(--blueb);}
+.nf-title{font-size:.82rem;font-weight:500;margin-bottom:.3rem;color:var(--text);}
+.nf-desc{font-size:.74rem;color:var(--textm);line-height:1.5;margin-bottom:.6rem;}
+.nf-btn{display:inline-flex;align-items:center;gap:.35rem;background:transparent;border:1px solid var(--border);border-radius:var(--r);padding:.3rem .8rem;font-size:.68rem;cursor:pointer;color:var(--textm);font-family:var(--sans);transition:all .2s;}
+.nf-btn:hover{border-color:var(--borderb);color:var(--gl);}
+.prog-wrap{display:flex;align-items:center;gap:.6rem;min-width:120px;}
+.prog-bar{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:3px;background:var(--gl);}
+.prog-fill.med{background:var(--amber);}.prog-fill.low{background:var(--red);}
+.prog-pct{font-size:.65rem;font-family:var(--mono);color:var(--textm);min-width:28px;text-align:right;}
+.al-av-sm{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:600;flex-shrink:0;}
+.search-bar{display:flex;align-items:center;gap:.6rem;padding:.7rem 1.1rem;border-bottom:1px solid var(--border);}
+.search-bar input,.search-bar select{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:.4rem .7rem;color:var(--text);font-family:var(--sans);font-size:.75rem;outline:none;transition:border-color .2s;}
+.search-bar input{flex:1;}.search-bar input:focus,.search-bar select:focus{border-color:var(--borderb);}
+.search-bar input::placeholder{color:var(--textd);}
+.spill.par{background:var(--blueb);color:var(--blue);}
+.abt.wa:hover{border-color:var(--gl);color:var(--gl);}
+.abt.cert:hover{border-color:var(--blue);color:var(--blue);}
+/* BUFFER */
+.post-form .fg{margin-bottom:.9rem;}
+.post-form .flbl{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--textm);margin-bottom:.35rem;display:block;}
+.post-form textarea,.post-form input[type=text],.post-form input[type=datetime-local]{width:100%;background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:.6rem .85rem;color:var(--text);font-family:var(--sans);font-size:.8rem;outline:none;transition:border-color .2s;resize:none;}
+.post-form textarea:focus,.post-form input:focus{border-color:var(--borderb);}
+.post-form textarea::placeholder,.post-form input::placeholder{color:var(--textd);}
+.char-count{font-size:.6rem;color:var(--textd);text-align:right;margin-top:.25rem;font-family:var(--mono);}
+.post-preview{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:.8rem 1rem;margin-bottom:.9rem;}
+.post-preview-lbl{font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--textd);margin-bottom:.4rem;}
+.post-preview-text{font-size:.8rem;color:var(--textm);line-height:1.6;white-space:pre-wrap;}
+.btn-post{width:100%;background:var(--g);color:var(--text);border:1px solid var(--gm);border-radius:var(--r);padding:.6rem 1.2rem;font-size:.8rem;font-weight:500;cursor:pointer;font-family:var(--sans);display:flex;align-items:center;justify-content:center;gap:.5rem;}
+.btn-post:hover{background:var(--gm);}
+.btn-post:disabled{opacity:.5;cursor:not-allowed;}
+.sched-item{display:flex;align-items:flex-start;gap:1rem;padding:.8rem 1.3rem;border-bottom:1px solid rgba(78,196,140,0.035);}
+.sched-item:last-child{border-bottom:none;}
+.cert-preview{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;text-align:center;margin-bottom:1rem;}
+.cert-title{font-family:var(--serif);font-size:1.5rem;color:var(--gl);margin-bottom:.5rem;}
+.cert-body{font-size:.85rem;color:var(--textm);line-height:1.8;}
+.cert-name{font-family:var(--serif);font-size:1.2rem;color:var(--text);border-bottom:1px solid var(--borderb);display:inline-block;padding:0 2rem;margin:.5rem 0;}
+.csv-preview{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:.8rem;margin-top:.8rem;max-height:200px;overflow-y:auto;}
+.csv-row{display:flex;gap:.5rem;padding:.3rem 0;border-bottom:1px solid rgba(78,196,140,0.04);font-size:.72rem;}
+.csv-cell{flex:1;color:var(--textm);font-family:var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 </style>
 </head>
 <body>
@@ -284,6 +329,11 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
     <div class="sb-item" onclick="nav('ingresos',this)">
       <svg class="sb-icon" viewBox="0 0 16 16"><path d="M1 12l4-4 3 3 4-5 3 2V14H1z"/></svg>
       Ingresos
+    </div>
+    <div class="sb-sec">Marketing</div>
+    <div class="sb-item" onclick="nav('buffer',this)">
+      <svg class="sb-icon" viewBox="0 0 16 16"><circle cx="4" cy="8" r="2"/><circle cx="12" cy="4" r="2"/><circle cx="12" cy="12" r="2"/><path d="M6 7.5l4-2.5M6 8.5l4 2.5" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+      Redes Sociales
     </div>
     <div class="sb-sec">Sistema</div>
     <div class="sb-item" onclick="nav('config',this)">
@@ -336,6 +386,11 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
         <div class="mc-bar"><div class="mc-fill r" id="b-arch" style="width:0%"></div></div>
       </div>
     </div>
+    <div class="nf-row">
+      <div class="nf-card"><div class="nf-ico g">📥</div><div><div class="nf-title">Importar alumnos</div><div class="nf-desc">Cargá un CSV y los alumnos se registran solos.</div><button class="nf-btn" onclick="openModalImport()">Subir archivo →</button></div></div>
+      <div class="nf-card"><div class="nf-ico g">💬</div><div><div class="nf-title">WhatsApp masivo</div><div class="nf-desc">Enviá un mensaje a todos los alumnos de un curso.</div><button class="nf-btn" onclick="openModalWA()">Seleccionar curso →</button></div></div>
+      <div class="nf-card"><div class="nf-ico b">📄</div><div><div class="nf-title">Certificados PDF</div><div class="nf-desc">Generá el certificado de un alumno con un click.</div><button class="nf-btn" onclick="nav('alumnos',document.querySelectorAll('.sb-item')[3])">Ver alumnos →</button></div></div>
+    </div>
     <div class="g2">
       <div class="panel">
         <div class="ph">
@@ -387,6 +442,11 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 
   <!-- ARCHIVOS -->
   <div id="p-arch" class="content" style="display:none">
+    <div class="nf-row">
+      <div class="nf-card"><div class="nf-ico g">📥</div><div><div class="nf-title">Importar alumnos</div><div class="nf-desc">Cargá un CSV y los alumnos se registran solos.</div><button class="nf-btn" onclick="openModalImport()">Subir archivo →</button></div></div>
+      <div class="nf-card"><div class="nf-ico g">💬</div><div><div class="nf-title">WhatsApp masivo</div><div class="nf-desc">Enviá un mensaje a todos los alumnos de un curso.</div><button class="nf-btn" onclick="openModalWA()">Seleccionar curso →</button></div></div>
+      <div class="nf-card"><div class="nf-ico b">📄</div><div><div class="nf-title">Certificados PDF</div><div class="nf-desc">Generá el certificado de un alumno con un click.</div><button class="nf-btn" onclick="nav('alumnos',document.querySelectorAll('.sb-item')[3])">Ver alumnos →</button></div></div>
+    </div>
     <div class="g2">
       <div class="panel" style="animation-delay:0s">
         <div class="ph"><div class="pt">Subir <em>Archivos</em></div></div>
@@ -471,6 +531,69 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
     </div>
     <div style="text-align:right;margin-top:1rem;">
       <button class="btn-cfg-save" onclick="saveConfig()">Guardar configuración</button>
+    </div>
+  </div>
+
+  <!-- BUFFER -->
+  <div id="p-buffer" class="content" style="display:none">
+    <div class="g2">
+      <div class="panel">
+        <div class="ph"><div class="pt">Publicar en <em>Redes</em></div></div>
+        <div class="post-form" style="padding:1.2rem">
+          <div class="fg"><label class="flbl">Curso (pre-rellena el texto)</label><select class="fsel" id="post-curso" onchange="prefillarPost()"><option value="">Escribir manualmente...</option></select></div>
+          <div class="fg"><label class="flbl">Texto del post</label><textarea id="post-text" rows="5" placeholder="Escribí el contenido del post..." maxlength="500" oninput="updateCharCount();updatePreview()"></textarea><div class="char-count"><span id="char-count">0</span>/500</div></div>
+          <div class="fg"><label class="flbl">URL de imagen (opcional)</label><input type="text" id="post-img" placeholder="https://..." oninput="updatePreview()"></div>
+          <div class="fg"><label class="flbl">Modo de publicación</label><select class="fsel" id="post-mode" onchange="toggleSchedule()"><option value="shareNow">Publicar ahora</option><option value="addToQueue">Agregar a la cola</option><option value="customScheduled">Programar para...</option></select></div>
+          <div class="fg" id="schedule-date" style="display:none"><label class="flbl">Fecha y hora</label><input type="datetime-local" id="post-date"></div>
+          <div class="post-preview"><div class="post-preview-lbl">Vista previa</div><div class="post-preview-text" id="post-preview-text">El texto aparecerá aquí...</div></div>
+          <button class="btn-post" id="btn-post" onclick="publishToBuffer()">📤 Publicar en Buffer (YouTube)</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="ph"><div class="pt">Posts <em>Programados</em></div><button class="bsm" onclick="loadScheduledPosts()">↻ Actualizar</button></div>
+        <div id="scheduled-list"><div class="empty"><div class="empty-ico">📅</div><div class="empty-txt">Click en Actualizar para cargar posts.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL IMPORTAR CSV -->
+  <div class="modal-bg" id="mbg-import">
+    <div class="modal">
+      <div class="mh"><div class="mt2">Importar <em>Alumnos CSV</em></div><button class="mclose" onclick="document.getElementById('mbg-import').classList.remove('open')">✕</button></div>
+      <div class="mb2">
+        <p style="font-size:.78rem;color:var(--textm);margin-bottom:1rem;line-height:1.6;">El CSV debe tener columnas: <span style="font-family:var(--mono);color:var(--gl)">nombre, email, curso, monto, estado, progreso</span></p>
+        <div class="fg" style="margin-bottom:.9rem;"><label class="flbl">Archivo CSV</label><input type="file" id="csv-input" accept=".csv" class="finput" onchange="previewCSV(this)"></div>
+        <div id="csv-preview-wrap" style="display:none"><div class="post-preview-lbl" style="margin-bottom:.4rem;">Vista previa</div><div class="csv-preview" id="csv-preview"></div></div>
+      </div>
+      <div class="mfoot"><button class="btn-cancel" onclick="document.getElementById('mbg-import').classList.remove('open')">Cancelar</button><button class="btn-save" id="btn-import-confirm" onclick="importCSV()" disabled>Importar</button></div>
+    </div>
+  </div>
+
+  <!-- MODAL WHATSAPP MASIVO -->
+  <div class="modal-bg" id="mbg-wa">
+    <div class="modal">
+      <div class="mh"><div class="mt2">WhatsApp <em>Masivo</em></div><button class="mclose" onclick="document.getElementById('mbg-wa').classList.remove('open')">✕</button></div>
+      <div class="mb2">
+        <div class="fg" style="margin-bottom:.9rem;"><label class="flbl">Curso</label><select class="fsel" id="wa-curso" onchange="updateWACount()"><option value="">Todos los alumnos</option></select></div>
+        <div id="wa-count" style="font-size:.75rem;color:var(--textm);margin-bottom:.9rem;"></div>
+        <div class="fg"><label class="flbl">Mensaje</label><textarea class="ftxt" id="wa-msg" rows="4" placeholder="Escribí el mensaje..."></textarea></div>
+      </div>
+      <div class="mfoot"><button class="btn-cancel" onclick="document.getElementById('mbg-wa').classList.remove('open')">Cancelar</button><button class="btn-save" onclick="sendWAMasivo()">Iniciar envío</button></div>
+    </div>
+  </div>
+
+  <!-- MODAL CERTIFICADO -->
+  <div class="modal-bg" id="mbg-cert">
+    <div class="modal">
+      <div class="mh"><div class="mt2">Certificado de <em>Finalización</em></div><button class="mclose" onclick="document.getElementById('mbg-cert').classList.remove('open')">✕</button></div>
+      <div class="mb2">
+        <div class="cert-preview">
+          <div style="font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--textd);margin-bottom:.5rem;">Ojeda Araujo & Asociados</div>
+          <div class="cert-title">Certificado de Finalización</div>
+          <div class="cert-body">Se certifica que<br><span class="cert-name" id="cert-nombre">Nombre del Alumno</span><br>completó satisfactoriamente el curso<br><strong id="cert-curso" style="color:var(--gl)">Nombre del Curso</strong><br><span style="font-size:.75rem;color:var(--textd)">Fecha: <span id="cert-fecha"></span></span></div>
+        </div>
+      </div>
+      <div class="mfoot"><button class="btn-cancel" onclick="document.getElementById('mbg-cert').classList.remove('open')">Cerrar</button><button class="btn-save" onclick="window.print()">🖨 Imprimir / PDF</button></div>
     </div>
   </div>
 </main>
@@ -1313,6 +1436,94 @@ window.addEventListener('DOMContentLoaded',()=>{
   updateRings();
   renderActividad();
 });
+
+// ══ BUFFER ═══════════════════════════════════════════════════
+const BUFFER_TOKEN = 'Dd3X7iqR9QMGLUHQcKTK6HwDq_iQyw2eHfH6mAoBDn';
+const BUFFER_CHANNEL_ID = '69d555b8031bfa423cdc7888';
+
+async function publishToBuffer() {
+  const text = document.getElementById('post-text').value.trim();
+  if(!text){ toast('Escribí el texto del post','r'); return; }
+  const mode = document.getElementById('post-mode').value;
+  const imgUrl = document.getElementById('post-img').value.trim();
+  const dueAt = document.getElementById('post-date').value;
+  const btn = document.getElementById('btn-post');
+  btn.disabled = true; btn.textContent = '⏳ Publicando...';
+  const params = new URLSearchParams({ profile_ids: BUFFER_CHANNEL_ID, text, access_token: BUFFER_TOKEN });
+  if(mode === 'shareNow') params.append('now', 'true');
+  if(mode === 'customScheduled' && dueAt) params.append('scheduled_at', new Date(dueAt).toISOString());
+  if(imgUrl) params.append('media[link]', imgUrl);
+  try {
+    const res = await fetch('https://api.bufferapp.com/1/updates/create.json', { method:'POST', body: params });
+    const data = await res.json();
+    btn.disabled = false; btn.textContent = '📤 Publicar en Buffer (YouTube)';
+    if(data && !data.error) {
+      toast('Post enviado a Buffer ✓');
+      addActividad('Post publicado en Buffer — YouTube','g');
+      document.getElementById('post-text').value = '';
+      updateCharCount(); updatePreview();
+    } else {
+      toast('Error Buffer: ' + (data.message || data.error || 'Error desconocido'), 'r');
+    }
+  } catch(e) {
+    btn.disabled = false; btn.textContent = '📤 Publicar en Buffer (YouTube)';
+    toast('Error de conexión: ' + e.message, 'r');
+  }
+}
+
+async function loadScheduledPosts() {
+  const el = document.getElementById('scheduled-list');
+  el.innerHTML = '<div class="empty"><div class="empty-ico">⏳</div><div class="empty-txt">Cargando...</div></div>';
+  try {
+    const res = await fetch('https://api.bufferapp.com/1/profiles/' + BUFFER_CHANNEL_ID + '/updates/pending.json?access_token=' + BUFFER_TOKEN);
+    const data = await res.json();
+    if(!data || data.error || !data.updates || !data.updates.length) {
+      el.innerHTML = '<div class="empty"><div class="empty-ico">📅</div><div class="empty-txt">No hay posts programados.</div></div>';
+      return;
+    }
+    el.innerHTML = data.updates.map(u => `<div class="sched-item"><div style="flex:1"><div style="font-size:.78rem;color:var(--text)">${u.text||''}</div><div style="font-size:.65rem;color:var(--textd);font-family:var(--mono);margin-top:3px">${u.due_at ? new Date(u.due_at*1000).toLocaleString('es-AR') : 'En cola'}</div></div><span class="spill act" style="font-size:.6rem">${u.status||'programado'}</span></div>`).join('');
+  } catch(e) {
+    el.innerHTML = '<div class="empty"><div class="empty-ico">⚠</div><div class="empty-txt">Error al cargar posts.</div></div>';
+  }
+}
+
+function prefillarPost() {
+  const cursoId = document.getElementById('post-curso').value;
+  if(!cursoId) return;
+  const c = getCursos().find(x=>x.id===cursoId);
+  if(!c) return;
+  const texto = '📚 ' + c.nombre + '\n\n' + (c.desc||'') + '\n\n💰 Precio: $' + (c.precio||0).toLocaleString('es-AR') + '\n\n¿Querés inscribirte? Escribinos por WhatsApp.';
+  document.getElementById('post-text').value = texto;
+  updateCharCount(); updatePreview();
+}
+function updateCharCount() { document.getElementById('char-count').textContent = document.getElementById('post-text').value.length; }
+function updatePreview() { document.getElementById('post-preview-text').textContent = document.getElementById('post-text').value || 'El texto aparecerá aquí...'; }
+function toggleSchedule() { document.getElementById('schedule-date').style.display = document.getElementById('post-mode').value==='customScheduled'?'block':'none'; }
+function populatePostCursos() { const sel=document.getElementById('post-curso'); if(!sel)return; sel.innerHTML='<option value="">Escribir manualmente...</option>'+getCursos().filter(c=>c.estado==='activo').map(c=>`<option value="${c.id}">${c.nombre}</option>`).join(''); }
+
+// ══ IMPORT CSV ═══════════════════════════════════════════════
+let csvParsed = [];
+function openModalImport(){document.getElementById('mbg-import').classList.add('open');document.getElementById('csv-preview-wrap').style.display='none';document.getElementById('btn-import-confirm').disabled=true;csvParsed=[];}
+function previewCSV(input){const file=input.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(e){const lines=e.target.result.split('\n').filter(l=>l.trim());if(!lines.length)return;const headers=lines[0].split(',').map(h=>h.trim().toLowerCase());csvParsed=lines.slice(1).map(l=>{const vals=l.split(',');return headers.reduce((o,h,i)=>(o[h]=(vals[i]||'').trim(),o),{});}).filter(r=>r.nombre);document.getElementById('csv-preview-wrap').style.display='block';document.getElementById('csv-preview').innerHTML=csvParsed.slice(0,5).map(r=>`<div class="csv-row"><span class="csv-cell">${r.nombre||''}</span><span class="csv-cell">${r.email||''}</span><span class="csv-cell">${r.curso||''}</span><span class="csv-cell">${r.monto||'0'}</span></div>`).join('');document.getElementById('btn-import-confirm').disabled=false;};reader.readAsText(file);}
+function importCSV(){if(!csvParsed.length)return;const cursos=getCursos();const als=getAlumnos();let n=0;csvParsed.forEach(r=>{const c=cursos.find(x=>x.nombre.toLowerCase()===(r.curso||'').toLowerCase());als.unshift({id:uid(),nombre:r.nombre,email:r.email||'',cursoId:c?c.id:'',cursoNombre:c?c.nombre:(r.curso||'Sin curso'),monto:parseInt(r.monto)||0,estadoPago:r.estado||'pendiente',progreso:parseInt(r.progreso)||0,ts:new Date().toISOString()});n++;});setAlumnos(als);addActividad(n+' alumnos importados desde CSV','b');document.getElementById('mbg-import').classList.remove('open');toast(n+' alumnos importados');updateAll();renderAlumnos();}
+
+// ══ WHATSAPP MASIVO ═══════════════════════════════════════════
+function openModalWA(){const sel=document.getElementById('wa-curso');sel.innerHTML='<option value="">Todos los alumnos</option>'+getCursos().map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('');updateWACount();document.getElementById('wa-msg').value='';document.getElementById('mbg-wa').classList.add('open');}
+function updateWACount(){const cid=document.getElementById('wa-curso').value;const n=getAlumnos().filter(a=>!cid||a.cursoId===cid).length;document.getElementById('wa-count').textContent=`Se enviará a ${n} alumno(s).`;}
+function sendWAMasivo(){const cid=document.getElementById('wa-curso').value;const msg=document.getElementById('wa-msg').value.trim();if(!msg){toast('Escribí el mensaje','r');return;}const als=getAlumnos().filter(a=>!cid||a.cursoId===cid);if(!als.length){toast('No hay alumnos','r');return;}document.getElementById('mbg-wa').classList.remove('open');als.forEach((a,i)=>{setTimeout(()=>window.open('https://wa.me/?text='+encodeURIComponent(msg)),i*1500);});toast('Abriendo WhatsApp para '+als.length+' alumnos...');}
+
+// ══ CERTIFICADO ═══════════════════════════════════════════════
+function openCert(id){const al=getAlumnos().find(x=>x.id===id);if(!al)return;document.getElementById('cert-nombre').textContent=al.nombre;document.getElementById('cert-curso').textContent=al.cursoNombre;document.getElementById('cert-fecha').textContent=new Date(al.ts).toLocaleDateString('es-AR');document.getElementById('mbg-cert').classList.add('open');}
+
+// ══ PATCH nav para soportar buffer ════════════════════════════
+const _navOrig = nav;
+nav = function(name, el) {
+  _navOrig(name, el);
+  if(name==='buffer'){ populatePostCursos(); }
+};
+
+// cerrar nuevos modales
+['mbg-import','mbg-wa','mbg-cert'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');});});
 </script>
 </body>
 </html>
