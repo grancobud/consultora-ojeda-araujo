@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formación Profesional | Ojeda Araujo & Asociados</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--v:#0F6E56;--v2:#1D9E75;--v3:#085041;--v4:#5DCAA5;--negro:#080c0a;--oscuro:#0e1410;--card:#111813;--borde:#1c2620;--borde2:#2a3d33;--blanco:#f0f4f0;--gris:#7a8c80;--gris2:#aabfb0;--oro:#c9a84c;--oro2:#e8c97a;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}body{background:var(--negro);color:var(--blanco);font-family:'Outfit',sans-serif;overflow-x:hidden;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 5rem;background:rgba(8,12,10,.88);border-bottom:1px solid var(--borde);backdrop-filter:blur(16px);}
+.nav-logo{display:flex;align-items:center;gap:.8rem;text-decoration:none;}.nav-dot{width:7px;height:7px;background:var(--v4);border-radius:50%;animation:blink 2.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+.nav-brand{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--blanco);}.nav-sub{font-size:.63rem;color:var(--gris);letter-spacing:.16em;text-transform:uppercase;margin-top:.1rem;}
+.nav-links{display:flex;gap:2.2rem;list-style:none;}.nav-links a{color:var(--gris);text-decoration:none;font-size:.77rem;letter-spacing:.09em;text-transform:uppercase;font-weight:500;transition:color .3s;}.nav-links a:hover{color:var(--v4);}
+.nav-cta{background:var(--oro);color:var(--negro);padding:.5rem 1.4rem;border-radius:2px;font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .3s;}.nav-cta:hover{background:var(--oro2);}
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:9rem 5rem 6rem;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;z-index:0;background-image:url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1800&q=85&auto=format&fit=crop');background-size:cover;background-position:center 40%;filter:brightness(.42) saturate(.8);}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,rgba(8,12,10,.94) 40%,rgba(8,12,10,.55) 72%,rgba(8,12,10,.18) 100%),linear-gradient(to top,rgba(8,12,10,.85) 0%,transparent 35%);}
+.hero-inner{position:relative;z-index:1;max-width:680px;}.hero-eyebrow{display:inline-flex;align-items:center;gap:.7rem;color:var(--v4);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;font-weight:600;margin-bottom:2rem;}.hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--v4);}
+.hero h1{font-family:'Playfair Display',serif;font-size:4.2rem;font-weight:400;line-height:1.08;margin-bottom:1.6rem;letter-spacing:-.015em;}.hero h1 em{font-style:italic;color:var(--v4);}
+.hero-desc{color:var(--gris2);font-size:.98rem;line-height:1.92;margin-bottom:2.8rem;max-width:520px;font-weight:300;border-left:2px solid var(--v);padding-left:1.2rem;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-oro{background:var(--oro);color:var(--negro);padding:.85rem 2.2rem;border-radius:2px;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .3s;display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--oro);}.btn-oro:hover{background:var(--oro2);transform:translateY(-2px);}
+.btn-ghost{background:transparent;color:var(--blanco);padding:.85rem 2.2rem;border:1px solid var(--borde2);border-radius:2px;font-size:.78rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .3s;}.btn-ghost:hover{border-color:var(--v4);color:var(--v4);}
+.hero-stats{position:absolute;right:5rem;bottom:5rem;z-index:1;display:flex;gap:3rem;}.hstat-num{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:600;color:var(--oro);}.hstat-lbl{font-size:.63rem;color:var(--gris);text-transform:uppercase;letter-spacing:.12em;margin-top:.2rem;}
+.divline{width:100%;height:1px;background:var(--borde);}.wrap{padding:6rem 5rem;max-width:1320px;margin:0 auto;}
+.eyebrow{color:var(--v4);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:.7rem;}.eyebrow::before{content:'';width:24px;height:1px;background:var(--v4);}
+.sec-title{font-family:'Playfair Display',serif;font-size:2.7rem;font-weight:400;line-height:1.15;margin-bottom:.8rem;}.sec-title em{font-style:italic;color:var(--v4);}
+.sec-sub{color:var(--gris2);max-width:560px;line-height:1.88;font-weight:300;font-size:.93rem;margin-bottom:3.5rem;}.goldbar{width:44px;height:2px;background:linear-gradient(90deg,var(--oro),transparent);margin:1.4rem 0;}
+.dif-wrap{background:var(--oscuro);border-top:1px solid var(--borde);border-bottom:1px solid var(--borde);padding:5rem;}.dif-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2.5rem;max-width:1320px;margin:0 auto;}
+.dif-item{border-left:2px solid var(--v);padding-left:1.2rem;}.dif-num{font-family:'Playfair Display',serif;font-size:2.3rem;color:var(--oro);font-weight:600;}.dif-lbl{font-size:.68rem;color:var(--gris);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem;}.dif-desc{color:var(--gris2);font-size:.8rem;line-height:1.7;margin-top:.6rem;font-weight:300;}
+.filter-bar{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:3rem;}.fbtn{background:transparent;border:1px solid var(--borde2);color:var(--gris);padding:.42rem 1rem;border-radius:2px;font-size:.7rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .3s;font-family:'Outfit',sans-serif;}.fbtn:hover,.fbtn.active{background:var(--v);border-color:var(--v2);color:var(--blanco);}
+.cursos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;}.ccard{background:var(--card);border:1px solid var(--borde);border-radius:3px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .35s,transform .4s;}.ccard:hover{border-color:var(--v2);transform:translateY(-5px);}.ccard.hidden{display:none;}
+.cimg{width:100%;height:172px;object-fit:cover;filter:brightness(.58) saturate(.72);transition:filter .4s;}.ccard:hover .cimg{filter:brightness(.72) saturate(.88);}
+.ccat-bar{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.2rem;border-bottom:1px solid var(--borde);}
+.ccat{display:inline-flex;align-items:center;background:rgba(15,110,86,.12);border:1px solid rgba(93,202,165,.18);color:var(--v4);padding:.2rem .65rem;border-radius:2px;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;}
+.cnum{color:var(--borde2);font-size:.68rem;letter-spacing:.08em;}.cbody{padding:1.2rem 1.2rem .7rem;}.ctitle{font-family:'Playfair Display',serif;font-size:1.18rem;font-weight:400;margin-bottom:.5rem;line-height:1.3;}.cdesc{color:var(--gris);font-size:.78rem;line-height:1.65;font-weight:300;}
+.cfoot{padding:.75rem 1.2rem 1.2rem;margin-top:auto;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--borde);}.cprecio{font-family:'Playfair Display',serif;font-size:1.55rem;color:var(--oro);}
+.btn-c{background:var(--v);color:var(--blanco);border:1px solid var(--v2);padding:.5rem 1rem;border-radius:2px;font-size:.68rem;font-weight:500;letter-spacing:.09em;text-transform:uppercase;cursor:pointer;transition:all .3s;font-family:'Outfit',sans-serif;}.btn-c:hover{background:var(--v2);}
+.nost-grid{display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:center;}.nost-img-wrap{position:relative;}.nost-img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px;filter:brightness(.62) saturate(.78);border:1px solid var(--borde2);}
+.nost-badge{position:absolute;bottom:-1.5rem;right:-1.5rem;background:var(--v3);border:1px solid var(--v2);border-radius:3px;padding:1.2rem 1.5rem;text-align:center;}.nost-badge-num{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--v4);font-weight:600;}.nost-badge-lbl{font-size:.62rem;color:var(--gris2);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem;}
+.team-cards{display:flex;flex-direction:column;gap:.8rem;margin:1.8rem 0;}.tcard{background:var(--card);border:1px solid var(--borde);border-radius:3px;padding:.95rem 1.3rem;display:flex;align-items:center;gap:1rem;transition:border-color .3s;}.tcard:hover{border-color:var(--v2);}
+.tav{width:44px;height:44px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--v),var(--v3));display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.92rem;color:var(--blanco);}.tname{font-weight:500;font-size:.86rem;}.trole{color:var(--gris);font-size:.73rem;margin-top:.1rem;}
+.nost-stats{display:flex;gap:2.5rem;padding-top:2rem;border-top:1px solid var(--borde);margin-top:2rem;}.nsnum{font-family:'Playfair Display',serif;font-size:1.75rem;color:var(--oro);}.nslbl{color:var(--gris);font-size:.65rem;text-transform:uppercase;letter-spacing:.09em;margin-top:.15rem;}
+.ctgrid{display:grid;grid-template-columns:1fr 1.1fr;gap:5rem;}.clink{display:flex;align-items:center;gap:1rem;background:var(--card);border:1px solid var(--borde);border-radius:3px;padding:.9rem 1.4rem;text-decoration:none;color:var(--blanco);transition:border-color .3s;margin-bottom:.8rem;}.clink:hover{border-color:var(--v2);}
+.cico{font-size:1.1rem;width:32px;text-align:center;}.clbl{font-weight:500;font-size:.82rem;}.cval{color:var(--gris);font-size:.72rem;margin-top:.1rem;}
+.fwrap{background:var(--card);border:1px solid var(--borde);border-radius:3px;padding:2rem;}.ftitle{font-family:'Playfair Display',serif;font-size:1.28rem;font-weight:400;margin-bottom:1.5rem;}.fcol{display:flex;flex-direction:column;gap:.82rem;}
+.finput,.ftarea{background:var(--oscuro);border:1px solid var(--borde2);border-radius:2px;padding:.78rem 1rem;color:var(--blanco);font-family:'Outfit',sans-serif;font-size:.84rem;outline:none;transition:border-color .3s;resize:none;width:100%;}.finput:focus,.ftarea:focus{border-color:var(--v2);}.finput::placeholder,.ftarea::placeholder{color:var(--gris);}
+footer{background:var(--oscuro);border-top:1px solid var(--borde);padding:2.5rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;}.flogo{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--oro);}.fcopy{color:var(--gris);font-size:.73rem;}.flinks{display:flex;gap:2rem;}.flinks a{color:var(--gris);text-decoration:none;font-size:.73rem;transition:color .3s;}.flinks a:hover{color:var(--v4);}
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:1000;align-items:center;justify-content:center;}.modal-box{background:var(--card);border:1px solid var(--borde2);border-radius:3px;padding:2.5rem;max-width:430px;width:92%;position:relative;}.modal-x{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--gris);font-size:1.2rem;cursor:pointer;}
+.modal-tit{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:.4rem;}.modal-sub{color:var(--gris);font-size:.8rem;margin-bottom:1.4rem;line-height:1.7;}.modal-total{background:var(--oscuro);border:1px solid var(--borde2);border-radius:2px;padding:.92rem 1.2rem;margin-bottom:1.4rem;display:flex;justify-content:space-between;align-items:center;}.modal-lbl{color:var(--gris);font-size:.8rem;}.modal-p{font-family:'Playfair Display',serif;font-size:1.75rem;color:var(--oro);}.modal-seg{color:var(--gris);font-size:.67rem;text-align:center;margin-top:.9rem;}
+.fu{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}.fu.vis{opacity:1;transform:translateY(0);}
+@media(max-width:1100px){nav{padding:1.1rem 2.5rem;}.hero{padding:8rem 2.5rem 5rem;}.hero h1{font-size:2.9rem;}.hero-stats{right:2.5rem;bottom:3rem;gap:2rem;}.wrap{padding:5rem 2.5rem;}.cursos-grid{grid-template-columns:1fr 1fr;}.dif-grid{grid-template-columns:1fr 1fr;gap:2rem;}.dif-wrap{padding:4rem 2.5rem;}.nost-grid{grid-template-columns:1fr;gap:3rem;}.nost-img{aspect-ratio:16/9;}.ctgrid{grid-template-columns:1fr;gap:3rem;}footer{padding:2rem 2.5rem;}}
+@media(max-width:640px){.cursos-grid{grid-template-columns:1fr;}.dif-grid{grid-template-columns:1fr 1fr;}.hero h1{font-size:2.3rem;}.hero-stats{position:relative;right:auto;bottom:auto;margin-top:3rem;flex-wrap:wrap;gap:1.5rem;}.nav-links{display:none;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#" class="nav-logo"><div class="nav-dot"></div><div><div class="nav-brand">Ojeda Araujo & Asociados</div><div class="nav-sub">Agro · Regulación · Sustentabilidad</div></div></a>
+  <ul class="nav-links">
+    <li><a href="#cursos">Cursos</a></li><li><a href="#vivo">Sesiones</a></li><li><a href="#nosotros">Nosotros</a></li><li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#cursos" class="nav-cta">Ver Cursos</a>
+</nav>
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Plataforma de Formación Profesional</div>
+    <h1>Conocimiento que <em>transforma</em> el sector</h1>
+    <p class="hero-desc">Formación especializada en agronegocios, cannabis medicinal, mercados de carbono, regulación normativa y gestión de organizaciones — desarrollada por consultores activos en el sector bioeconómico latinoamericano.</p>
+    <div class="hero-btns"><a href="#cursos" class="btn-oro">Explorar Cursos →</a><a href="#vivo" class="btn-ghost">Consultoría Directa</a></div>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-num">500+</div><div class="hstat-lbl">Alumnos</div></div>
+    <div class="hstat"><div class="hstat-num">7</div><div class="hstat-lbl">Categorías</div></div>
+    <div class="hstat"><div class="hstat-num">AL</div><div class="hstat-lbl">Regional</div></div>
+  </div>
+</section>
+<div class="divline"></div>
+<div class="dif-wrap">
+  <div class="dif-grid">
+    <div class="dif-item fu"><div class="dif-num">+5</div><div class="dif-lbl">Años de trayectoria</div><div class="dif-desc">Consultores en actividad permanente en el sector.</div></div>
+    <div class="dif-item fu" style="transition-delay:.1s"><div class="dif-num">AL</div><div class="dif-lbl">Presencia regional</div><div class="dif-desc">Argentina, Uruguay, Paraguay, Colombia y más.</div></div>
+    <div class="dif-item fu" style="transition-delay:.2s"><div class="dif-num">360°</div><div class="dif-lbl">Enfoque integral</div><div class="dif-desc">Desde la viabilidad técnica hasta la implementación y acceso a mercados.</div></div>
+    <div class="dif-item fu" style="transition-delay:.3s"><div class="dif-num">100%</div><div class="dif-lbl">Casos reales</div><div class="dif-desc">Cada curso nace de proyectos reales ejecutados en el sector.</div></div>
+  </div>
+</div>
+<div class="divline"></div>
+<section id="cursos">
+  <div class="wrap">
+    <div class="eyebrow fu">Lo que ofrecemos</div>
+    <h2 class="sec-title fu">Nuestros <em>Cursos</em></h2>
+    <div class="goldbar fu"></div>
+    <p class="sec-sub fu">Materiales PDF descargables, acceso permanente y contenido actualizado por profesionales activos en el sector bioeconómico hispanoamericano.</p>
+    <div class="filter-bar fu" id="filter-bar"></div>
+    <div class="cursos-grid" id="cursos-grid"></div>
+  </div>
+</section>
+<div class="divline"></div>
+<section id="vivo">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;">
+      <div class="fu">
+        <div class="eyebrow">Consultoría personalizada</div>
+        <h2 class="sec-title">¿Necesitás una <em>sesión específica</em>?</h2>
+        <div class="goldbar"></div>
+        <p style="color:var(--gris2);line-height:1.9;font-weight:300;font-size:.95rem;margin-bottom:1.5rem;">Si tu proyecto requiere un abordaje particular — regulatorio, técnico, de inversión o de gestión — podés solicitar una sesión directamente con nuestros consultores.</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <a href="https://wa.me/5493794058223?text=Hola%2C%20quisiera%20coordinar%20una%20sesion%20con%20un%20consultor." target="_blank" class="btn-oro">Escribinos por WhatsApp →</a>
+          <a href="mailto:contactos@oa-consultora.com" class="btn-ghost">Enviar un email</a>
+        </div>
+      </div>
+      <div class="fu" style="transition-delay:.15s;display:flex;flex-direction:column;gap:1rem;">
+        <div style="background:var(--card);border:1px solid var(--borde);border-radius:3px;padding:1.5rem;display:flex;align-items:flex-start;gap:1rem;"><div style="width:42px;height:42px;flex-shrink:0;background:rgba(15,110,86,.12);border:1px solid rgba(93,202,165,.2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">📋</div><div><div style="font-weight:500;font-size:.88rem;margin-bottom:.3rem;">Diagnóstico regulatorio</div><div style="color:var(--gris);font-size:.78rem;line-height:1.6;font-weight:300;">Revisión de tu situación normativa y hoja de ruta para regularizarla.</div></div></div>
+        <div style="background:var(--card);border:1px solid var(--borde);border-radius:3px;padding:1.5rem;display:flex;align-items:flex-start;gap:1rem;"><div style="width:42px;height:42px;flex-shrink:0;background:rgba(15,110,86,.12);border:1px solid rgba(93,202,165,.2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🌿</div><div><div style="font-weight:500;font-size:.88rem;margin-bottom:.3rem;">Asesoría técnica específica</div><div style="color:var(--gris);font-size:.78rem;line-height:1.6;font-weight:300;">Cannabis, carbono, certificaciones o agronegocios según tu necesidad.</div></div></div>
+        <div style="background:var(--card);border:1px solid var(--borde);border-radius:3px;padding:1.5rem;display:flex;align-items:flex-start;gap:1rem;"><div style="width:42px;height:42px;flex-shrink:0;background:rgba(15,110,86,.12);border:1px solid rgba(93,202,165,.2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">💼</div><div><div style="font-weight:500;font-size:.88rem;margin-bottom:.3rem;">Evaluación de inversión</div><div style="color:var(--gris);font-size:.78rem;line-height:1.6;font-weight:300;">Análisis técnico-regulatorio de proyectos antes de tomar decisiones.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divline"></div>
+<section id="nosotros">
+  <div class="wrap">
+    <div class="nost-grid">
+      <div class="nost-img-wrap fu"><img class="nost-img" src="https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800&q=80&auto=format&fit=crop" alt=""><div class="nost-badge"><div class="nost-badge-num">6+</div><div class="nost-badge-lbl">Áreas de expertise</div></div></div>
+      <div class="fu" style="transition-delay:.15s">
+        <div class="eyebrow">Quiénes somos</div>
+        <h2 class="sec-title">El equipo <em>Ojeda & Araujo</em></h2>
+        <div class="goldbar"></div>
+        <p style="color:var(--gris2);line-height:1.9;margin-bottom:1.2rem;font-weight:300;font-size:.93rem;">Consultora especializada en servicios técnicos y estratégicos para empresas, productores e inversores del sector bioeconómico latinoamericano.</p>
+        <div class="team-cards">
+          <div class="tcard"><div class="tav">O</div><div><div class="tname">Ojeda</div><div class="trole">Co-fundador · Consultor Senior</div></div></div>
+          <div class="tcard"><div class="tav">A</div><div><div class="tname">Araujo</div><div class="trole">Co-fundador · Consultor Senior</div></div></div>
+        </div>
+        <div class="nost-stats">
+          <div><div class="nsnum">+5</div><div class="nslbl">Años</div></div>
+          <div><div class="nsnum">500+</div><div class="nslbl">Alumnos</div></div>
+          <div><div class="nsnum">7</div><div class="nslbl">Categorías</div></div>
+          <div><div class="nsnum">AL</div><div class="nslbl">Regional</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divline"></div>
+<section id="contacto">
+  <div class="wrap">
+    <div class="eyebrow fu">Hablemos</div>
+    <h2 class="sec-title fu">¿Tenés <em>preguntas?</em></h2>
+    <div class="goldbar fu"></div>
+    <div class="ctgrid">
+      <div class="fu">
+        <p style="color:var(--gris2);line-height:1.88;margin-bottom:2rem;font-weight:300;font-size:.93rem;">Escribinos por WhatsApp o email. Respondemos en menos de 24 horas.</p>
+        <a href="https://wa.me/5493794058223" target="_blank" class="clink"><div class="cico">💬</div><div><div class="clbl">WhatsApp</div><div class="cval">+54 9 379 405-8223</div></div></a>
+        <a href="mailto:contactos@oa-consultora.com" class="clink"><div class="cico">📧</div><div><div class="clbl">Email</div><div class="cval">contactos@oa-consultora.com</div></div></a>
+        <a href="https://www.oa-consultora.com" target="_blank" class="clink"><div class="cico">🌐</div><div><div class="clbl">Web Corporativa</div><div class="cval">www.oa-consultora.com</div></div></a>
+      </div>
+      <div class="fu" style="transition-delay:.1s">
+        <div class="fwrap">
+          <h3 class="ftitle">Envianos un mensaje</h3>
+          <div class="fcol">
+            <input type="text" placeholder="Tu nombre" class="finput">
+            <input type="email" placeholder="Tu email" class="finput">
+            <textarea placeholder="Tu consulta..." rows="4" class="ftarea"></textarea>
+            <a href="https://wa.me/5493794058223?text=Hola%2C%20me%20interesa%20consultar%20sobre%20los%20cursos." target="_blank" class="btn-oro" style="justify-content:center;">Enviar por WhatsApp →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="flogo">Ojeda Araujo & Asociados</div>
+  <div class="fcopy">© 2025 · Agro · Regulación · Sustentabilidad</div>
+  <div class="flinks"><a href="#">Web principal</a><a href="https://wa.me/5493794058223">WhatsApp</a><a href="#cursos">Cursos</a></div>
+</footer>
+<div class="modal-ov" id="modal">
+  <div class="modal-box">
+    <button class="modal-x" onclick="cerrarModal()">✕</button>
+    <h3 class="modal-tit" id="mtit"></h3>
+    <p class="modal-sub">Serás redirigido a MercadoPago para completar tu compra de forma segura.</p>
+    <div class="modal-total"><span class="modal-lbl">Total</span><span class="modal-p" id="mprec"></span></div>
+    <a id="btn-mp" href="#" target="_blank" class="btn-oro" style="display:flex;justify-content:center;">Pagar con MercadoPago →</a>
+    <p class="modal-seg">🔒 Pago seguro · Todas las tarjetas y transferencia bancaria</p>
+  </div>
+</div>
+<script>
+var CURSOS = [
+  {id:'c01',nombre:'Fundamentos de Agronegocios en América Latina',categoria:'agronegocios',desc:'Cadenas de valor, planificación estratégica y análisis de mercados para el sector primario y agroindustrial de la región.',precio:15000,mp:''},
+  {id:'c02',nombre:'Digitalización del Agro: Herramientas Prácticas',categoria:'agronegocios',desc:'Tecnologías aplicadas al campo: precisión, trazabilidad digital y toma de decisiones basada en datos.',precio:18000,mp:''},
+  {id:'c03',nombre:'Marco Regulatorio Cannabis Medicinal — Argentina',categoria:'cannabis',desc:'Normativa vigente, licencias ANMAT, trámites de habilitación y cumplimiento para cultivo, procesamiento y exportación.',precio:22000,mp:''},
+  {id:'c04',nombre:'GMP/BPM y BPF para Cannabis: Implementación Práctica',categoria:'cannabis',desc:'Buenas Prácticas de Manufactura aplicadas a instalaciones cannábicas: documentación, procesos, auditorías y certificación.',precio:25000,mp:''},
+  {id:'c05',nombre:'Introducción a los Mercados de Carbono Voluntarios',categoria:'carbono',desc:'Funcionamiento de los mercados VCM, créditos de carbono, certificadoras internacionales y acceso para proyectos agropecuarios.',precio:20000,mp:''},
+  {id:'c06',nombre:'Estrategias ESG para el Sector Agroindustrial',categoria:'carbono',desc:'Diseño e implementación de estrategias ambientales, sociales y de gobernanza. Reporte de impacto y acceso a financiamiento verde.',precio:20000,mp:''},
+  {id:'c07',nombre:'Habilitaciones y Cumplimiento Sanitario en Argentina',categoria:'regulacion',desc:'SENASA, ANMAT y organismos provinciales: requisitos, procedimientos y gestión para establecimientos agroindustriales.',precio:18000,mp:''},
+  {id:'c08',nombre:'Acceso a Mercados Internacionales: Barreras Regulatorias',categoria:'regulacion',desc:'Normativa comparada en Argentina, Uruguay y Colombia. Requisitos de exportación, trazabilidad y estrategias de cumplimiento.',precio:22000,mp:''},
+  {id:'c09',nombre:'GlobalG.A.P.: Implementación Paso a Paso',categoria:'certificaciones',desc:'Guía práctica para la certificación en producción primaria: requisitos, checklist, auditorías y mantenimiento del estándar.',precio:18000,mp:''},
+  {id:'c10',nombre:'ISO 9001 para Agroindustria',categoria:'certificaciones',desc:'Implementación del sistema de gestión de calidad ISO 9001:2015 en organizaciones agroindustriales.',precio:20000,mp:''},
+  {id:'c11',nombre:'Due Diligence Técnico-Regulatorio en Activos Agro',categoria:'inversiones',desc:'Metodología para evaluación integral de inversiones en activos agropecuarios y bioindustriales.',precio:28000,mp:''},
+  {id:'c12',nombre:'Estructuración de Proyectos Agroindustriales',categoria:'inversiones',desc:'De la idea al plan de negocios: factibilidad, estructuración financiera y acceso a financiamiento verde.',precio:25000,mp:''},
+  {id:'c13',nombre:'Cuando el Recurso Humano Tiene Nombre',categoria:'gestion',desc:'Aspectos ético-políticos de la gestión de personas en el empleo estatal. Selección, capacitación y desvinculación con dimensión humana.',precio:15000,mp:''},
+  {id:'c14',nombre:'Modernización del Estado y Empleo Público',categoria:'gestion',desc:'Revisión crítica del discurso modernizador. Cultura organizacional y agenda en clave de derechos para administraciones provinciales.',precio:15000,mp:''},
+  {id:'c15',nombre:'Gestión con Perspectiva de Género en el Estado',categoria:'gestion',desc:'Trabajo estatal, tareas de cuidado y agenda de género. Impacto en productividad, clima laboral y cultura organizacional.',precio:15000,mp:''},
+  {id:'c16',nombre:'Introducción a la IA',categoria:'agronegocios',desc:'Descubrí qué es la Inteligencia Artificial, cómo funciona y cómo podés usarla en tu trabajo y vida cotidiana. Sin conocimientos previos.',precio:50000,mp:''}
+];
+var IMGS = {
+  c01:'https://images.unsplash.com/photo-1560493676-04071c5f467b?w=600&q=80&auto=format&fit=crop',
+  c02:'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&q=80&auto=format&fit=crop',
+  c03:'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=600&q=80&auto=format&fit=crop',
+  c04:'https://images.unsplash.com/photo-1576086213369-97a306d36557?w=600&q=80&auto=format&fit=crop',
+  c05:'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=600&q=80&auto=format&fit=crop',
+  c06:'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&q=80&auto=format&fit=crop',
+  c07:'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80&auto=format&fit=crop',
+  c08:'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=600&q=80&auto=format&fit=crop',
+  c09:'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80&auto=format&fit=crop',
+  c10:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80&auto=format&fit=crop',
+  c11:'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80&auto=format&fit=crop',
+  c12:'https://images.unsplash.com/photo-1444653614773-995cb1ef9efa?w=600&q=80&auto=format&fit=crop',
+  c13:'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80&auto=format&fit=crop',
+  c14:'https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=600&q=80&auto=format&fit=crop',
+  c15:'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80&auto=format&fit=crop',
+  c16:'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80&auto=format&fit=crop'
+};
+var CAT_LABEL = {agronegocios:'Agronegocios',cannabis:'Cannabis Medicinal',carbono:'Carbono & ESG',regulacion:'Regulación',certificaciones:'Certificaciones',inversiones:'Inversiones',gestion:'Gestión & Trabajo'};
+var filtroActual = 'todos';
+function pagar(nombre,precio,mp){
+  document.getElementById('mtit').textContent=nombre;
+  document.getElementById('mprec').textContent='$'+precio.toLocaleString('es-AR');
+  var link=mp&&mp.length>5?mp:'#';
+  document.getElementById('btn-mp').href=link;
+  document.getElementById('btn-mp').style.opacity=link==='#'?'0.5':'1';
+  document.getElementById('modal').style.display='flex';
+}
+function cerrarModal(){document.getElementById('modal').style.display='none';}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)cerrarModal();});
+function filtrar(cat,btn){
+  filtroActual=cat;
+  document.querySelectorAll('.fbtn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.querySelectorAll('.ccard').forEach(function(c){
+    (cat==='todos'||c.dataset.cat===cat)?c.classList.remove('hidden'):c.classList.add('hidden');
+  });
+}
+function renderCursos(){
+  var cats=['todos'];
+  CURSOS.forEach(function(c){if(cats.indexOf(c.categoria)===-1)cats.push(c.categoria);});
+  var fb=document.getElementById('filter-bar');
+  fb.innerHTML=cats.map(function(cat,i){
+    var lbl=cat==='todos'?'Todos':(CAT_LABEL[cat]||cat);
+    return '<button class="fbtn'+(i===0?' active':'')+'" onclick="filtrar(\''+cat+'\',this)">'+lbl+'</button>';
+  }).join('');
+  var grid=document.getElementById('cursos-grid');
+  grid.innerHTML=CURSOS.map(function(c,i){
+    var img=IMGS[c.id]||IMGS.c01;
+    var cat=CAT_LABEL[c.categoria]||c.categoria;
+    var num=String(i+1).padStart(2,'0');
+    var delay=(i*0.05).toFixed(2);
+    return '<div class="ccard fu" data-cat="'+c.categoria+'" style="transition-delay:'+delay+'s">'+
+      '<img class="cimg" src="'+img+'" alt="">'+
+      '<div class="ccat-bar"><span class="ccat">'+cat+'</span><span class="cnum">'+num+'</span></div>'+
+      '<div class="cbody"><h3 class="ctitle">'+c.nombre+'</h3><p class="cdesc">'+c.desc+'</p></div>'+
+      '<div class="cfoot"><div class="cprecio">$'+c.precio.toLocaleString('es-AR')+'</div>'+
+      '<button onclick="pagar(\''+c.nombre.replace(/'/g,"\\'")+"',"+c.precio+',\''+c.mp+'\')" class="btn-c">Comprar</button></div></div>';
+  }).join('');
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.1});
+  grid.querySelectorAll('.fu').forEach(function(el){obs.observe(el);});
+}
+var obs2=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.1});
+document.querySelectorAll('.fu').forEach(function(el){obs2.observe(el);});
+window.addEventListener('DOMContentLoaded',renderCursos);
+</script>
+</body>
+</html>

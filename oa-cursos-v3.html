@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formación Profesional | Ojeda Araujo & Asociados</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --verde:       #0F6E56;
+  --verde-luz:   #1D9E75;
+  --verde-oscuro:#085041;
+  --acento:      #5DCAA5;
+  --dorado:      #C9A84C;
+  --dorado-claro:#E8C97A;
+  --negro:       #080c0a;
+  --oscuro:      #0e1410;
+  --card:        #131a15;
+  --card2:       #182018;
+  --borde:       #1d2a20;
+  --borde-luz:   #2c3f30;
+  --blanco:      #f2f5f0;
+  --gris:        #7a8c7e;
+  --gris-claro:  #a8bcac;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--negro);color:var(--blanco);font-family:'Outfit',sans-serif;overflow-x:hidden;}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.1rem 5rem;
+  background:rgba(8,12,10,0.88);
+  border-bottom:1px solid rgba(93,202,165,0.1);
+  backdrop-filter:blur(16px);
+  transition:background 0.3s;
+}
+.nav-logo{display:flex;align-items:center;gap:0.75rem;text-decoration:none;}
+.nav-dot{width:7px;height:7px;background:var(--acento);border-radius:50%;animation:blink 2.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.4)}}
+.nav-brand{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--blanco);}
+.nav-tagline{font-size:.65rem;color:var(--gris);letter-spacing:.15em;text-transform:uppercase;margin-top:.1rem;}
+.nav-links{display:flex;gap:2.2rem;list-style:none;}
+.nav-links a{color:var(--gris);text-decoration:none;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;transition:color .25s;}
+.nav-links a:hover{color:var(--acento);}
+.nav-btn{
+  background:transparent;color:var(--acento);padding:.5rem 1.3rem;
+  border:1px solid rgba(93,202,165,.4);border-radius:2px;
+  font-size:.75rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;transition:all .25s;
+}
+.nav-btn:hover{background:var(--verde);border-color:var(--verde-luz);color:var(--blanco);}
+
+/* ─── HERO ─── */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;
+  padding:9rem 5rem 5rem;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background-image:url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&q=85&auto=format&fit=crop');
+  background-size:cover;background-position:center 40%;
+  filter:brightness(.45) saturate(.85);
+  transform:scale(1.03);
+  transition:transform 8s ease;
+}
+.hero-bg::after{
+  content:'';position:absolute;inset:0;
+  background:
+    linear-gradient(to right, rgba(8,12,10,.92) 45%, rgba(8,12,10,.15) 100%),
+    linear-gradient(to top, rgba(8,12,10,.7) 0%, transparent 60%);
+}
+.hero-grain{
+  position:absolute;inset:0;z-index:1;opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+.hero-content{position:relative;z-index:2;max-width:680px;}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.6rem;
+  color:var(--acento);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;
+  margin-bottom:1.6rem;
+}
+.hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--acento);}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.8rem,5vw,4.4rem);
+  font-weight:400;line-height:1.1;
+  margin-bottom:1.5rem;letter-spacing:-.01em;
+}
+.hero h1 em{font-style:italic;color:var(--acento);}
+.hero-sub{
+  color:var(--gris-claro);font-size:1rem;line-height:1.9;
+  margin-bottom:2.8rem;font-weight:300;max-width:520px;
+}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-fill{
+  background:var(--verde);color:var(--blanco);
+  padding:.85rem 2rem;border:1px solid var(--verde-luz);border-radius:2px;
+  font-size:.8rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;transition:all .25s;display:inline-flex;align-items:center;gap:.5rem;
+}
+.btn-fill:hover{background:var(--verde-luz);transform:translateY(-2px);}
+.btn-ghost{
+  background:transparent;color:var(--blanco);
+  padding:.85rem 2rem;border:1px solid rgba(242,245,240,.2);border-radius:2px;
+  font-size:.8rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;transition:all .25s;
+}
+.btn-ghost:hover{border-color:var(--acento);color:var(--acento);}
+.hero-stats{
+  position:absolute;right:5rem;bottom:5rem;z-index:2;
+  display:flex;flex-direction:column;gap:.8rem;
+}
+.stat-chip{
+  background:rgba(19,26,21,.85);border:1px solid rgba(93,202,165,.2);
+  border-radius:3px;padding:.9rem 1.3rem;
+  backdrop-filter:blur(12px);
+  opacity:0;animation:fadeSlide .6s ease forwards;
+  display:flex;align-items:center;gap:1rem;
+}
+.stat-chip:nth-child(1){animation-delay:.5s}
+.stat-chip:nth-child(2){animation-delay:.7s}
+.stat-chip:nth-child(3){animation-delay:.9s}
+@keyframes fadeSlide{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+.stat-n{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--acento);}
+.stat-l{font-size:.68rem;color:var(--gris);text-transform:uppercase;letter-spacing:.1em;}
+
+/* ─── DIVIDER ─── */
+.rule{width:100%;height:1px;background:var(--borde);}
+
+/* ─── SECTION WRAPPER ─── */
+.sw{padding:6rem 5rem;max-width:1300px;margin:0 auto;}
+.eyebrow{color:var(--acento);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem;}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--acento);}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,2.8rem);font-weight:400;line-height:1.15;margin-bottom:1rem;}
+.sec-title em{font-style:italic;color:var(--acento);}
+.sec-sub{color:var(--gris-claro);max-width:540px;line-height:1.85;font-weight:300;font-size:.95rem;margin-bottom:3.5rem;}
+.gold-rule{width:48px;height:2px;background:linear-gradient(90deg,var(--verde-luz),transparent);margin:1.2rem 0 1.8rem;}
+
+/* ─── CATEGORIAS TABS ─── */
+.cat-tabs{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+.cat-tab{
+  background:transparent;border:1px solid var(--borde-luz);
+  color:var(--gris);padding:.45rem 1.1rem;border-radius:2px;
+  font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;
+}
+.cat-tab:hover,.cat-tab.active{background:var(--verde);border-color:var(--verde-luz);color:var(--blanco);}
+
+/* ─── CURSOS GRID ─── */
+.cursos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;}
+.curso-card{
+  background:var(--card);border:1px solid var(--borde);
+  border-radius:4px;overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:border-color .3s,transform .3s;
+}
+.curso-card:hover{border-color:rgba(93,202,165,.5);transform:translateY(-4px);}
+.curso-thumb{
+  width:100%;height:175px;object-fit:cover;
+  filter:brightness(.6) saturate(.75);
+  transition:filter .4s;
+}
+.curso-card:hover .curso-thumb{filter:brightness(.75) saturate(.9);}
+.curso-head{padding:1.3rem 1.4rem .5rem;}
+.curso-cat-badge{
+  display:inline-flex;align-items:center;gap:.35rem;
+  background:rgba(15,110,86,.18);border:1px solid rgba(93,202,165,.2);
+  color:var(--acento);padding:.2rem .65rem;border-radius:2px;
+  font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+  margin-bottom:.7rem;
+}
+.curso-nombre{
+  font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:400;
+  line-height:1.3;margin-bottom:.5rem;
+}
+.curso-desc{color:var(--gris);font-size:.8rem;line-height:1.65;font-weight:300;}
+.curso-foot{padding:.9rem 1.4rem 1.4rem;margin-top:auto;}
+.curso-price-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;}
+.curso-price{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--acento);}
+.curso-tag{color:var(--gris);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;}
+.btn-comprar{
+  width:100%;background:var(--verde);color:var(--blanco);
+  border:1px solid var(--verde-luz);padding:.75rem;border-radius:2px;
+  font-size:.74rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;transition:all .25s;font-family:'Outfit',sans-serif;
+}
+.btn-comprar:hover{background:var(--verde-luz);}
+
+/* ─── CLASES EN VIVO ─── */
+.vivo-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;}
+.vivo-card{
+  background:var(--card);border:1px solid var(--borde);
+  border-radius:4px;padding:2rem;
+  display:flex;gap:1.4rem;align-items:flex-start;
+  transition:border-color .3s;
+}
+.vivo-card:hover{border-color:rgba(93,202,165,.4);}
+.vivo-icon-wrap{
+  width:50px;height:50px;flex-shrink:0;
+  background:rgba(15,110,86,.15);border:1px solid rgba(93,202,165,.2);
+  border-radius:3px;display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;
+}
+.vivo-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:400;margin-bottom:.45rem;}
+.vivo-desc{color:var(--gris);font-size:.8rem;line-height:1.65;margin-bottom:1.1rem;font-weight:300;}
+.vivo-foot{display:flex;align-items:center;gap:1.1rem;flex-wrap:wrap;}
+.vivo-price{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--acento);}
+.btn-reservar{
+  background:transparent;border:1px solid rgba(93,202,165,.4);color:var(--acento);
+  padding:.5rem 1.1rem;border-radius:2px;font-size:.72rem;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .25s;
+  font-family:'Outfit',sans-serif;
+}
+.btn-reservar:hover{background:var(--verde);border-color:var(--verde-luz);color:var(--blanco);}
+
+/* ─── NOSOTROS ─── */
+.nos-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;}
+.nos-img{
+  width:100%;aspect-ratio:4/5;object-fit:cover;
+  border-radius:4px;filter:brightness(.65) saturate(.8);
+  border:1px solid var(--borde-luz);
+}
+.nos-text p{color:var(--gris-claro);line-height:1.9;font-weight:300;font-size:.95rem;margin-bottom:1.2rem;}
+.team-row{
+  background:var(--card);border:1px solid var(--borde);
+  border-radius:4px;padding:1.1rem 1.4rem;
+  display:flex;align-items:center;gap:1rem;
+  transition:border-color .3s;margin-bottom:.8rem;
+}
+.team-row:hover{border-color:rgba(93,202,165,.4);}
+.team-av{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--verde),var(--verde-oscuro));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:600;font-size:.95rem;color:var(--blanco);flex-shrink:0;
+}
+.team-name{font-weight:500;font-size:.88rem;}
+.team-role{color:var(--gris);font-size:.75rem;margin-top:.1rem;}
+.nos-stats{display:flex;gap:2.5rem;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--borde);}
+.nstat-n{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--acento);}
+.nstat-l{color:var(--gris);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;margin-top:.1rem;}
+
+/* ─── DIFERENCIAL STRIP ─── */
+.dif-strip{
+  background:var(--card);border-top:1px solid var(--borde);border-bottom:1px solid var(--borde);
+  padding:3.5rem 5rem;
+}
+.dif-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;max-width:1300px;margin:0 auto;}
+.dif-item{border-left:2px solid rgba(93,202,165,.3);padding-left:1.2rem;}
+.dif-title{font-weight:500;font-size:.88rem;margin-bottom:.4rem;color:var(--blanco);}
+.dif-desc{color:var(--gris);font-size:.78rem;line-height:1.65;font-weight:300;}
+
+/* ─── CONTACTO ─── */
+.contacto-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;}
+.contact-link{
+  display:flex;align-items:center;gap:1rem;
+  background:var(--card);border:1px solid var(--borde);border-radius:4px;
+  padding:.95rem 1.4rem;text-decoration:none;color:var(--blanco);
+  transition:border-color .25s;margin-bottom:.9rem;
+}
+.contact-link:hover{border-color:rgba(93,202,165,.4);}
+.contact-ico{font-size:1.1rem;}
+.contact-lbl{font-weight:500;font-size:.83rem;}
+.contact-val{color:var(--gris);font-size:.73rem;margin-top:.1rem;}
+.form-wrap{background:var(--card);border:1px solid var(--borde);border-radius:4px;padding:2rem;}
+.form-wrap h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:400;margin-bottom:1.4rem;}
+.form-col{display:flex;flex-direction:column;gap:.85rem;}
+.finput,.ftextarea{
+  background:var(--oscuro);border:1px solid var(--borde-luz);border-radius:2px;
+  padding:.8rem 1rem;color:var(--blanco);font-family:'Outfit',sans-serif;
+  font-size:.87rem;outline:none;transition:border-color .25s;resize:none;
+}
+.finput:focus,.ftextarea:focus{border-color:var(--acento);}
+.finput::placeholder,.ftextarea::placeholder{color:var(--gris);}
+
+/* ─── FOOTER ─── */
+footer{
+  background:var(--oscuro);border-top:1px solid var(--borde);
+  padding:2.5rem 5rem;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.foot-logo{font-family:'Playfair Display',serif;font-size:1rem;color:var(--acento);}
+.foot-copy{color:var(--gris);font-size:.75rem;}
+.foot-links{display:flex;gap:2rem;}
+.foot-links a{color:var(--gris);text-decoration:none;font-size:.75rem;transition:color .25s;}
+.foot-links a:hover{color:var(--acento);}
+
+/* ─── MODAL ─── */
+.modal-wrap{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.9);z-index:1000;
+  align-items:center;justify-content:center;
+}
+.modal-box{
+  background:var(--card);border:1px solid rgba(93,202,165,.25);
+  border-radius:4px;padding:2.5rem;max-width:400px;width:90%;position:relative;
+}
+.modal-close{
+  position:absolute;top:1rem;right:1rem;background:none;border:none;
+  color:var(--gris);font-size:1.1rem;cursor:pointer;
+}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:.4rem;}
+.modal-sub{color:var(--gris);font-size:.8rem;margin-bottom:1.4rem;line-height:1.7;}
+.modal-total{
+  background:var(--oscuro);border:1px solid var(--borde-luz);border-radius:2px;
+  padding:.9rem 1.1rem;margin-bottom:1.4rem;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.modal-total-lbl{color:var(--gris);font-size:.8rem;}
+.modal-total-num{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--acento);}
+.modal-sec{color:var(--gris);font-size:.67rem;text-align:center;margin-top:.9rem;}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1024px){
+  nav{padding:1.1rem 2rem;}
+  .hero{padding:8rem 2rem 4rem;}
+  .hero-stats{display:none;}
+  .sw{padding:5rem 2rem;}
+  .cursos-grid{grid-template-columns:1fr;}
+  .vivo-grid{grid-template-columns:1fr;}
+  .nos-grid{grid-template-columns:1fr;gap:3rem;}
+  .dif-strip{padding:3rem 2rem;}
+  .dif-grid{grid-template-columns:1fr 1fr;}
+  .contacto-grid{grid-template-columns:1fr;gap:3rem;}
+  footer{flex-direction:column;gap:1.5rem;padding:2rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://www.oa-consultora.com" class="nav-logo">
+    <div class="nav-dot"></div>
+    <div>
+      <div class="nav-brand">Ojeda Araujo & Asociados</div>
+      <div class="nav-tagline">Agro · Regulación · Sustentabilidad</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#cursos">Cursos</a></li>
+    <li><a href="#vivo">Clases en Vivo</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#cursos" class="nav-btn">Ver Cursos</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Plataforma de Formación Profesional</div>
+    <h1>Conocimiento que<br><em>transforma</em> el sector</h1>
+    <p class="hero-sub">Cursos especializados en agronegocios, cannabis medicinal, mercados de carbono, regulación normativa y gestión organizacional. Contenido técnico desarrollado por consultores en actividad en América Latina.</p>
+    <div class="hero-btns">
+      <a href="#cursos" class="btn-fill">Explorar Cursos →</a>
+      <a href="#vivo" class="btn-ghost">Clases en Vivo</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-chip"><div><div class="stat-n">500+</div><div class="stat-l">Alumnos formados</div></div></div>
+    <div class="stat-chip"><div><div class="stat-n">7</div><div class="stat-l">Áreas de especialización</div></div></div>
+    <div class="stat-chip"><div><div class="stat-n">AL</div><div class="stat-l">Presencia regional</div></div></div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- DIFERENCIAL STRIP -->
+<div class="dif-strip">
+  <div class="dif-grid">
+    <div class="dif-item">
+      <div class="dif-title">Consultores en actividad</div>
+      <div class="dif-desc">No académicos. Profesionales que trabajan hoy en el sector bioeconómico latinoamericano.</div>
+    </div>
+    <div class="dif-item">
+      <div class="dif-title">Enfoque técnico-práctico</div>
+      <div class="dif-desc">Cada curso incluye herramientas concretas aplicables desde el primer día.</div>
+    </div>
+    <div class="dif-item">
+      <div class="dif-title">Perspectiva regional</div>
+      <div class="dif-desc">Contenido ajustado a la normativa y realidad de Argentina y América Latina.</div>
+    </div>
+    <div class="dif-item">
+      <div class="dif-title">Acceso permanente</div>
+      <div class="dif-desc">Materiales PDF descargables y acceso sin vencimiento a todo el contenido adquirido.</div>
+    </div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<!-- CURSOS -->
+<section id="cursos">
+  <div class="sw">
+    <div class="eyebrow">Lo que ofrecemos</div>
+    <h2 class="sec-title">Nuestros <em>Cursos</em></h2>
+    <div class="gold-rule"></div>
+    <p class="sec-sub">Seleccioná una categoría para explorar los cursos disponibles en esa área de especialización.</p>
+
+    <div class="cat-tabs">
+      <button class="cat-tab active" onclick="filtrar('todos',this)">Todos</button>
+      <button class="cat-tab" onclick="filtrar('agro',this)">Agronegocios</button>
+      <button class="cat-tab" onclick="filtrar('cannabis',this)">Cannabis Medicinal</button>
+      <button class="cat-tab" onclick="filtrar('carbono',this)">Carbono & ESG</button>
+      <button class="cat-tab" onclick="filtrar('regulacion',this)">Regulación</button>
+      <button class="cat-tab" onclick="filtrar('certificaciones',this)">Certificaciones</button>
+      <button class="cat-tab" onclick="filtrar('inversiones',this)">Inversiones</button>
+      <button class="cat-tab" onclick="filtrar('gestion',this)">Gestión & Organizaciones</button>
+    </div>
+
+    <div class="cursos-grid" id="cursosGrid">
+
+      <!-- AGRO -->
+      <div class="curso-card" data-cat="agro">
+        <img class="curso-thumb" src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=600&q=80&auto=format&fit=crop" alt="Agronegocios">
+        <div class="curso-head">
+          <div class="curso-cat-badge">Agronegocios</div>
+          <h3 class="curso-nombre">Fundamentos de Agronegocios en América Latina</h3>
+          <p class="curso-desc">Estrategia, planificación y análisis de cadenas de valor en el sector primario y agroindustrial regional.</p>
+        </div>
+        <div class="curso-foot">
+          <div class="curso-price-row"><span class="curso-price">$15.000</span><span class="curso-tag">PDF incluido</span></div>
+          <button onclick="pagar('Fundamentos de Agronegocios',15000)" class="btn-comprar">Comprar con MercadoPago</button>
+        </div>
+      </div>
+
+      <div class="curso-card" data-cat="agro">
+        <img class="curso-thumb" src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80&auto=format&fit=crop" alt="Planificación agro">
+        <div class="curso-head">
+          <div class="curso-cat-badge">Agronegocios</div>
+          <h3 class="curso-nombre">Planificación Estratégica de Proyectos Agropecuarios</h3>
+          <p class="curso-desc">Herramientas para diseñar, evaluar y ejecutar proyectos agropecuarios con foco en productividad sostenible.</p>
+        </div>
+        <div class="curso-foot">
+          <div class="curso-price-row"><span class="curso-price">$18.000</span><span class="curso-tag">PDF incluido</span></div>
+          <button onclick="pagar('Planificación Estratégica Agropecuaria',18000)" class="btn-comprar">Comprar con MercadoPago</button>
+        </div>
+      </div>
+
+      <!-- CANNABIS -->
+      <div class="curso-card" data-cat="cannabis">
+        <img class="curso-thumb" src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=600&q=80&auto=format&fit=crop" alt="Cannabis medicinal">
+        <div class="curso-head">
+          <div class="curso-cat-badge">Cannabis Medicinal</div>
+          <h3 class="curso-nombre">Marco Regulatorio Cannabis Medicinal — Argentina 2025</h3>
+          <p class="curso-desc">Normativa vigente, habilitaciones, autorizaciones y adecuación regulatoria en Argentina y la región.</p>
+        </div>
+        <div class="curso-foot">
+          <div class="curso-price-row"><span class="curso-price">$22.000</span><span class="curso-tag">PDF incluido</span></div>
+          <button onclick="pagar('Marco Regulatorio Cannabis 2025',22000)" class="btn-comprar">Comprar con MercadoPago</button>
+        </div>
+      </div>
+
+      <div class="curso-card" data-cat="cannabis">
+        <img class="curso-thumb" src="https://images.unsplash.com/photo-1587893904882-0d6a72b89ebb?w=600&q=80&auto=format&fit=crop" alt="GMP cannabis">
+        <div class="curso-head">
+          <div class="curso-cat-badge">Cannabis Medicinal</div>
+          <h3 class="curso-nombre">GMP/BPM para Cannabis: Implementación Práctica</h3>
+          <p class="curso-desc">Guía práctica para implementar Buenas Prácticas de Manufactura en proyectos de cannabis medicinal e industrial.</p>
+        </div>
+        <div class="curso-foot">
+          <div class="curso-price-row"><span class="curso-price">$25.000</span><span class="curso-tag">PDF incluido</span></div>
+          <button onclick="pagar('GMP/BPM Cannabis',25000)" class="btn-comprar">Comprar con MercadoPago</button>
+        </div>
+      </div>
+
+      <!-- CARBONO -->
+      <div class="curso-card" data-cat="carbono">
+        <img class="curso-thumb" src="https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=600&q=80&auto=format&fit=crop" alt="Carbono ESG">
+        <div class="curso-head">
+          <div class="curso-cat-badge">Carbono & ESG</div>
+          <h3 class="curso-nombre">Introducción a los Mercados de Carbono Voluntarios</h3>
+          <p class="curso-desc">Fundamentos, actores, metodologías y acceso a mercados voluntarios y regulados de créditos de carbono.</p>
+        </div>
+        <div class="curso-foot">
+          <div class="curso-price-row"><span class="curso-price">$20.000</span><span class="curso-tag">PDF incluido</span></div>
+          <button onclick="pagar('Mercados de Carbono',20000)" class="btn-comprar">Comprar con MercadoPago</button>
+        </div>
+      </div>
+
+      <div class="curso-card" data-cat="carbono">
+        <img class="curso-thumb" src="https://images.unsplash.com/photo-1560493676-04071c5f467b?w=600&q=80&auto=format&fit=crop" alt="ESG agro">
+        <div class="curso-head">
+          <div class="curso-cat-badge">Carbono & ESG</div>
+          <h3 class="curso-nombre">Estrategias ESG para el Sector Agroindustrial</h3>
+          <p class="curso-desc">Huella de carbono, descarbonización y reportes de impacto para empresas del sector bioeconómico.</p>
+        </div>
+        <div class="curso-foot">
+          <div class="curso-price-row"><span class="curso-price">$22.000</span><span class="curso-tag">PDF incluido</span></div>
+          <button onclick="pagar('Estrategias ESG Agroindustrial',22000)" class="btn-comprar">Comprar con MercadoPago</button>
+        </div>
+      </div>
+
+      <!-- REGULACION -->
+      <div class="curso-card" data-cat="regulacion">
+        <img class="curso-thumb" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80&auto=format&fit=crop" alt="Regulación normativa">
+        <div class="curso-head">
+          <div class="curso-cat-badge">Regulación</div>
+          <h3 class="curso-nombre">Habilitaciones y Cumplimiento Sanitario en Argentina</h3>
+          <p class="curso-desc">Trámites, autorizaciones y cumplimiento normativo ante SENASA, ANMAT y organismos provinciales.</p>
+        </div>
+        <div class="curso-foot">
+          <div class="curso-price-row"><span class="curso-price">$18.000</span><span class="curso-tag">PDF incluido</span></div>
+          <button onclick="pagar('Habilitaciones y Cumplimiento Sanitario',18000)" class="btn-comprar">Comprar con MercadoPago</button>
+        </div>
+      </div>
+
+      <div class="curso-card" data-cat="regulacion">
+        <img class="curso-thumb" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80&auto=format&fit=crop" alt="Normativa comparada">
+        <div class="curso-head">
+          <div class="curso-cat-badge">Regulación</div>
+          <h3 class="curso-nombre">Acceso a Mercados Internacionales: Barreras Regulatorias</h3>
+          <p class="curso-desc">Normativa comparada entre Argentina, Uruguay y Colombia. Estrategias para superar barreras de acceso a mercados.</p>
+        </div>
+        <div class="curso-foot">
+          <div class="curso-price-row"><span class="curso-price">$20.000</span><span class="curso-tag">PDF incluido</span></div>
+          <button onclick="pagar('Acceso a Mercados Internacionales',20000)" class="btn-comprar">Comprar con MercadoPago</button>
+        </div>
+      </div>
+
+      <!-- CERTIFICACIONES -->
+      <div class="curso-card" data-cat="certificaciones">
+        <img class="curso-thumb" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80&auto=format&fit=crop" alt="GlobalGAP">
+        <div class="curso-head">
+          <div class="curso-cat-badge">Certificaciones</div>
+          <h3 class="curso-nombre">GlobalG.A.P.: Implementación Paso a Paso</h3>
+          <p class="curso-desc">Guía práctica completa para la implementación y certificación GlobalG.A.P. en producciones agropecuarias.</p>
+        </div>
+        <div class="curso-foot">
+          <div class="curso-price-row"><span class="curso-price">$20.000</span><span class="curso-tag">PDF incluido</span></div>
+          <button onclick="pagar('GlobalGAP Implementación',20000)" class="btn-comprar">Comprar con MercadoPago</button>
+        </div>
+      </div>
+
+      <div class="curso-card" data-cat="certificaciones">
+        <img class="curso-thumb" src="https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=600&q=80&auto=format&fit=crop" alt="ISO HACCP">
+        <div class="curso-head">
+          <div class="curso-cat-badge">Certificaciones</div>
+          <h3 class="curso-nombre">ISO 9001 y HACCP para Agroindustria</h3>
+          <p class="curso-desc">Sistemas de gestión de calidad e inocuidad alimentaria aplicados al procesamiento y la agroindustria.</p>
+        </div>
+        <div class="curso-foot">
+          <div class="curso-price-row"><span class="curso-price">$22.000</span><span class="curso-tag">PDF incluido</span></div>
+          <button onclick="pagar('ISO 9001 y HACCP',22000)" class="btn-comprar">Comprar con MercadoPago</button>
+        </div>
+      </div>
+
+      <!-- INVERSIONES -->
+      <div class="curso-card" data-cat="inversiones">
+        <img class="curso-thumb" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80&auto=format&fit=crop" alt="Due diligence">
+        <div class="curso-head">
+          <div class="curso-cat-badge">Inversiones</div>
+          <h3 class="curso-nombre">Due Diligence Técnico-Regulatorio en Activos Agro</h3>
+          <p class="curso-desc">Metodología para el análisis de riesgos y evaluación de inversiones en activos agropecuarios y bioindustriales.</p>
+        </div>
+        <div class="curso-foot">
+          <div class="curso-price-row"><span class="curso-price">$28.000</span><span class="curso-tag">PDF incluido</span></div>
+          <button onclick="pagar('Due Diligence Activos Agro',28000)" class="btn-comprar">Comprar con MercadoPago</button>
+        </div>
+      </div>
+
+      <div class="curso-card" data-cat="inversiones">
+        <img class="curso-thumb" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80&auto=format&fit=crop" alt="Financiamiento verde">
+        <div class="curso-head">
+          <div class="curso-cat-badge">Inversiones</div>
+          <h3 class="curso-nombre">Financiamiento Verde y Bioeconomía</h3>
+          <p class="curso-desc">Instrumentos de financiamiento verde, bonos sostenibles y acceso a fondos para proyectos bioeconómicos.</p>
+        </div>
+        <div class="curso-foot">
+          <div class="curso-price-row"><span class="curso-price">$25.000</span><span class="curso-tag">PDF incluido</span></div>
+          <button onclick="pagar('Financiamiento Verde',25000)" class="btn-comprar">Comprar con MercadoPago</button>
+        </div>
+      </div>
+
+      <!-- GESTION -->
+      <div class="curso-card" data-cat="gestion">
+        <img class="curso-thumb" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80&auto=format&fit=crop" alt="Gestión personas">
+        <div class="curso-head">
+          <div class="curso-cat-badge">Gestión & Organizaciones</div>
+          <h3 class="curso-nombre">Cuando el Recurso Humano Tiene Nombre</h3>
+          <p class="curso-desc">Aspectos ético-políticos de la gestión de personas en el empleo estatal. Hacia una gestión más humana y situada.</p>
+        </div>
+        <div class="curso-foot">
+          <div class="curso-price-row"><span class="curso-price">$15.000</span><span class="curso-tag">PDF incluido</span></div>
+          <button onclick="pagar('Cuando el Recurso Humano Tiene Nombre',15000)" class="btn-comprar">Comprar con MercadoPago</button>
+        </div>
+      </div>
+
+      <div class="curso-card" data-cat="gestion">
+        <img class="curso-thumb" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80&auto=format&fit=crop" alt="Modernización Estado">
+        <div class="curso-head">
+          <div class="curso-cat-badge">Gestión & Organizaciones</div>
+          <h3 class="curso-nombre">Modernización del Estado y Empleo Público</h3>
+          <p class="curso-desc">Hacia una agenda en clave de derechos. Cultura organizacional, legitimidad y gestión territorial del trabajo estatal.</p>
+        </div>
+        <div class="curso-foot">
+          <div class="curso-price-row"><span class="curso-price">$15.000</span><span class="curso-tag">PDF incluido</span></div>
+          <button onclick="pagar('Modernización del Estado',15000)" class="btn-comprar">Comprar con MercadoPago</button>
+        </div>
+      </div>
+
+      <div class="curso-card" data-cat="gestion">
+        <img class="curso-thumb" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80&auto=format&fit=crop" alt="Perspectiva género">
+        <div class="curso-head">
+          <div class="curso-cat-badge">Gestión & Organizaciones</div>
+          <h3 class="curso-nombre">Gestión con Perspectiva de Género en Organizaciones Públicas</h3>
+          <p class="curso-desc">Trabajadoras estatales, tareas de cuidado y agenda de género en la gestión del trabajo en el Estado.</p>
+        </div>
+        <div class="curso-foot">
+          <div class="curso-price-row"><span class="curso-price">$15.000</span><span class="curso-tag">PDF incluido</span></div>
+          <button onclick="pagar('Gestión Perspectiva de Género',15000)" class="btn-comprar">Comprar con MercadoPago</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- CLASES EN VIVO -->
+<section id="vivo">
+  <div class="sw">
+    <div class="eyebrow">En tiempo real</div>
+    <h2 class="sec-title">Clases en <em>Vivo</em></h2>
+    <div class="gold-rule"></div>
+    <p class="sec-sub">Sesiones en vivo por Zoom con consultores en actividad. Casos reales, preguntas directas, aprendizaje situado.</p>
+    <div class="vivo-grid">
+      <div class="vivo-card">
+        <div class="vivo-icon-wrap">📅</div>
+        <div>
+          <h3 class="vivo-title">Nombre de la Clase</h3>
+          <p class="vivo-desc">Descripción de la clase en vivo. Fecha y horario a confirmar por WhatsApp.</p>
+          <div class="vivo-foot">
+            <span class="vivo-price">$10.000</span>
+            <button onclick="pagar('Clase en Vivo 1',10000)" class="btn-reservar">Reservar lugar</button>
+          </div>
+        </div>
+      </div>
+      <div class="vivo-card">
+        <div class="vivo-icon-wrap">🎓</div>
+        <div>
+          <h3 class="vivo-title">Nombre de la Clase</h3>
+          <p class="vivo-desc">Descripción de la clase en vivo. Fecha y horario a confirmar por WhatsApp.</p>
+          <div class="vivo-foot">
+            <span class="vivo-price">$12.000</span>
+            <button onclick="pagar('Clase en Vivo 2',12000)" class="btn-reservar">Reservar lugar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- NOSOTROS -->
+<section id="nosotros">
+  <div class="sw">
+    <div class="nos-grid">
+      <img class="nos-img" src="https://images.unsplash.com/photo-1560493676-04071c5f467b?w=800&q=80&auto=format&fit=crop" alt="Consultoría OA">
+      <div class="nos-text">
+        <div class="eyebrow">Quiénes somos</div>
+        <h2 class="sec-title">El equipo <em>Ojeda & Araujo</em></h2>
+        <div class="gold-rule"></div>
+        <p>Consultora especializada en servicios técnicos y estratégicos para empresas, productores e inversores del sector bioeconómico latinoamericano.</p>
+        <p>Combinamos profundo conocimiento normativo con experiencia operativa en agronegocios, cannabis medicinal, certificaciones y mercados ambientales en toda la región.</p>
+        <div class="team-row">
+          <div class="team-av">O</div>
+          <div><div class="team-name">Ojeda</div><div class="team-role">Co-fundador & Consultor Senior</div></div>
+        </div>
+        <div class="team-row">
+          <div class="team-av">A</div>
+          <div><div class="team-name">Araujo</div><div class="team-role">Co-fundador & Consultor Senior</div></div>
+        </div>
+        <div class="nos-stats">
+          <div><div class="nstat-n">+5</div><div class="nstat-l">Años</div></div>
+          <div><div class="nstat-n">500+</div><div class="nstat-l">Alumnos</div></div>
+          <div><div class="nstat-n">7</div><div class="nstat-l">Categorías</div></div>
+          <div><div class="nstat-n">AL</div><div class="nstat-l">Regional</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="sw">
+    <div class="eyebrow">Hablemos</div>
+    <h2 class="sec-title">¿Tenés <em>preguntas?</em></h2>
+    <div class="gold-rule"></div>
+    <div class="contacto-grid">
+      <div>
+        <p style="color:var(--gris-claro);line-height:1.85;margin-bottom:2rem;font-weight:300;font-size:.95rem;">Escribinos por WhatsApp o email. Respondemos en menos de 24 horas.</p>
+        <a href="https://wa.me/5493794058223" target="_blank" class="contact-link">
+          <span class="contact-ico">💬</span>
+          <div><div class="contact-lbl">WhatsApp</div><div class="contact-val">+54 9 379 405-8223</div></div>
+        </a>
+        <a href="mailto:info@oa-consultora.com" class="contact-link">
+          <span class="contact-ico">📧</span>
+          <div><div class="contact-lbl">Email</div><div class="contact-val">info@oa-consultora.com</div></div>
+        </a>
+        <a href="https://www.oa-consultora.com" target="_blank" class="contact-link">
+          <span class="contact-ico">🌐</span>
+          <div><div class="contact-lbl">Web principal</div><div class="contact-val">www.oa-consultora.com</div></div>
+        </a>
+      </div>
+      <div class="form-wrap">
+        <h3>Envianos un mensaje</h3>
+        <div class="form-col">
+          <input type="text" placeholder="Tu nombre" class="finput">
+          <input type="email" placeholder="Tu email" class="finput">
+          <textarea placeholder="Tu consulta..." rows="4" class="ftextarea"></textarea>
+          <a href="https://wa.me/5493794058223?text=Hola%2C%20me%20interesa%20consultar%20sobre%20los%20cursos." target="_blank" class="btn-fill" style="text-align:center;justify-content:center;">Enviar por WhatsApp →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">Ojeda Araujo & Asociados</div>
+  <div class="foot-copy">© 2025 · Agro · Regulación · Sustentabilidad</div>
+  <div class="foot-links">
+    <a href="https://www.oa-consultora.com">Web principal</a>
+    <a href="https://wa.me/5493794058223">WhatsApp</a>
+    <a href="#cursos">Cursos</a>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-wrap" id="modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="cerrarModal()">✕</button>
+    <h3 class="modal-title" id="modal-titulo"></h3>
+    <p class="modal-sub">Vas a ser redirigido a MercadoPago para completar tu compra de forma segura.</p>
+    <div class="modal-total">
+      <span class="modal-total-lbl">Total</span>
+      <span class="modal-total-num" id="modal-precio"></span>
+    </div>
+    <a id="btn-mp" href="#" target="_blank" class="btn-fill" style="display:block;text-align:center;justify-content:center;">Pagar con MercadoPago →</a>
+    <p class="modal-sec">🔒 Pago seguro · Todas las tarjetas y transferencia bancaria</p>
+  </div>
+</div>
+
+<script>
+const LINKS_MP = {
+  'Fundamentos de Agronegocios':           'https://mpago.la/TU-LINK-1',
+  'Planificación Estratégica Agropecuaria':'https://mpago.la/TU-LINK-2',
+  'Marco Regulatorio Cannabis 2025':       'https://mpago.la/TU-LINK-3',
+  'GMP/BPM Cannabis':                      'https://mpago.la/TU-LINK-4',
+  'Mercados de Carbono':                   'https://mpago.la/TU-LINK-5',
+  'Estrategias ESG Agroindustrial':        'https://mpago.la/TU-LINK-6',
+  'Habilitaciones y Cumplimiento Sanitario':'https://mpago.la/TU-LINK-7',
+  'Acceso a Mercados Internacionales':     'https://mpago.la/TU-LINK-8',
+  'GlobalGAP Implementación':              'https://mpago.la/TU-LINK-9',
+  'ISO 9001 y HACCP':                      'https://mpago.la/TU-LINK-10',
+  'Due Diligence Activos Agro':            'https://mpago.la/TU-LINK-11',
+  'Financiamiento Verde':                  'https://mpago.la/TU-LINK-12',
+  'Cuando el Recurso Humano Tiene Nombre': 'https://mpago.la/TU-LINK-13',
+  'Modernización del Estado':              'https://mpago.la/TU-LINK-14',
+  'Gestión Perspectiva de Género':         'https://mpago.la/TU-LINK-15',
+  'Clase en Vivo 1':                       'https://mpago.la/TU-LINK-V1',
+  'Clase en Vivo 2':                       'https://mpago.la/TU-LINK-V2',
+};
+
+function pagar(nombre, precio) {
+  document.getElementById('modal-titulo').textContent = nombre;
+  document.getElementById('modal-precio').textContent = '$' + precio.toLocaleString('es-AR');
+  document.getElementById('btn-mp').href = LINKS_MP[nombre] || '#';
+  document.getElementById('modal').style.display = 'flex';
+}
+function cerrarModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+document.getElementById('modal').addEventListener('click', function(e){
+  if(e.target === this) cerrarModal();
+});
+
+function filtrar(cat, btn) {
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.curso-card').forEach(c => {
+    if(cat === 'todos' || c.dataset.cat === cat){
+      c.style.display = 'flex';
+    } else {
+      c.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>

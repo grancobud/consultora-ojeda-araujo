@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OA Formación — Panel Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06080a;--s1:#0b0f0d;--s2:#0f1510;--s3:#131c15;--s4:#182119;
+  --border:rgba(78,196,140,0.07);--borderb:rgba(78,196,140,0.18);--borderh:rgba(78,196,140,0.35);
+  --g:#0d5c3f;--gm:#14845a;--gl:#4EC48C;--gd:#082e1f;
+  --gold:#b8922a;--goldb:rgba(184,146,42,0.15);
+  --red:#c94f4f;--redb:rgba(201,79,79,0.13);
+  --blue:#3d7fc1;--blueb:rgba(61,127,193,0.13);
+  --amber:#c4873a;--amberb:rgba(196,135,58,0.13);
+  --text:#d8e8de;--textm:#7a9e87;--textd:#3d5944;
+  --mono:'DM Mono',monospace;--serif:'Cormorant Garamond',serif;--sans:'Jost',sans-serif;
+  --r:3px;--r2:5px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:128px;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(78,196,140,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(78,196,140,0.03) 1px,transparent 1px);background-size:48px 48px;}
+
+.sb{position:fixed;top:0;left:0;bottom:0;width:240px;background:var(--s1);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;}
+.sb-logo{padding:1.6rem 1.4rem 1.1rem;border-bottom:1px solid var(--border);}
+.sb-badge{display:inline-flex;align-items:center;gap:.45rem;background:rgba(78,196,140,0.07);border:1px solid var(--borderb);border-radius:var(--r);padding:.22rem .7rem;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gl);font-weight:500;margin-bottom:.75rem;}
+.sb-dot{width:5px;height:5px;background:var(--gl);border-radius:50%;animation:blink 2.5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.sb-name{font-family:var(--serif);font-size:1.1rem;font-weight:400;color:var(--text);letter-spacing:.02em;}
+.sb-sub{font-size:.58rem;color:var(--textm);letter-spacing:.14em;text-transform:uppercase;margin-top:2px;}
+.sb-nav{flex:1;padding:.8rem 0;overflow-y:auto;}
+.sb-sec{padding:.6rem 1.4rem .2rem;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--textd);font-weight:500;}
+.sb-item{display:flex;align-items:center;gap:.75rem;padding:.62rem 1.4rem;cursor:pointer;font-size:.78rem;color:var(--textm);font-weight:400;transition:all .2s;border-left:2px solid transparent;user-select:none;}
+.sb-item:hover{color:var(--text);background:rgba(78,196,140,0.03);}
+.sb-item.on{color:var(--gl);border-left-color:var(--gl);background:rgba(78,196,140,0.06);}
+.sb-icon{width:15px;height:15px;opacity:.6;flex-shrink:0;fill:currentColor;}
+.sb-item.on .sb-icon{opacity:1;}
+.sb-pill{margin-left:auto;background:var(--g);color:rgba(255,255,255,.8);font-size:.57rem;font-family:var(--mono);padding:.1rem .4rem;border-radius:var(--r);font-weight:500;}
+.sb-foot{padding:1rem 1.4rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:.75rem;}
+.sb-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--g),var(--gd));display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:600;color:var(--gl);}
+.sb-uname{font-size:.76rem;font-weight:500;}
+.sb-urole{font-size:.6rem;color:var(--textm);}
+
+.main{margin-left:240px;min-height:100vh;position:relative;z-index:1;}
+.top{position:sticky;top:0;z-index:50;background:rgba(6,8,10,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:.9rem 2rem;display:flex;align-items:center;gap:1rem;}
+.top-title{font-family:var(--serif);font-size:1.15rem;font-weight:300;flex:1;letter-spacing:.01em;}
+.top-title em{font-style:italic;color:var(--gl);}
+.btn-new{display:flex;align-items:center;gap:.45rem;background:var(--g);color:var(--text);border:1px solid var(--gm);border-radius:var(--r);padding:.44rem 1.1rem;font-size:.74rem;font-weight:500;letter-spacing:.05em;cursor:pointer;transition:all .2s;font-family:var(--sans);white-space:nowrap;}
+.btn-new:hover{background:var(--gm);transform:translateY(-1px);}
+.top-actions{display:flex;gap:.5rem;align-items:center;}
+
+.content{padding:1.8rem 2rem;}
+
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.8rem;}
+.mc{background:var(--s2);border:1px solid var(--border);border-radius:var(--r2);padding:1.2rem 1.3rem;position:relative;overflow:hidden;animation:up .5s ease forwards;opacity:0;cursor:default;transition:border-color .25s,transform .25s;}
+.mc:nth-child(1){animation-delay:.04s}.mc:nth-child(2){animation-delay:.09s}.mc:nth-child(3){animation-delay:.14s}.mc:nth-child(4){animation-delay:.19s}
+.mc:hover{border-color:var(--borderb);transform:translateY(-3px);}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--glow,rgba(78,196,140,0.4)),transparent);}
+.mc.gold{--glow:rgba(184,146,42,0.5);}.mc.red{--glow:rgba(201,79,79,0.4);}.mc.blue{--glow:rgba(61,127,193,0.4);}
+.mc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.8rem;}
+.mc-lbl{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--textm);font-weight:500;}
+.mc-ico{width:28px;height:28px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:.85rem;}
+.mc-ico.g{background:rgba(78,196,140,0.1);}.mc-ico.gold{background:var(--goldb);}.mc-ico.r{background:var(--redb);}.mc-ico.b{background:var(--blueb);}
+.mc-num{font-family:var(--serif);font-size:2.1rem;font-weight:300;color:var(--text);line-height:1;margin-bottom:.35rem;letter-spacing:-.01em;}
+.mc-trend{font-size:.68rem;font-family:var(--mono);display:flex;align-items:center;gap:.3rem;}
+.mc-trend.up{color:var(--gl);}.mc-trend.dn{color:var(--red);}.mc-trend.nt{color:var(--textm);}
+.mc-bar{height:2px;background:var(--border);border-radius:2px;margin-top:.85rem;overflow:hidden;}
+.mc-fill{height:100%;border-radius:2px;transition:width 1.1s cubic-bezier(.4,0,.2,1);}
+.mc-fill.g{background:linear-gradient(90deg,var(--g),var(--gl));}.mc-fill.gold{background:var(--gold);}.mc-fill.r{background:var(--red);}.mc-fill.b{background:var(--blue);}
+
+.g2{display:grid;grid-template-columns:1fr 360px;gap:1.4rem;margin-bottom:1.4rem;}
+.panel{background:var(--s2);border:1px solid var(--border);border-radius:var(--r2);animation:up .55s ease forwards;opacity:0;overflow:hidden;}
+.panel:nth-child(1){animation-delay:.24s}.panel:nth-child(2){animation-delay:.3s}.panel:nth-child(3){animation-delay:.35s}
+.ph{padding:1rem 1.3rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.pt{font-family:var(--serif);font-size:.95rem;font-weight:300;display:flex;align-items:center;gap:.5rem;letter-spacing:.01em;}
+.pt em{font-style:italic;color:var(--gl);}
+.pa{display:flex;gap:.4rem;}
+.bsm{background:transparent;border:1px solid var(--border);border-radius:var(--r);padding:.25rem .7rem;font-size:.66rem;color:var(--textm);cursor:pointer;transition:all .2s;font-family:var(--sans);letter-spacing:.04em;}
+.bsm:hover{border-color:var(--borderb);color:var(--text);}
+.bsm.on{background:rgba(78,196,140,0.08);border-color:var(--borderb);color:var(--gl);}
+
+.tbl{width:100%;border-collapse:collapse;}
+.tbl th{padding:.55rem 1.1rem;text-align:left;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--textd);border-bottom:1px solid var(--border);font-weight:500;white-space:nowrap;}
+.tbl td{padding:.85rem 1.1rem;border-bottom:1px solid rgba(78,196,140,0.035);vertical-align:middle;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr{transition:background .15s;}
+.tbl tr:hover td{background:rgba(78,196,140,0.02);}
+.cname{font-size:.8rem;font-weight:500;margin-bottom:2px;color:var(--text);}
+.ccat{font-size:.6rem;color:var(--textm);font-family:var(--mono);}
+.dots{display:flex;gap:3px;align-items:center;}
+.dot{width:7px;height:7px;border-radius:50%;}
+.dot.done{background:var(--gl);box-shadow:0 0 5px rgba(78,196,140,0.5);}.dot.miss{background:var(--border);border:1px solid var(--borderb);}.dot.prt{background:var(--amber);}
+.spill{display:inline-flex;align-items:center;gap:.3rem;padding:.18rem .55rem;border-radius:var(--r);font-size:.6rem;font-family:var(--mono);font-weight:500;}
+.spill.act{background:rgba(78,196,140,0.08);color:var(--gl);}.spill.dft{background:var(--goldb);color:var(--gold);}.spill.pau{background:var(--redb);color:var(--red);}
+.spill::before{content:'';width:4px;height:4px;border-radius:50%;background:currentColor;}
+.price{font-family:var(--mono);font-size:.78rem;color:var(--gl);}
+.abts{display:flex;gap:.3rem;}
+.abt{background:transparent;border:1px solid var(--border);border-radius:var(--r);padding:.22rem .5rem;font-size:.62rem;color:var(--textm);cursor:pointer;transition:all .2s;font-family:var(--sans);}
+.abt:hover{border-color:var(--borderb);color:var(--text);}
+.abt.edit:hover{border-color:var(--gl);color:var(--gl);}
+.abt.del:hover{border-color:var(--red);color:var(--red);}
+
+.acts{padding:.3rem 0;}
+.act{display:flex;gap:.85rem;padding:.72rem 1.3rem;border-bottom:1px solid rgba(78,196,140,0.03);align-items:flex-start;transition:background .15s;}
+.act:last-child{border-bottom:none;}
+.act:hover{background:rgba(78,196,140,0.02);}
+.adot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.adot.g{background:var(--gl);box-shadow:0 0 6px rgba(78,196,140,0.5);}.adot.gold{background:var(--gold);}.adot.b{background:var(--blue);}.adot.r{background:var(--red);}
+.atxt{font-size:.76rem;color:var(--textm);line-height:1.5;flex:1;}
+.atxt strong{color:var(--text);font-weight:500;}
+.atxt em{font-style:normal;color:var(--gl);font-family:var(--mono);font-size:.72rem;}
+.atme{font-size:.6rem;color:var(--textd);font-family:var(--mono);flex-shrink:0;margin-top:2px;white-space:nowrap;}
+
+.chart-wrap{padding:.9rem 1.1rem;}
+.bars{display:flex;align-items:flex-end;gap:3px;height:72px;}
+.bar{flex:1;border-radius:2px 2px 0 0;cursor:pointer;position:relative;transition:opacity .2s;background:linear-gradient(to top,var(--g),var(--gl));}
+.bar:hover{opacity:.75;}
+.bar::after{content:attr(data-v);position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);font-size:.55rem;font-family:var(--mono);color:var(--gl);white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;}
+.bar:hover::after{opacity:1;}
+.bar.dim{background:var(--s3);opacity:.5;}
+.blbls{display:flex;gap:3px;margin-top:3px;}
+.blbl{flex:1;text-align:center;font-size:.52rem;font-family:var(--mono);color:var(--textd);}
+
+.rings{display:flex;gap:.8rem;padding:1.1rem 1.1rem;flex-wrap:wrap;}
+.ring-item{display:flex;flex-direction:column;align-items:center;gap:.35rem;}
+.rbg{fill:none;stroke:var(--border);stroke-width:3.5;}
+.rfill{fill:none;stroke-width:3.5;stroke-linecap:round;transition:stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1);}
+.rfill.g{stroke:var(--gl);}.rfill.prt{stroke:var(--amber);}.rfill.mt{stroke:var(--borderb);}
+.ring-val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.62rem;font-family:var(--mono);font-weight:500;}
+.ring-lbl{font-size:.6rem;color:var(--textm);text-align:center;max-width:58px;line-height:1.3;}
+
+.up-zone{border:1.5px dashed var(--borderb);border-radius:var(--r2);padding:1.8rem 1.3rem;text-align:center;cursor:pointer;transition:all .3s;background:rgba(78,196,140,0.02);margin:1rem;position:relative;overflow:hidden;}
+.up-zone:hover,.up-zone.drag{border-color:var(--gl);background:rgba(78,196,140,0.05);}
+.up-zone.drag::after{content:'Soltar archivo aquí';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(13,21,16,0.92);font-family:var(--serif);font-size:1.1rem;font-style:italic;color:var(--gl);backdrop-filter:blur(6px);}
+.up-ico{font-size:1.8rem;margin-bottom:.5rem;display:block;}
+.up-title{font-size:.82rem;font-weight:500;margin-bottom:.25rem;}
+.up-sub{font-size:.68rem;color:var(--textm);line-height:1.6;}
+.up-chips{display:flex;gap:.3rem;justify-content:center;margin-top:.7rem;flex-wrap:wrap;}
+.chip{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:.15rem .5rem;font-size:.58rem;font-family:var(--mono);color:var(--textm);}
+
+.csel-wrap{padding:.75rem 1rem;border-bottom:1px solid var(--border);}
+.csel-lbl{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--textm);margin-bottom:.3rem;}
+.csel{width:100%;background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:.5rem .8rem;color:var(--text);font-family:var(--sans);font-size:.78rem;outline:none;cursor:pointer;transition:border-color .2s;}
+.csel:focus{border-color:var(--borderb);}
+.csel option{background:var(--s1);}
+
+.tabs{display:flex;border-bottom:1px solid var(--border);padding:0 1rem;}
+.tab{padding:.65rem .9rem;font-size:.72rem;color:var(--textm);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;margin-bottom:-1px;letter-spacing:.03em;white-space:nowrap;}
+.tab:hover{color:var(--text);}
+.tab.on{color:var(--gl);border-bottom-color:var(--gl);}
+
+.flist{padding:.6rem .8rem;}
+.fitem{display:flex;align-items:center;gap:.75rem;padding:.6rem .7rem;border-radius:var(--r);transition:background .2s;cursor:pointer;border:1px solid transparent;}
+.fitem:hover{background:var(--s3);border-color:var(--border);}
+.fext{width:32px;height:32px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:.56rem;font-family:var(--mono);font-weight:600;flex-shrink:0;}
+.fext.pdf{background:var(--redb);color:var(--red);}.fext.ppt{background:var(--goldb);color:var(--gold);}.fext.mp4{background:var(--blueb);color:var(--blue);}.fext.img{background:rgba(78,196,140,0.1);color:var(--gl);}.fext.docx{background:var(--amberb);color:var(--amber);}
+.fname{font-size:.76rem;font-weight:500;color:var(--text);}
+.fmeta{display:flex;align-items:center;gap:.5rem;margin-top:2px;}
+.fsize{font-size:.6rem;color:var(--textm);font-family:var(--mono);}
+.fcurso{font-size:.58rem;color:var(--textd);font-family:var(--mono);}
+.fdel{background:none;border:none;color:var(--textd);cursor:pointer;padding:.2rem;transition:color .2s;flex-shrink:0;font-size:.8rem;}
+.fdel:hover{color:var(--red);}
+
+.cbd{padding:.9rem;}
+.cbi{background:var(--s1);border:1px solid var(--border);border-radius:var(--r2);padding:.9rem 1rem;margin-bottom:.8rem;transition:border-color .2s;}
+.cbi:hover{border-color:var(--borderb);}
+.cbi-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;}
+.cbi-name{font-size:.78rem;font-weight:500;}
+.cbi-count{font-size:.6rem;font-family:var(--mono);color:var(--textm);}
+.cbi-types{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.5rem;}
+.cbi-type{display:flex;align-items:center;gap:.3rem;background:var(--s2);border:1px solid var(--border);border-radius:var(--r);padding:.18rem .5rem;}
+.cbi-bar{height:2px;background:var(--border);border-radius:2px;}
+.cbi-bfill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--g),var(--gl));transition:width 1s ease;}
+
+/* ALUMNOS */
+.al-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;}
+.al-card{background:var(--s2);border:1px solid var(--border);border-radius:var(--r2);padding:1.2rem;transition:border-color .25s;}
+.al-card:hover{border-color:var(--borderb);}
+.al-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--g),var(--gd));display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;color:var(--gl);margin-bottom:.7rem;}
+.al-name{font-size:.82rem;font-weight:500;margin-bottom:.2rem;}
+.al-email{font-size:.65rem;color:var(--textm);font-family:var(--mono);margin-bottom:.5rem;word-break:break-all;}
+.al-curso{display:inline-flex;background:rgba(78,196,140,0.08);border:1px solid var(--borderb);border-radius:var(--r);padding:.15rem .5rem;font-size:.6rem;color:var(--gl);font-family:var(--mono);}
+.al-date{font-size:.6rem;color:var(--textd);font-family:var(--mono);margin-top:.4rem;}
+.al-del{background:none;border:none;color:var(--textd);cursor:pointer;float:right;font-size:.75rem;transition:color .2s;}
+.al-del:hover{color:var(--red);}
+
+/* INGRESOS */
+.ing-tbl{width:100%;border-collapse:collapse;}
+.ing-tbl th{padding:.55rem 1.1rem;text-align:left;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--textd);border-bottom:1px solid var(--border);font-weight:500;}
+.ing-tbl td{padding:.85rem 1.1rem;border-bottom:1px solid rgba(78,196,140,0.035);vertical-align:middle;font-size:.8rem;}
+.ing-tbl tr:last-child td{border-bottom:none;}
+.ing-tbl tr:hover td{background:rgba(78,196,140,0.02);}
+.ing-total{background:var(--s2);border:1px solid var(--borderb);border-radius:var(--r2);padding:1.2rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.ing-total-lbl{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--textm);}
+.ing-total-num{font-family:var(--serif);font-size:2rem;color:var(--gold);}
+
+/* CONFIG */
+.cfg-section{background:var(--s2);border:1px solid var(--border);border-radius:var(--r2);padding:1.5rem;margin-bottom:1.2rem;}
+.cfg-title{font-family:var(--serif);font-size:1rem;font-weight:300;margin-bottom:1.2rem;color:var(--gl);}
+.cfg-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.cfg-row.full{grid-template-columns:1fr;}
+.cfg-lbl{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--textm);margin-bottom:.3rem;}
+.cfg-input{width:100%;background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:.6rem .85rem;color:var(--text);font-family:var(--sans);font-size:.8rem;outline:none;transition:border-color .2s;}
+.cfg-input:focus{border-color:var(--borderb);}
+.cfg-input::placeholder{color:var(--textd);}
+.btn-cfg-save{background:var(--g);border:1px solid var(--gm);border-radius:var(--r);padding:.55rem 1.4rem;color:var(--text);cursor:pointer;font-size:.76rem;font-weight:500;transition:all .2s;font-family:var(--sans);letter-spacing:.04em;}
+.btn-cfg-save:hover{background:var(--gm);}
+
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(5px);}
+.modal-bg.open{display:flex;}
+.modal{background:var(--s2);border:1px solid var(--borderb);border-radius:var(--r2);padding:0;max-width:580px;width:95%;max-height:88vh;overflow-y:auto;animation:modalIn .22s ease;}
+@keyframes modalIn{from{opacity:0;transform:scale(.97)translateY(8px)}to{opacity:1;transform:scale(1)translateY(0)}}
+.mh{padding:1.3rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.mt2{font-family:var(--serif);font-size:1.05rem;font-weight:300;}
+.mt2 em{font-style:italic;color:var(--gl);}
+.mclose{background:none;border:none;color:var(--textm);cursor:pointer;font-size:1rem;transition:color .2s;}
+.mclose:hover{color:var(--text);}
+.mb2{padding:1.3rem 1.5rem;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:.9rem;}
+.frow.full{grid-template-columns:1fr;}
+.fg{display:flex;flex-direction:column;gap:.35rem;}
+.flbl{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--textm);font-weight:500;}
+.finput,.fsel,.ftxt{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:.6rem .85rem;color:var(--text);font-family:var(--sans);font-size:.8rem;outline:none;transition:border-color .2s;resize:none;width:100%;}
+.finput:focus,.fsel:focus,.ftxt:focus{border-color:var(--borderb);}
+.finput::placeholder,.ftxt::placeholder{color:var(--textd);}
+.fsel option{background:var(--s1);}
+.mfoot{padding:.9rem 1.5rem 1.3rem;display:flex;justify-content:flex-end;gap:.7rem;border-top:1px solid var(--border);}
+.btn-cancel{background:transparent;border:1px solid var(--border);border-radius:var(--r);padding:.5rem 1.1rem;color:var(--textm);cursor:pointer;font-size:.74rem;transition:all .2s;font-family:var(--sans);}
+.btn-cancel:hover{border-color:var(--borderb);color:var(--text);}
+.btn-save{background:var(--g);border:1px solid var(--gm);border-radius:var(--r);padding:.5rem 1.3rem;color:var(--text);cursor:pointer;font-size:.74rem;font-weight:500;transition:all .2s;font-family:var(--sans);letter-spacing:.04em;}
+.btn-save:hover{background:var(--gm);}
+
+.toast{position:fixed;bottom:1.4rem;right:1.4rem;background:var(--s3);border:1px solid var(--borderb);border-radius:var(--r2);padding:.8rem 1.1rem;display:flex;align-items:center;gap:.65rem;z-index:2000;font-size:.78rem;max-width:300px;transform:translateY(80px);opacity:0;transition:all .3s cubic-bezier(.4,0,.2,1);}
+.toast.show{transform:translateY(0);opacity:1;}
+.tdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.tdot.g{background:var(--gl);box-shadow:0 0 6px var(--gl);}.tdot.r{background:var(--red);}
+
+.empty{padding:2.5rem;text-align:center;color:var(--textm);}
+.empty-ico{font-size:1.8rem;margin-bottom:.5rem;}
+.empty-txt{font-size:.78rem;}
+
+::-webkit-scrollbar{width:3px;height:3px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--borderb);border-radius:2px;}
+
+@media(max-width:1180px){.metrics{grid-template-columns:repeat(2,1fr);}.g2{grid-template-columns:1fr;}.al-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:860px){.sb{transform:translateX(-100%);}.main{margin-left:0;}}
+</style>
+</head>
+<body>
+
+<aside class="sb">
+  <div class="sb-logo">
+    <div class="sb-badge"><div class="sb-dot"></div>Admin</div>
+    <div class="sb-name">Ojeda Araujo</div>
+    <div class="sb-sub">Plataforma de Formación</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-sec">Principal</div>
+    <div class="sb-item on" onclick="nav('dash',this)">
+      <svg class="sb-icon" viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+      Dashboard
+    </div>
+    <div class="sb-item" onclick="nav('cursos',this)">
+      <svg class="sb-icon" viewBox="0 0 16 16"><path d="M2 3h12v1.5H2zM2 7h9v1.5H2zM2 11h6v1.5H2z"/></svg>
+      Cursos
+      <span class="sb-pill" id="pill-cursos">0</span>
+    </div>
+    <div class="sb-item" onclick="nav('arch',this)">
+      <svg class="sb-icon" viewBox="0 0 16 16"><path d="M3 2h6l3 3v9H3V2zm6-.5v3.5h3.5"/></svg>
+      Archivos
+      <span class="sb-pill" id="pill-arch">0</span>
+    </div>
+    <div class="sb-sec">Gestión</div>
+    <div class="sb-item" onclick="nav('alumnos',this)">
+      <svg class="sb-icon" viewBox="0 0 16 16"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6H2z"/></svg>
+      Alumnos
+      <span class="sb-pill" id="pill-alumnos">0</span>
+    </div>
+    <div class="sb-item" onclick="nav('ingresos',this)">
+      <svg class="sb-icon" viewBox="0 0 16 16"><path d="M1 12l4-4 3 3 4-5 3 2V14H1z"/></svg>
+      Ingresos
+    </div>
+    <div class="sb-sec">Sistema</div>
+    <div class="sb-item" onclick="nav('config',this)">
+      <svg class="sb-icon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2"/><path d="M8 1v2m0 10v2M1 8h2m10 0h2M3.2 3.2l1.4 1.4m6.8 6.8 1.4 1.4M3.2 12.8l1.4-1.4M11.4 4.6l1.4-1.4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      Configuración
+    </div>
+  </nav>
+  <div class="sb-foot">
+    <div class="sb-av">OA</div>
+    <div><div class="sb-uname">Admin</div><div class="sb-urole">Super usuario</div></div>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="top">
+    <div class="top-title" id="ptitle">Panel <em>Principal</em></div>
+    <div class="top-actions">
+      <button class="btn-new" id="btn-top-action" onclick="openModal()">
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 2v12M2 8h12"/></svg>
+        Nuevo Curso
+      </button>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="p-dash" class="content">
+    <div class="metrics">
+      <div class="mc">
+        <div class="mc-top"><div class="mc-lbl">Alumnos Activos</div><div class="mc-ico g">👥</div></div>
+        <div class="mc-num" id="n-alumnos">0</div>
+        <div class="mc-trend nt" id="t-alumnos">— sin datos aún</div>
+        <div class="mc-bar"><div class="mc-fill g" id="b-alumnos" style="width:0%"></div></div>
+      </div>
+      <div class="mc gold">
+        <div class="mc-top"><div class="mc-lbl">Ingresos ARS</div><div class="mc-ico gold">💰</div></div>
+        <div class="mc-num" id="n-ingresos">$0</div>
+        <div class="mc-trend nt" id="t-ingresos">— registrá pagos</div>
+        <div class="mc-bar"><div class="mc-fill gold" id="b-ingresos" style="width:0%"></div></div>
+      </div>
+      <div class="mc blue">
+        <div class="mc-top"><div class="mc-lbl">Cursos Activos</div><div class="mc-ico b">📚</div></div>
+        <div class="mc-num" id="n-cursos">0</div>
+        <div class="mc-trend nt" id="t-cursos">— creá el primero</div>
+        <div class="mc-bar"><div class="mc-fill b" id="b-cursos" style="width:0%"></div></div>
+      </div>
+      <div class="mc red">
+        <div class="mc-top"><div class="mc-lbl">Archivos Totales</div><div class="mc-ico r">📁</div></div>
+        <div class="mc-num" id="n-arch">0</div>
+        <div class="mc-trend nt" id="t-arch">— subí materiales</div>
+        <div class="mc-bar"><div class="mc-fill r" id="b-arch" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="g2">
+      <div class="panel">
+        <div class="ph">
+          <div class="pt">Cursos <em>Recientes</em></div>
+          <button class="bsm" onclick="nav('cursos',document.querySelectorAll('.sb-item')[1])">Ver todos</button>
+        </div>
+        <table class="tbl">
+          <thead><tr><th>Curso</th><th>Categoría</th><th>Estado</th><th>Precio</th><th>Acciones</th></tr></thead>
+          <tbody id="dash-cursos-tbody">
+            <tr><td colspan="5"><div class="empty"><div class="empty-ico">📚</div><div class="empty-txt">Sin cursos. Creá el primero.</div></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel">
+        <div class="ph"><div class="pt">Actividad <em>Reciente</em></div></div>
+        <div class="acts" id="act-list">
+          <div class="act"><div class="adot g"></div><div class="atxt">Panel iniciado. Bienvenido.</div><div class="atme">ahora</div></div>
+        </div>
+        <div class="ph" style="border-top:1px solid var(--border)"><div class="pt">Ingresos <em>por curso</em></div></div>
+        <div class="chart-wrap">
+          <div class="bars" id="cbars"></div>
+          <div class="blbls" id="clbls"></div>
+        </div>
+      </div>
+    </div>
+    <div class="panel" style="animation-delay:.38s;margin-bottom:0">
+      <div class="ph"><div class="pt">Archivos <em>por Curso</em></div><button class="bsm" onclick="nav('arch',document.querySelectorAll('.sb-item')[2])">+ Subir</button></div>
+      <div class="rings" id="rings"></div>
+    </div>
+  </div>
+
+  <!-- CURSOS -->
+  <div id="p-cursos" class="content" style="display:none">
+    <div class="panel" style="animation-delay:0s">
+      <div class="ph">
+        <div class="pt">Gestión de <em>Cursos</em></div>
+        <div class="pa">
+          <button class="bsm on" onclick="filterCursos('todos',this)">Todos</button>
+          <button class="bsm" onclick="filterCursos('activo',this)">Activos</button>
+          <button class="bsm" onclick="filterCursos('borrador',this)">Borradores</button>
+        </div>
+      </div>
+      <table class="tbl">
+        <thead><tr><th>Curso</th><th>Categoría</th><th>Estado</th><th>Precio</th><th>Link MP</th><th>Acciones</th></tr></thead>
+        <tbody id="cursos-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ARCHIVOS -->
+  <div id="p-arch" class="content" style="display:none">
+    <div class="g2">
+      <div class="panel" style="animation-delay:0s">
+        <div class="ph"><div class="pt">Subir <em>Archivos</em></div></div>
+        <div class="csel-wrap">
+          <div class="csel-lbl">Curso de destino</div>
+          <select class="csel" id="up-sel"></select>
+        </div>
+        <div class="up-zone" id="dropzone" onclick="document.getElementById('finput').click()">
+          <input type="file" id="finput" multiple style="display:none" accept=".pdf,.ppt,.pptx,.mp4,.jpg,.jpeg,.png,.docx" onchange="handleFiles(this.files)">
+          <span class="up-ico">⬆</span>
+          <div class="up-title">Arrastrá o hacé clic para subir</div>
+          <div class="up-sub">Seleccioná el curso primero.<br>Hasta 500MB por archivo.</div>
+          <div class="up-chips"><span class="chip">PDF</span><span class="chip">PPT</span><span class="chip">MP4</span><span class="chip">JPG/PNG</span><span class="chip">DOCX</span></div>
+        </div>
+        <div class="tabs">
+          <div class="tab on" onclick="tabFiles(this,'all')">Todos</div>
+          <div class="tab" onclick="tabFiles(this,'pdf')">PDF</div>
+          <div class="tab" onclick="tabFiles(this,'mp4')">Video</div>
+          <div class="tab" onclick="tabFiles(this,'ppt')">PPT</div>
+        </div>
+        <div class="flist" id="flist"></div>
+      </div>
+      <div class="panel" style="animation-delay:.1s">
+        <div class="ph"><div class="pt">Archivos por <em>Curso</em></div></div>
+        <div class="cbd" id="cbd"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALUMNOS -->
+  <div id="p-alumnos" class="content" style="display:none">
+    <div class="al-grid" id="al-grid"></div>
+    <div class="panel" style="animation-delay:0s">
+      <div class="ph"><div class="pt">Todos los <em>Alumnos</em></div></div>
+      <table class="tbl">
+        <thead><tr><th>Nombre</th><th>Email</th><th>Curso</th><th>Fecha</th><th>Monto</th><th>Acciones</th></tr></thead>
+        <tbody id="al-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- INGRESOS -->
+  <div id="p-ingresos" class="content" style="display:none">
+    <div class="ing-total">
+      <div><div class="ing-total-lbl">Total acumulado</div><div class="ing-total-num" id="ing-total-num">$0</div></div>
+      <button class="btn-new" onclick="openModalIngreso()">
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 2v12M2 8h12"/></svg>
+        Registrar pago
+      </button>
+    </div>
+    <div class="panel" style="animation-delay:0s">
+      <div class="ph"><div class="pt">Historial de <em>Ingresos</em></div></div>
+      <table class="ing-tbl">
+        <thead><tr><th>Alumno</th><th>Curso</th><th>Monto</th><th>Fecha</th><th>Acciones</th></tr></thead>
+        <tbody id="ing-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CONFIG -->
+  <div id="p-config" class="content" style="display:none">
+    <div class="cfg-section">
+      <div class="cfg-title">Datos de contacto</div>
+      <div class="cfg-row">
+        <div><div class="cfg-lbl">WhatsApp</div><input class="cfg-input" id="cfg-wa" placeholder="+54 9 379 405-8223"></div>
+        <div><div class="cfg-lbl">Email</div><input class="cfg-input" id="cfg-email" placeholder="contactos@oa-consultora.com"></div>
+      </div>
+      <div class="cfg-row full">
+        <div><div class="cfg-lbl">Web principal</div><input class="cfg-input" id="cfg-web" placeholder="https://www.oa-consultora.com"></div>
+      </div>
+    </div>
+    <div class="cfg-section">
+      <div class="cfg-title">Links de MercadoPago por curso</div>
+      <div id="cfg-mp-links"></div>
+    </div>
+    <div class="cfg-section">
+      <div class="cfg-title">Herramientas</div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <button class="btn-cfg-save" onclick="exportData()" style="background:var(--blue);border-color:var(--blue)">📥 Exportar datos JSON</button>
+        <button class="btn-cfg-save" onclick="if(confirm('¿Borrar TODOS los datos? Esta acción no se puede deshacer.'))resetAll()" style="background:var(--red);border-color:var(--red)">🗑 Resetear todo</button>
+      </div>
+    </div>
+    <div style="text-align:right;margin-top:1rem;">
+      <button class="btn-cfg-save" onclick="saveConfig()">Guardar configuración</button>
+    </div>
+  </div>
+</main>
+
+<!-- MODAL CURSO -->
+<div class="modal-bg" id="mbg">
+  <div class="modal">
+    <div class="mh">
+      <div class="mt2" id="modal-titulo">Nuevo <em>Curso</em></div>
+      <button class="mclose" onclick="closeModal()">✕</button>
+    </div>
+    <div class="mb2">
+      <input type="hidden" id="m-id">
+      <div class="frow">
+        <div class="fg"><label class="flbl">Nombre del curso</label><input class="finput" id="m-nombre" placeholder="Nombre del curso..."></div>
+        <div class="fg"><label class="flbl">Categoría</label>
+          <select class="fsel" id="m-cat">
+            <option value="agronegocios">Agronegocios</option>
+            <option value="cannabis">Cannabis Medicinal</option>
+            <option value="carbono">Carbono & ESG</option>
+            <option value="regulacion">Regulación</option>
+            <option value="certificaciones">Certificaciones</option>
+            <option value="inversiones">Inversiones</option>
+            <option value="gestion">Gestión & Trabajo</option>
+          </select>
+        </div>
+      </div>
+      <div class="frow full">
+        <div class="fg"><label class="flbl">Descripción</label><textarea class="ftxt" id="m-desc" rows="3" placeholder="Descripción para alumnos..."></textarea></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flbl">Precio (ARS)</label><input class="finput" id="m-precio" placeholder="Ej. 15000" type="number"></div>
+        <div class="fg"><label class="flbl">Estado</label>
+          <select class="fsel" id="m-estado">
+            <option value="activo">Activo</option>
+            <option value="borrador">Borrador</option>
+            <option value="pausado">Pausado</option>
+          </select>
+        </div>
+      </div>
+      <div class="frow full">
+        <div class="fg"><label class="flbl">Link MercadoPago</label><input class="finput" id="m-mp" placeholder="https://mpago.la/..."></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flbl">Duración estimada</label><input class="finput" id="m-dur" placeholder="Ej. 2.5 horas"></div>
+        <div class="fg"><label class="flbl">Docente</label><input class="finput" id="m-docente" placeholder="Nombre del docente..."></div>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-save" onclick="saveCurso()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ALUMNO -->
+<div class="modal-bg" id="mbg-al">
+  <div class="modal">
+    <div class="mh">
+      <div class="mt2">Nuevo <em>Alumno</em></div>
+      <button class="mclose" onclick="document.getElementById('mbg-al').classList.remove('open')">✕</button>
+    </div>
+    <div class="mb2">
+      <div class="frow">
+        <div class="fg"><label class="flbl">Nombre completo</label><input class="finput" id="al-nombre" placeholder="Nombre..."></div>
+        <div class="fg"><label class="flbl">Email</label><input class="finput" id="al-email" placeholder="email@..."></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flbl">Curso inscripto</label><select class="fsel" id="al-curso"></select></div>
+        <div class="fg"><label class="flbl">Monto pagado (ARS)</label><input class="finput" id="al-monto" type="number" placeholder="0"></div>
+      </div>
+      <div class="frow full">
+        <div class="fg"><label class="flbl">Notas (opcional)</label><input class="finput" id="al-notas" placeholder="Notas..."></div>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="btn-cancel" onclick="document.getElementById('mbg-al').classList.remove('open')">Cancelar</button>
+      <button class="btn-save" onclick="saveAlumno()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL INGRESO -->
+<div class="modal-bg" id="mbg-ing">
+  <div class="modal">
+    <div class="mh">
+      <div class="mt2">Registrar <em>Pago</em></div>
+      <button class="mclose" onclick="document.getElementById('mbg-ing').classList.remove('open')">✕</button>
+    </div>
+    <div class="mb2">
+      <div class="frow">
+        <div class="fg"><label class="flbl">Nombre alumno</label><input class="finput" id="ing-nombre" placeholder="Nombre..."></div>
+        <div class="fg"><label class="flbl">Email</label><input class="finput" id="ing-email" placeholder="email@..."></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="flbl">Curso</label><select class="fsel" id="ing-curso"></select></div>
+        <div class="fg"><label class="flbl">Monto (ARS)</label><input class="finput" id="ing-monto" type="number" placeholder="0"></div>
+      </div>
+      <div class="frow full">
+        <div class="fg"><label class="flbl">Método de pago</label>
+          <select class="fsel" id="ing-metodo">
+            <option>MercadoPago</option><option>Transferencia</option><option>Efectivo</option><option>Otro</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="btn-cancel" onclick="document.getElementById('mbg-ing').classList.remove('open')">Cancelar</button>
+      <button class="btn-save" onclick="saveIngreso()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><div class="tdot g"></div><span id="tmsg">Guardado</span></div>
+
+<script>
+// ══════════════════════════════════════════════════════
+//  STORAGE — todas las operaciones van a LocalStorage
+// ══════════════════════════════════════════════════════
+
+const LS = {
+  get(k){ try{ return JSON.parse(localStorage.getItem('oa_'+k)||'null'); }catch(e){return null;} },
+  set(k,v){ localStorage.setItem('oa_'+k, JSON.stringify(v)); },
+};
+
+function getDB(k, def){ return LS.get(k) || def; }
+function setDB(k,v){ LS.set(k,v); }
+
+// ══════════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════════
+
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+
+function fmtARS(n){ return '$'+(n||0).toLocaleString('es-AR'); }
+
+function fmtDate(iso){
+  if(!iso)return '—';
+  const d=new Date(iso);
+  return d.toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric'});
+}
+
+function toast(msg,type='g'){
+  const t=document.getElementById('toast'),d=t.querySelector('.tdot');
+  document.getElementById('tmsg').textContent=msg;
+  d.className='tdot '+(type||'g');
+  t.classList.add('show');
+  clearTimeout(t._to);
+  t._to=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+function addActividad(msg,color='g'){
+  const acts=getDB('actividad',[]);
+  acts.unshift({msg,color,ts:new Date().toISOString()});
+  if(acts.length>30)acts.pop();
+  setDB('actividad',acts);
+  renderActividad();
+}
+
+function renderActividad(){
+  const acts=getDB('actividad',[]);
+  const el=document.getElementById('act-list');
+  if(!el)return;
+  if(!acts.length){
+    el.innerHTML='<div class="act"><div class="adot g"></div><div class="atxt">Sin actividad reciente.</div></div>';
+    return;
+  }
+  const ago=iso=>{
+    const s=Math.floor((Date.now()-new Date(iso))/1000);
+    if(s<60)return 'ahora';
+    if(s<3600)return Math.floor(s/60)+'m';
+    if(s<86400)return Math.floor(s/3600)+'h';
+    return Math.floor(s/86400)+'d';
+  };
+  el.innerHTML=acts.slice(0,8).map(a=>`
+    <div class="act"><div class="adot ${a.color||'g'}"></div><div class="atxt">${a.msg}</div><div class="atme">${ago(a.ts)}</div></div>
+  `).join('');
+}
+
+// ══════════════════════════════════════════════════════
+//  CURSOS
+// ══════════════════════════════════════════════════════
+
+let editingCursoId=null;
+
+function getCursos(){ return getDB('cursos',[]); }
+function setCursos(v){ setDB('cursos',v); }
+
+function openModal(id=null){
+  editingCursoId=id;
+  const m=document.getElementById('mbg');
+  if(id){
+    const c=getCursos().find(x=>x.id===id)||{};
+    document.getElementById('modal-titulo').innerHTML='Editar <em>Curso</em>';
+    document.getElementById('m-id').value=id;
+    document.getElementById('m-nombre').value=c.nombre||'';
+    document.getElementById('m-cat').value=c.categoria||'agronegocios';
+    document.getElementById('m-desc').value=c.desc||'';
+    document.getElementById('m-precio').value=c.precio||'';
+    document.getElementById('m-estado').value=c.estado||'activo';
+    document.getElementById('m-mp').value=c.mp||'';
+    document.getElementById('m-dur').value=c.dur||'';
+    document.getElementById('m-docente').value=c.docente||'';
+  } else {
+    document.getElementById('modal-titulo').innerHTML='Nuevo <em>Curso</em>';
+    ['m-id','m-nombre','m-desc','m-precio','m-mp','m-dur','m-docente'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('m-cat').value='agronegocios';
+    document.getElementById('m-estado').value='activo';
+  }
+  m.classList.add('open');
+}
+
+function closeModal(){ document.getElementById('mbg').classList.remove('open'); }
+
+function saveCurso(){
+  const nombre=document.getElementById('m-nombre').value.trim();
+  if(!nombre){toast('Ingresá el nombre del curso','r');return;}
+  const cursos=getCursos();
+  const obj={
+    id: editingCursoId||uid(),
+    nombre,
+    categoria: document.getElementById('m-cat').value,
+    desc: document.getElementById('m-desc').value.trim(),
+    precio: parseInt(document.getElementById('m-precio').value)||0,
+    estado: document.getElementById('m-estado').value,
+    mp: document.getElementById('m-mp').value.trim(),
+    dur: document.getElementById('m-dur').value.trim(),
+    docente: document.getElementById('m-docente').value.trim(),
+    created: editingCursoId ? (cursos.find(x=>x.id===editingCursoId)||{}).created||new Date().toISOString() : new Date().toISOString(),
+  };
+  if(editingCursoId){
+    const i=cursos.findIndex(x=>x.id===editingCursoId);
+    if(i>-1)cursos[i]=obj;
+  } else {
+    cursos.push(obj);
+    addActividad(`Curso <strong>"${nombre}"</strong> creado`,'g');
+  }
+  setCursos(cursos);
+  closeModal();
+  toast(editingCursoId?'Curso actualizado':'Curso creado correctamente');
+  updateAll();
+}
+
+function delCurso(id){
+  if(!confirm('¿Eliminar este curso?'))return;
+  const cursos=getCursos().filter(x=>x.id!==id);
+  setCursos(cursos);
+  addActividad('Curso eliminado','r');
+  toast('Curso eliminado','r');
+  updateAll();
+}
+
+function renderCursosTabla(filter='todos'){
+  const cursos=getCursos().filter(c=>filter==='todos'||c.estado===filter);
+  const tbody=document.getElementById('cursos-tbody');
+  if(!tbody)return;
+  if(!cursos.length){
+    tbody.innerHTML='<tr><td colspan="6"><div class="empty"><div class="empty-ico">📚</div><div class="empty-txt">Sin cursos. Creá el primero.</div></div></td></tr>';
+    return;
+  }
+  const estadoClass={activo:'act',borrador:'dft',pausado:'pau'};
+  tbody.innerHTML=cursos.map(c=>`
+    <tr>
+      <td><div class="cname">${c.nombre}</div><div class="ccat">${c.docente||'sin docente'}</div></td>
+      <td><div class="ccat">${c.categoria}</div></td>
+      <td><span class="spill ${estadoClass[c.estado]||'dft'}">${c.estado}</span></td>
+      <td class="price">${fmtARS(c.precio)}</td>
+      <td><div class="ccat" style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.mp||'—'}</div></td>
+      <td><div class="abts">
+        <button class="abt edit" onclick="openModal('${c.id}')">Editar</button>
+        <button class="abt del" onclick="delCurso('${c.id}')">✕</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+function renderDashCursos(){
+  const cursos=getCursos();
+  const tbody=document.getElementById('dash-cursos-tbody');
+  if(!tbody)return;
+  if(!cursos.length){
+    tbody.innerHTML='<tr><td colspan="5"><div class="empty"><div class="empty-ico">📚</div><div class="empty-txt">Sin cursos. Creá el primero.</div></div></td></tr>';
+    return;
+  }
+  const estadoClass={activo:'act',borrador:'dft',pausado:'pau'};
+  tbody.innerHTML=cursos.map(c=>`
+    <tr>
+      <td><div class="cname">${c.nombre}</div><div class="ccat">${c.categoria}</div></td>
+      <td><div class="ccat">${c.docente||'—'}</div></td>
+      <td><span class="spill ${estadoClass[c.estado]||'dft'}">${c.estado}</span></td>
+      <td class="price">${fmtARS(c.precio)}</td>
+      <td><div class="abts">
+        <button class="abt edit" onclick="openModal('${c.id}')">Editar</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+function filterCursos(f,btn){
+  document.querySelectorAll('#p-cursos .bsm').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderCursosTabla(f);
+}
+
+// ══════════════════════════════════════════════════════
+//  ARCHIVOS
+// ══════════════════════════════════════════════════════
+
+function getFiles(){ return getDB('archivos',[]); }
+function setFiles(v){ setDB('archivos',v); }
+
+const extMap={pdf:'pdf',ppt:'ppt',pptx:'ppt',mp4:'mp4',jpg:'img',jpeg:'img',png:'img',docx:'docx'};
+
+function handleFiles(fl){
+  const cursoId=document.getElementById('up-sel').value;
+  if(!cursoId){toast('Seleccioná un curso primero','r');return;}
+  const curso=getCursos().find(x=>x.id===cursoId);
+  const files=getFiles();
+  Array.from(fl).forEach(f=>{
+    const ext=f.name.split('.').pop().toLowerCase();
+    const nf={
+      id:uid(),
+      n:f.name,
+      e:extMap[ext]||'pdf',
+      s:f.size>1048576?(f.size/1048576).toFixed(1)+' MB':(f.size/1024).toFixed(0)+' KB',
+      c:cursoId,
+      cn:curso?curso.nombre:'Sin curso',
+      ts:new Date().toISOString(),
+    };
+    files.unshift(nf);
+    addActividad(`Archivo <em>${f.name}</em> subido a ${nf.cn}`,'gold');
+  });
+  setFiles(files);
+  toast(fl.length+' archivo(s) registrado(s)');
+  updateAll();
+  renderFiles(getFiles());
+  renderCBD();
+}
+
+function renderFiles(list){
+  const el=document.getElementById('flist');
+  if(!el)return;
+  if(!list.length){el.innerHTML='<div class="empty"><div class="empty-ico">📂</div><div class="empty-txt">Sin archivos registrados</div></div>';return;}
+  el.innerHTML=list.map(f=>`
+    <div class="fitem">
+      <div class="fext ${f.e}">${f.e.toUpperCase()}</div>
+      <div style="flex:1;min-width:0">
+        <div class="fname" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${f.n}</div>
+        <div class="fmeta"><span class="fsize">${f.s}</span><span class="fcurso">${f.cn||''}</span></div>
+      </div>
+      <button class="fdel" onclick="delFile('${f.id}')">✕</button>
+    </div>`).join('');
+}
+
+function renderCBD(){
+  const el=document.getElementById('cbd');
+  if(!el)return;
+  const cursos=getCursos();
+  const files=getFiles();
+  if(!cursos.length){el.innerHTML='<div class="empty"><div class="empty-ico">📁</div><div class="empty-txt">Sin cursos creados</div></div>';return;}
+  el.innerHTML=cursos.map(c=>{
+    const cf=files.filter(f=>f.c===c.id);
+    const tipos={pdf:cf.filter(f=>f.e==='pdf').length,ppt:cf.filter(f=>f.e==='ppt').length,mp4:cf.filter(f=>f.e==='mp4').length,img:cf.filter(f=>f.e==='img').length};
+    const total=Object.values(tipos).reduce((a,b)=>a+b,0);
+    return `<div class="cbi">
+      <div class="cbi-top"><div class="cbi-name">${c.nombre}</div><div class="cbi-count">${total} archivos</div></div>
+      <div class="cbi-types">
+        ${Object.entries(tipos).map(([l,v])=>`<div class="cbi-type"><div class="fext ${l}" style="width:24px;height:24px;font-size:.52rem">${l.toUpperCase()}</div><span style="font-size:.68rem;font-family:var(--mono);color:${v>0?'var(--text)':'var(--textd)'}">${v}</span></div>`).join('')}
+      </div>
+      <div class="cbi-bar"><div class="cbi-bfill" style="width:${total?Math.min(total/10*100,100):0}%"></div></div>
+    </div>`;
+  }).join('');
+}
+
+function delFile(id){
+  const files=getFiles().filter(f=>f.id!==id);
+  setFiles(files);
+  toast('Archivo eliminado','r');
+  renderFiles(files);
+  renderCBD();
+  updateAll();
+}
+
+function tabFiles(el,type){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  const f=type==='all'?getFiles():getFiles().filter(x=>x.e===type);
+  renderFiles(f);
+}
+
+function populateUpSel(){
+  const sel=document.getElementById('up-sel');
+  if(!sel)return;
+  const cursos=getCursos();
+  sel.innerHTML='<option value="">Seleccionar curso...</option>'+cursos.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('');
+}
+
+function setupDrop(){
+  const z=document.getElementById('dropzone');
+  if(!z)return;
+  z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag');});
+  z.addEventListener('dragleave',()=>z.classList.remove('drag'));
+  z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag');handleFiles(e.dataTransfer.files);});
+}
+
+// ══════════════════════════════════════════════════════
+//  ALUMNOS
+// ══════════════════════════════════════════════════════
+
+function getAlumnos(){ return getDB('alumnos',[]); }
+function setAlumnos(v){ setDB('alumnos',v); }
+
+function openModalAlumno(){
+  const sel=document.getElementById('al-curso');
+  const cursos=getCursos();
+  sel.innerHTML='<option value="">Sin curso...</option>'+cursos.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('');
+  ['al-nombre','al-email','al-monto','al-notas'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('mbg-al').classList.add('open');
+}
+
+function saveAlumno(){
+  const nombre=document.getElementById('al-nombre').value.trim();
+  const email=document.getElementById('al-email').value.trim();
+  if(!nombre){toast('Ingresá el nombre','r');return;}
+  const cursoId=document.getElementById('al-curso').value;
+  const curso=getCursos().find(x=>x.id===cursoId);
+  const monto=parseInt(document.getElementById('al-monto').value)||0;
+  const al={
+    id:uid(),
+    nombre,email,
+    cursoId,
+    cursoNombre:curso?curso.nombre:'Sin curso',
+    monto,
+    notas:document.getElementById('al-notas').value.trim(),
+    ts:new Date().toISOString(),
+  };
+  const als=getAlumnos();
+  als.unshift(al);
+  setAlumnos(als);
+  // Si tiene monto, registrar ingreso automáticamente
+  if(monto>0){
+    const ings=getIngresos();
+    ings.unshift({id:uid(),nombre,email,cursoId,cursoNombre:al.cursoNombre,monto,metodo:'MercadoPago',ts:new Date().toISOString()});
+    setIngresos(ings);
+  }
+  addActividad(`<strong>${nombre}</strong> inscripto en ${al.cursoNombre}`,'b');
+  document.getElementById('mbg-al').classList.remove('open');
+  toast('Alumno registrado');
+  updateAll();
+  renderAlumnos();
+}
+
+function delAlumno(id){
+  if(!confirm('¿Eliminar este alumno?'))return;
+  setAlumnos(getAlumnos().filter(x=>x.id!==id));
+  toast('Alumno eliminado','r');
+  updateAll();
+  renderAlumnos();
+}
+
+function renderAlumnos(){
+  const als=getAlumnos();
+  const grid=document.getElementById('al-grid');
+  const tbody=document.getElementById('al-tbody');
+  if(grid){
+    if(!als.length){grid.innerHTML='<div style="grid-column:1/-1"><div class="empty"><div class="empty-ico">👥</div><div class="empty-txt">Sin alumnos registrados</div></div></div>';
+    } else {
+      grid.innerHTML=als.slice(0,6).map(a=>`
+        <div class="al-card">
+          <button class="al-del" onclick="delAlumno('${a.id}')">✕</button>
+          <div class="al-av">${a.nombre.charAt(0).toUpperCase()}</div>
+          <div class="al-name">${a.nombre}</div>
+          <div class="al-email">${a.email||'—'}</div>
+          <span class="al-curso">${a.cursoNombre}</span>
+          <div class="al-date">${fmtDate(a.ts)} · ${a.monto?fmtARS(a.monto):'sin pago'}</div>
+        </div>`).join('');
+    }
+  }
+  if(tbody){
+    if(!als.length){
+      tbody.innerHTML='<tr><td colspan="6"><div class="empty"><div class="empty-ico">👥</div><div class="empty-txt">Sin alumnos</div></div></td></tr>';
+    } else {
+      tbody.innerHTML=als.map(a=>`
+        <tr>
+          <td>${a.nombre}</td>
+          <td style="font-size:.75rem;color:var(--textm)">${a.email||'—'}</td>
+          <td>${a.cursoNombre}</td>
+          <td style="font-size:.72rem;color:var(--textm)">${fmtDate(a.ts)}</td>
+          <td class="price">${a.monto?fmtARS(a.monto):'—'}</td>
+          <td><button class="abt del" onclick="delAlumno('${a.id}')">✕</button></td>
+        </tr>`).join('');
+    }
+  }
+}
+
+// ══════════════════════════════════════════════════════
+//  INGRESOS
+// ══════════════════════════════════════════════════════
+
+function getIngresos(){ return getDB('ingresos',[]); }
+function setIngresos(v){ setDB('ingresos',v); }
+
+function openModalIngreso(){
+  const sel=document.getElementById('ing-curso');
+  const cursos=getCursos();
+  sel.innerHTML='<option value="">Sin curso...</option>'+cursos.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('');
+  ['ing-nombre','ing-email','ing-monto'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('mbg-ing').classList.add('open');
+}
+
+function saveIngreso(){
+  const nombre=document.getElementById('ing-nombre').value.trim();
+  const monto=parseInt(document.getElementById('ing-monto').value)||0;
+  if(!nombre||!monto){toast('Completá nombre y monto','r');return;}
+  const cursoId=document.getElementById('ing-curso').value;
+  const curso=getCursos().find(x=>x.id===cursoId);
+  const ing={
+    id:uid(),
+    nombre,
+    email:document.getElementById('ing-email').value.trim(),
+    cursoId,
+    cursoNombre:curso?curso.nombre:'Sin curso',
+    monto,
+    metodo:document.getElementById('ing-metodo').value,
+    ts:new Date().toISOString(),
+  };
+  const ings=getIngresos();
+  ings.unshift(ing);
+  setIngresos(ings);
+  addActividad(`Pago de <strong>${nombre}</strong> — ${fmtARS(monto)}`,'gold');
+  document.getElementById('mbg-ing').classList.remove('open');
+  toast('Pago registrado');
+  updateAll();
+  renderIngresos();
+}
+
+function delIngreso(id){
+  if(!confirm('¿Eliminar este registro?'))return;
+  setIngresos(getIngresos().filter(x=>x.id!==id));
+  toast('Registro eliminado','r');
+  updateAll();
+  renderIngresos();
+}
+
+function renderIngresos(){
+  const ings=getIngresos();
+  const tbody=document.getElementById('ing-tbody');
+  const total=ings.reduce((a,b)=>a+(b.monto||0),0);
+  const numEl=document.getElementById('ing-total-num');
+  if(numEl)numEl.textContent=fmtARS(total);
+  if(!tbody)return;
+  if(!ings.length){
+    tbody.innerHTML='<tr><td colspan="5"><div class="empty"><div class="empty-ico">💰</div><div class="empty-txt">Sin ingresos registrados</div></div></td></tr>';
+    return;
+  }
+  tbody.innerHTML=ings.map(i=>`
+    <tr>
+      <td>${i.nombre}</td>
+      <td>${i.cursoNombre}</td>
+      <td class="price">${fmtARS(i.monto)}</td>
+      <td style="font-size:.72rem;color:var(--textm)">${fmtDate(i.ts)} · ${i.metodo}</td>
+      <td><button class="abt del" onclick="delIngreso('${i.id}')">✕</button></td>
+    </tr>`).join('');
+}
+
+// ══════════════════════════════════════════════════════
+//  CONFIG
+// ══════════════════════════════════════════════════════
+
+function loadConfig(){
+  const cfg=getDB('config',{});
+  document.getElementById('cfg-wa').value=cfg.wa||'+54 9 379 405-8223';
+  document.getElementById('cfg-email').value=cfg.email||'contactos@oa-consultora.com';
+  document.getElementById('cfg-web').value=cfg.web||'https://www.oa-consultora.com';
+  renderMPLinks();
+}
+
+function renderMPLinks(){
+  const cursos=getCursos();
+  const cfg=getDB('config',{});
+  const el=document.getElementById('cfg-mp-links');
+  if(!el)return;
+  if(!cursos.length){el.innerHTML='<div class="empty" style="padding:1rem"><div class="empty-txt">Creá cursos primero para configurar sus links de MercadoPago</div></div>';return;}
+  el.innerHTML=cursos.map(c=>`
+    <div class="cfg-row full" style="margin-bottom:.7rem">
+      <div>
+        <div class="cfg-lbl">${c.nombre}</div>
+        <input class="cfg-input" id="mp-${c.id}" placeholder="https://mpago.la/..." value="${c.mp||''}">
+      </div>
+    </div>`).join('');
+}
+
+function saveConfig(){
+  const cfg={
+    wa:document.getElementById('cfg-wa').value.trim(),
+    email:document.getElementById('cfg-email').value.trim(),
+    web:document.getElementById('cfg-web').value.trim(),
+  };
+  setDB('config',cfg);
+  // Guardar links MP en cada curso
+  const cursos=getCursos();
+  cursos.forEach(c=>{
+    const el=document.getElementById('mp-'+c.id);
+    if(el)c.mp=el.value.trim();
+  });
+  setCursos(cursos);
+  toast('Configuración guardada');
+  addActividad('Configuración actualizada','b');
+}
+
+function exportData(){
+  const data={cursos:getCursos(),archivos:getFiles(),alumnos:getAlumnos(),ingresos:getIngresos(),config:getDB('config',{}),actividad:getDB('actividad',[])};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='oa-formacion-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+  toast('Datos exportados');
+}
+
+function resetAll(){
+  ['cursos','archivos','alumnos','ingresos','actividad','config'].forEach(k=>localStorage.removeItem('oa_'+k));
+  toast('Todos los datos eliminados','r');
+  location.reload();
+}
+
+// ══════════════════════════════════════════════════════
+//  MÉTRICAS Y CHART
+// ══════════════════════════════════════════════════════
+
+function aNum(el,target,dur=800,fmt){
+  if(!el)return;
+  let v=0,inc=target/(dur/16);
+  if(inc===0){el.textContent=fmt?fmt(0):'0';return;}
+  const iv=setInterval(()=>{
+    v=Math.min(v+inc,target);
+    el.textContent=fmt?fmt(Math.round(v)):Math.round(v).toLocaleString('es-AR');
+    if(v>=target)clearInterval(iv);
+  },16);
+}
+
+function updateMetrics(){
+  const cursos=getCursos();
+  const alumnos=getAlumnos();
+  const archivos=getFiles();
+  const ingresos=getIngresos();
+  const activos=cursos.filter(c=>c.estado==='activo').length;
+  const totalIng=ingresos.reduce((a,b)=>a+(b.monto||0),0);
+
+  aNum(document.getElementById('n-alumnos'),alumnos.length);
+  aNum(document.getElementById('n-ingresos'),totalIng,900,v=>'$'+v.toLocaleString('es-AR'));
+  aNum(document.getElementById('n-cursos'),activos);
+  aNum(document.getElementById('n-arch'),archivos.length);
+
+  const maxIng=Math.max(totalIng,1);
+  setTimeout(()=>{
+    const ba=document.getElementById('b-alumnos');if(ba)ba.style.width=Math.min(alumnos.length/50*100,100)+'%';
+    const bi=document.getElementById('b-ingresos');if(bi)bi.style.width=Math.min(totalIng/500000*100,100)+'%';
+    const bc=document.getElementById('b-cursos');if(bc)bc.style.width=Math.min(activos/15*100,100)+'%';
+    const ba2=document.getElementById('b-arch');if(ba2)ba2.style.width=Math.min(archivos.length/30*100,100)+'%';
+  },300);
+
+  // Trends
+  const ta=document.getElementById('t-alumnos');if(ta)ta.textContent=alumnos.length?'— '+alumnos.length+' inscriptos':'— sin alumnos aún';
+  const ti=document.getElementById('t-ingresos');if(ti)ti.textContent=totalIng?'— total acumulado':'— registrá pagos';
+  const tc=document.getElementById('t-cursos');if(tc)tc.textContent=activos?'— '+cursos.filter(c=>c.estado==='borrador').length+' en borrador':'— creá el primero';
+  const ta2=document.getElementById('t-arch');if(ta2)ta2.textContent=archivos.length?'— '+archivos.length+' archivos':'— subí materiales';
+
+  // Pills sidebar
+  document.getElementById('pill-cursos').textContent=cursos.length;
+  document.getElementById('pill-arch').textContent=archivos.length;
+  document.getElementById('pill-alumnos').textContent=alumnos.length;
+
+  // Chart por curso
+  const cb=document.getElementById('cbars'),cl=document.getElementById('clbls');
+  if(cb&&cl){
+    cb.innerHTML='';cl.innerHTML='';
+    const top=cursos.slice(0,16);
+    if(!top.length){cb.innerHTML='<div style="color:var(--textd);font-size:.7rem;padding:.5rem">Sin cursos</div>';return;}
+    const vals=top.map(c=>ingresos.filter(i=>i.cursoId===c.id).reduce((a,b)=>a+(b.monto||0),0));
+    const mx=Math.max(...vals,1);
+    top.forEach((c,i)=>{
+      const b=document.createElement('div');
+      b.className='bar';b.style.height='0';
+      b.dataset.v=fmtARS(vals[i]);
+      cb.appendChild(b);
+      setTimeout(()=>b.style.height=(vals[i]/mx*100)+'%',300+i*60);
+      const l=document.createElement('div');
+      l.className='blbl';
+      l.textContent=c.nombre.slice(0,4);
+      cl.appendChild(l);
+    });
+  }
+}
+
+function updateRings(){
+  const el=document.getElementById('rings');
+  if(!el)return;
+  el.innerHTML='';
+  const cursos=getCursos();
+  const files=getFiles();
+  if(!cursos.length){el.innerHTML='<div class="empty"><div class="empty-ico">📁</div><div class="empty-txt">Sin cursos. Los anillos de completitud aparecerán acá.</div></div>';return;}
+  cursos.forEach(c=>{
+    const cf=files.filter(f=>f.c===c.id);
+    const tipos={pdf:cf.some(f=>f.e==='pdf'),ppt:cf.some(f=>f.e==='ppt'),mp4:cf.some(f=>f.e==='mp4'),img:cf.some(f=>f.e==='img')};
+    const done=Object.values(tipos).filter(Boolean).length;
+    const pct=Math.round(done/4*100);
+    const cls=pct===100?'g':pct>=50?'prt':'mt';
+    const col=pct===100?'var(--gl)':pct>=50?'var(--amber)':'var(--borderb)';
+    const circ=2*Math.PI*19,off=circ-(pct/100)*circ;
+    const id='r'+c.id;
+    const d=document.createElement('div');d.className='ring-item';
+    d.innerHTML=`
+      <div style="position:relative;width:50px;height:50px">
+        <svg viewBox="0 0 44 44" width="50" height="50" style="transform:rotate(-90deg)">
+          <circle class="rbg" cx="22" cy="22" r="19"/>
+          <circle class="rfill ${cls}" cx="22" cy="22" r="19" stroke-dasharray="${circ}" stroke-dashoffset="${circ}" id="${id}"/>
+        </svg>
+        <div class="ring-val" style="color:${col}">${pct}%</div>
+      </div>
+      <div class="ring-lbl">${c.nombre.slice(0,16)}${c.nombre.length>16?'…':''}</div>`;
+    el.appendChild(d);
+    setTimeout(()=>{const e=document.getElementById(id);if(e)e.style.strokeDashoffset=off;},600);
+  });
+}
+
+// ══════════════════════════════════════════════════════
+//  NAVEGACIÓN
+// ══════════════════════════════════════════════════════
+
+const pages={
+  dash:'Panel <em>Principal</em>',
+  cursos:'Gestión de <em>Cursos</em>',
+  arch:'Gestión de <em>Archivos</em>',
+  alumnos:'<em>Alumnos</em>',
+  ingresos:'<em>Ingresos</em>',
+  config:'<em>Configuración</em>'
+};
+
+const topActions={
+  dash:['Nuevo Curso','openModal()'],
+  cursos:['Nuevo Curso','openModal()'],
+  alumnos:['Nuevo Alumno','openModalAlumno()'],
+  ingresos:['Registrar Pago','openModalIngreso()'],
+  arch:null,
+  config:null,
+};
+
+function nav(name,el){
+  document.querySelectorAll('.sb-item').forEach(n=>n.classList.remove('on'));
+  if(el)el.classList.add('on');
+  document.querySelectorAll('[id^="p-"]').forEach(p=>p.style.display='none');
+  const pg=document.getElementById('p-'+name);
+  if(pg)pg.style.display='block';
+  document.getElementById('ptitle').innerHTML=pages[name]||name;
+
+  const btn=document.getElementById('btn-top-action');
+  const action=topActions[name];
+  if(action){
+    btn.style.display='flex';
+    btn.querySelector('svg').nextSibling.textContent=' '+action[0];
+    btn.onclick=new Function(action[1]);
+  } else {
+    btn.style.display='none';
+  }
+
+  // Render de cada sección al entrar
+  if(name==='dash'){renderDashCursos();updateRings();renderActividad();}
+  if(name==='cursos'){renderCursosTabla();}
+  if(name==='arch'){populateUpSel();renderFiles(getFiles());renderCBD();setTimeout(setupDrop,50);}
+  if(name==='alumnos'){renderAlumnos();}
+  if(name==='ingresos'){renderIngresos();}
+  if(name==='config'){loadConfig();}
+}
+
+// ══════════════════════════════════════════════════════
+//  UPDATE ALL — recalcula métricas y tablas activas
+// ══════════════════════════════════════════════════════
+
+function updateAll(){
+  updateMetrics();
+  // Refresh tabla activa si es cursos
+  if(document.getElementById('p-cursos').style.display!=='none') renderCursosTabla();
+  if(document.getElementById('p-dash').style.display!=='none'){renderDashCursos();updateRings();}
+  if(document.getElementById('p-arch').style.display!=='none'){populateUpSel();renderCBD();}
+  if(document.getElementById('p-alumnos').style.display!=='none') renderAlumnos();
+  if(document.getElementById('p-ingresos').style.display!=='none') renderIngresos();
+  if(document.getElementById('p-config').style.display!=='none') renderMPLinks();
+}
+
+// Modal cerrar al click en bg
+document.getElementById('mbg').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
+document.getElementById('mbg-al').addEventListener('click',e=>{if(e.target===e.currentTarget)e.target.classList.remove('open');});
+document.getElementById('mbg-ing').addEventListener('click',e=>{if(e.target===e.currentTarget)e.target.classList.remove('open');});
+
+// ══════════════════════════════════════════════════════
+//  CURSOS DEFAULT — se cargan si el LocalStorage está vacío
+// ══════════════════════════════════════════════════════
+
+const CURSOS_DEFAULT = [
+  {id:'c01',nombre:'Fundamentos de Agronegocios en América Latina',categoria:'agronegocios',desc:'Cadenas de valor, planificación estratégica y análisis de mercados para el sector primario y agroindustrial de la región.',precio:15000,estado:'activo',mp:'',dur:'',docente:'',created:'2026-04-07T00:00:00.000Z'},
+  {id:'c02',nombre:'Digitalización del Agro: Herramientas Prácticas',categoria:'agronegocios',desc:'Tecnologías aplicadas al campo: precisión, trazabilidad digital y toma de decisiones basada en datos.',precio:18000,estado:'activo',mp:'',dur:'',docente:'',created:'2026-04-07T00:00:00.000Z'},
+  {id:'c03',nombre:'Marco Regulatorio Cannabis Medicinal — Argentina',categoria:'cannabis',desc:'Normativa vigente, licencias ANMAT, trámites de habilitación y cumplimiento para cultivo, procesamiento y exportación.',precio:22000,estado:'activo',mp:'',dur:'',docente:'',created:'2026-04-07T00:00:00.000Z'},
+  {id:'c04',nombre:'GMP/BPM y BPF para Cannabis: Implementación Práctica',categoria:'cannabis',desc:'Buenas Prácticas de Manufactura y Fabricación aplicadas a instalaciones cannábicas: documentación, procesos, auditorías y certificación.',precio:25000,estado:'activo',mp:'',dur:'',docente:'',created:'2026-04-07T00:00:00.000Z'},
+  {id:'c05',nombre:'Introducción a los Mercados de Carbono Voluntarios',categoria:'carbono',desc:'Funcionamiento de los mercados VCM, créditos de carbono, certificadoras internacionales y acceso para proyectos agropecuarios.',precio:20000,estado:'activo',mp:'',dur:'',docente:'',created:'2026-04-07T00:00:00.000Z'},
+  {id:'c06',nombre:'Estrategias ESG para el Sector Agroindustrial',categoria:'carbono',desc:'Diseño e implementación de estrategias ambientales, sociales y de gobernanza. Reporte de impacto y acceso a financiamiento verde.',precio:20000,estado:'activo',mp:'',dur:'',docente:'',created:'2026-04-07T00:00:00.000Z'},
+  {id:'c07',nombre:'Habilitaciones y Cumplimiento Sanitario en Argentina',categoria:'regulacion',desc:'SENASA, ANMAT y organismos provinciales: requisitos, procedimientos y gestión para establecimientos agroindustriales.',precio:18000,estado:'activo',mp:'',dur:'',docente:'',created:'2026-04-07T00:00:00.000Z'},
+  {id:'c08',nombre:'Acceso a Mercados Internacionales: Barreras Regulatorias',categoria:'regulacion',desc:'Normativa comparada en Argentina, Uruguay y Colombia. Requisitos de exportación, trazabilidad y estrategias de cumplimiento.',precio:22000,estado:'activo',mp:'',dur:'',docente:'',created:'2026-04-07T00:00:00.000Z'},
+  {id:'c09',nombre:'GlobalG.A.P.: Implementación Paso a Paso',categoria:'certificaciones',desc:'Guía práctica para la certificación en producción primaria: requisitos, checklist, auditorías y mantenimiento del estándar.',precio:18000,estado:'activo',mp:'',dur:'',docente:'',created:'2026-04-07T00:00:00.000Z'},
+  {id:'c10',nombre:'ISO 9001 para Agroindustria',categoria:'certificaciones',desc:'Implementación del sistema de gestión de calidad ISO 9001:2015 en organizaciones agroindustriales. Documentación y auditoría interna.',precio:20000,estado:'activo',mp:'',dur:'',docente:'',created:'2026-04-07T00:00:00.000Z'},
+  {id:'c11',nombre:'Due Diligence Técnico-Regulatorio en Activos Agro',categoria:'inversiones',desc:'Metodología para evaluación integral de inversiones en activos agropecuarios y bioindustriales: riesgos técnicos, legales y regulatorios.',precio:28000,estado:'activo',mp:'',dur:'',docente:'',created:'2026-04-07T00:00:00.000Z'},
+  {id:'c12',nombre:'Estructuración de Proyectos Agroindustriales',categoria:'inversiones',desc:'De la idea al plan de negocios: factibilidad, estructuración financiera y acceso a financiamiento verde para proyectos del sector.',precio:25000,estado:'activo',mp:'',dur:'',docente:'',created:'2026-04-07T00:00:00.000Z'},
+  {id:'c13',nombre:'Cuando el Recurso Humano Tiene Nombre',categoria:'gestion',desc:'Aspectos ético-políticos de la gestión de personas en el empleo estatal. Selección, capacitación y desvinculación con dimensión humana.',precio:15000,estado:'activo',mp:'',dur:'',docente:'',created:'2026-04-07T00:00:00.000Z'},
+  {id:'c14',nombre:'Modernización del Estado y Empleo Público',categoria:'gestion',desc:'Revisión crítica del discurso modernizador. Cultura organizacional y agenda en clave de derechos para administraciones provinciales y municipales.',precio:15000,estado:'activo',mp:'',dur:'',docente:'',created:'2026-04-07T00:00:00.000Z'},
+  {id:'c15',nombre:'Gestión con Perspectiva de Género en el Estado',categoria:'gestion',desc:'Trabajo estatal, tareas de cuidado y agenda de género. Impacto en productividad, clima laboral y cultura organizacional.',precio:15000,estado:'activo',mp:'',dur:'',docente:'',created:'2026-04-07T00:00:00.000Z'},
+  {id:'c16',nombre:'Introducción a la IA',categoria:'agronegocios',desc:'Descubrí qué es la Inteligencia Artificial, cómo funciona y cómo podés usarla en tu trabajo y vida cotidiana. Sin conocimientos previos. Herramientas de IA, capacidades, limitaciones y aplicaciones reales en distintos sectores productivos y organizacionales.',precio:50000,estado:'activo',mp:'',dur:'',docente:'Gaston Persoglia',created:'2026-04-07T00:00:00.000Z'},
+];
+
+function seedCursosIfEmpty(){
+  // Si nunca se inicializó O si hay 0 o 1 cursos (viejo estado), carga los defaults
+  const existing = getDB('cursos', []);
+  const seeded = getDB('seeded', false);
+  if(!seeded || !existing || existing.length <= 1){
+    // Preservar el curso de Gaston si existe
+    const gastonCurso = existing.find(function(c){ return c.id === 'c16' || (c.docente && c.docente.toLowerCase().includes('gaston')); });
+    const defaults = CURSOS_DEFAULT.slice(); // copia
+    if(gastonCurso){
+      // Reemplazar c16 con los datos reales de Gaston
+      const idx = defaults.findIndex(function(c){ return c.id === 'c16'; });
+      if(idx > -1) defaults[idx] = gastonCurso;
+    }
+    setDB('cursos', defaults);
+    setDB('seeded', true);
+  }
+}
+
+// ══════════════════════════════════════════════════════
+//  BOOT
+// ══════════════════════════════════════════════════════
+
+window.addEventListener('DOMContentLoaded',()=>{
+  seedCursosIfEmpty();
+  updateMetrics();
+  renderDashCursos();
+  updateRings();
+  renderActividad();
+});
+</script>
+</body>
+</html>
+
+

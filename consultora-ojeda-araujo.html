@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consultora Ojeda & Araujo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --negro: #0a0a0a; --oscuro: #111111; --card: #161616;
+  --borde: #2a2a2a; --dorado: #c9a84c; --dorado-claro: #e8c97a;
+  --blanco: #f5f5f0; --gris: #888880;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--negro); color:var(--blanco); font-family:'DM Sans',sans-serif; }
+
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1.5rem 4rem; background:rgba(10,10,10,0.95);
+  border-bottom:1px solid var(--borde); backdrop-filter:blur(10px);
+}
+.logo { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:600; color:var(--dorado); letter-spacing:0.05em; }
+.nav-links { display:flex; gap:2.5rem; list-style:none; }
+.nav-links a { color:var(--gris); text-decoration:none; font-size:0.85rem; letter-spacing:0.08em; text-transform:uppercase; transition:color 0.3s; }
+.nav-links a:hover { color:var(--dorado); }
+.nav-cta { background:var(--dorado); color:var(--negro); padding:0.6rem 1.5rem; border-radius:2px; font-size:0.8rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; text-decoration:none; transition:background 0.3s; }
+.nav-cta:hover { background:var(--dorado-claro); }
+
+.hero {
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  padding:8rem 4rem 4rem; position:relative; overflow:hidden;
+  background:radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.06) 0%, transparent 60%),
+             radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.04) 0%, transparent 50%);
+}
+.hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center; max-width:1200px; width:100%; }
+.hero-badge { display:inline-flex; align-items:center; gap:0.5rem; background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.3); color:var(--dorado); padding:0.4rem 1rem; border-radius:20px; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:1.5rem; }
+.hero-badge span { width:6px; height:6px; background:var(--dorado); border-radius:50%; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.hero h1 { font-family:'Cormorant Garamond',serif; font-size:4.2rem; font-weight:300; line-height:1.1; margin-bottom:1.5rem; }
+.hero h1 em { font-style:normal; color:var(--dorado); }
+.hero p { color:var(--gris); font-size:1rem; line-height:1.8; margin-bottom:2.5rem; max-width:480px; }
+.hero-btns { display:flex; gap:1rem; flex-wrap:wrap; }
+.btn-primary { background:var(--dorado); color:var(--negro); padding:0.9rem 2rem; border:none; border-radius:2px; font-size:0.85rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; text-decoration:none; transition:all 0.3s; }
+.btn-primary:hover { background:var(--dorado-claro); transform:translateY(-1px); }
+.btn-outline { background:transparent; color:var(--blanco); padding:0.9rem 2rem; border:1px solid var(--borde); border-radius:2px; font-size:0.85rem; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; text-decoration:none; transition:all 0.3s; }
+.btn-outline:hover { border-color:var(--dorado); color:var(--dorado); }
+.hero-visual { display:flex; flex-direction:column; gap:1rem; }
+.stat-card { background:var(--card); border:1px solid var(--borde); border-radius:4px; padding:1.5rem; animation:fadeUp 0.6s ease forwards; opacity:0; }
+.stat-card:nth-child(1){animation-delay:0.2s} .stat-card:nth-child(2){animation-delay:0.4s} .stat-card:nth-child(3){animation-delay:0.6s}
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.stat-num { font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:600; color:var(--dorado); }
+.stat-label { color:var(--gris); font-size:0.8rem; letter-spacing:0.06em; text-transform:uppercase; margin-top:0.2rem; }
+
+section { padding:6rem 4rem; max-width:1200px; margin:0 auto; }
+.section-label { color:var(--dorado); font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:1rem; }
+.section-title { font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; margin-bottom:1rem; }
+.section-sub { color:var(--gris); max-width:500px; line-height:1.7; margin-bottom:3rem; }
+.divider { width:60px; height:1px; background:var(--dorado); margin:1.5rem 0; }
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">Ojeda & Araujo</div>
+  <ul class="nav-links">
+    <li><a href="#cursos">Cursos</a></li>
+    <li><a href="#vivo">Clases en Vivo</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#cursos" class="nav-cta">Ver Cursos</a>
+</nav>
+<section class="hero" style="max-width:100%;padding:8rem 4rem 4rem;">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-badge"><span></span>Consultora Profesional</div>
+      <h1>Formación que <em>transforma</em> tu carrera</h1>
+      <p>Cursos especializados, materiales descargables y clases en vivo para profesionales que quieren dar el siguiente paso.</p>
+      <div class="hero-btns">
+        <a href="#cursos" class="btn-primary">Explorar Cursos</a>
+        <a href="#vivo" class="btn-outline">Clases en Vivo</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="stat-card"><div class="stat-num">500+</div><div class="stat-label">Alumnos formados</div></div>
+      <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Cursos disponibles</div></div>
+      <div class="stat-card"><div class="stat-num">98%</div><div class="stat-label">Satisfacción de alumnos</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCION CURSOS -->
+<section id="cursos" style="padding:6rem 4rem; max-width:1200px; margin:0 auto; border-top:1px solid #2a2a2a;">
+  <p class="section-label">Lo que ofrecemos</p>
+  <h2 class="section-title">Nuestros <em style="font-style:normal;color:#c9a84c;">Cursos</em></h2>
+  <div class="divider"></div>
+  <p class="section-sub">Materiales PDF descargables, acceso permanente y contenido actualizado por profesionales.</p>
+
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem;">
+
+    <div style="background:#161616; border:1px solid #2a2a2a; border-radius:4px; overflow:hidden; transition:border-color 0.3s;" onmouseover="this.style.borderColor='#c9a84c'" onmouseout="this.style.borderColor='#2a2a2a'">
+      <div style="background:linear-gradient(135deg,#1a1a1a,#222); padding:2rem; border-bottom:1px solid #2a2a2a;">
+        <span style="font-size:2rem;">📊</span>
+        <div style="color:#888880; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; margin-top:1rem;">Finanzas</div>
+      </div>
+      <div style="padding:1.5rem;">
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:400; margin-bottom:0.7rem;">Nombre del Curso</h3>
+        <p style="color:#888880; font-size:0.85rem; line-height:1.6; margin-bottom:1.2rem;">Descripción breve del curso. Qué van a aprender los alumnos.</p>
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem;">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; color:#c9a84c;">$15.000</span>
+          <span style="color:#888880; font-size:0.75rem;">PDF incluido</span>
+        </div>
+        <button onclick="pagar('Curso 1', 15000)" style="width:100%; background:#c9a84c; color:#0a0a0a; border:none; padding:0.8rem; border-radius:2px; font-size:0.8rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer;">Comprar con MercadoPago</button>
+      </div>
+    </div>
+
+    <div style="background:#161616; border:1px solid #2a2a2a; border-radius:4px; overflow:hidden; transition:border-color 0.3s;" onmouseover="this.style.borderColor='#c9a84c'" onmouseout="this.style.borderColor='#2a2a2a'">
+      <div style="background:linear-gradient(135deg,#1a1a1a,#222); padding:2rem; border-bottom:1px solid #2a2a2a;">
+        <span style="font-size:2rem;">📈</span>
+        <div style="color:#888880; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; margin-top:1rem;">Inversiones</div>
+      </div>
+      <div style="padding:1.5rem;">
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:400; margin-bottom:0.7rem;">Nombre del Curso</h3>
+        <p style="color:#888880; font-size:0.85rem; line-height:1.6; margin-bottom:1.2rem;">Descripción breve del curso. Qué van a aprender los alumnos.</p>
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem;">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; color:#c9a84c;">$20.000</span>
+          <span style="color:#888880; font-size:0.75rem;">PDF incluido</span>
+        </div>
+        <button onclick="pagar('Curso 2', 20000)" style="width:100%; background:#c9a84c; color:#0a0a0a; border:none; padding:0.8rem; border-radius:2px; font-size:0.8rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer;">Comprar con MercadoPago</button>
+      </div>
+    </div>
+
+    <div style="background:#161616; border:1px solid #2a2a2a; border-radius:4px; overflow:hidden; transition:border-color 0.3s;" onmouseover="this.style.borderColor='#c9a84c'" onmouseout="this.style.borderColor='#2a2a2a'">
+      <div style="background:linear-gradient(135deg,#1a1a1a,#222); padding:2rem; border-bottom:1px solid #2a2a2a;">
+        <span style="font-size:2rem;">🎯</span>
+        <div style="color:#888880; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; margin-top:1rem;">Estrategia</div>
+      </div>
+      <div style="padding:1.5rem;">
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:400; margin-bottom:0.7rem;">Nombre del Curso</h3>
+        <p style="color:#888880; font-size:0.85rem; line-height:1.6; margin-bottom:1.2rem;">Descripción breve del curso. Qué van a aprender los alumnos.</p>
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem;">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; color:#c9a84c;">$25.000</span>
+          <span style="color:#888880; font-size:0.75rem;">PDF incluido</span>
+        </div>
+        <button onclick="pagar('Curso 3', 25000)" style="width:100%; background:#c9a84c; color:#0a0a0a; border:none; padding:0.8rem; border-radius:2px; font-size:0.8rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer;">Comprar con MercadoPago</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CLASES EN VIVO -->
+<section id="vivo" style="padding:6rem 4rem; max-width:1200px; margin:0 auto; border-top:1px solid #2a2a2a;">
+  <p class="section-label">En tiempo real</p>
+  <h2 class="section-title">Clases en <em style="font-style:normal;color:#c9a84c;">Vivo</em></h2>
+  <div class="divider"></div>
+  <p class="section-sub">Sesiones en vivo por Zoom con consultores especializados. Hacé preguntas, analizá casos reales y aprendé en tiempo real.</p>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+    <div style="background:#161616; border:1px solid #2a2a2a; border-radius:4px; padding:2rem; display:flex; gap:1.5rem; align-items:flex-start;">
+      <div style="background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.3); border-radius:50%; width:50px; height:50px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1.3rem;">📅</div>
+      <div>
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:400; margin-bottom:0.5rem;">Nombre de la Clase</h3>
+        <p style="color:#888880; font-size:0.85rem; line-height:1.6; margin-bottom:1rem;">Descripción de la clase en vivo. Fecha y horario a confirmar por WhatsApp.</p>
+        <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap;">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:#c9a84c;">$10.000</span>
+          <button onclick="pagar('Clase en Vivo 1', 10000)" style="background:#c9a84c; color:#0a0a0a; border:none; padding:0.6rem 1.2rem; border-radius:2px; font-size:0.75rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer;">Reservar lugar</button>
+        </div>
+      </div>
+    </div>
+    <div style="background:#161616; border:1px solid #2a2a2a; border-radius:4px; padding:2rem; display:flex; gap:1.5rem; align-items:flex-start;">
+      <div style="background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.3); border-radius:50%; width:50px; height:50px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1.3rem;">🎓</div>
+      <div>
+        <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:400; margin-bottom:0.5rem;">Nombre de la Clase</h3>
+        <p style="color:#888880; font-size:0.85rem; line-height:1.6; margin-bottom:1rem;">Descripción de la clase en vivo. Fecha y horario a confirmar por WhatsApp.</p>
+        <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap;">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:#c9a84c;">$12.000</span>
+          <button onclick="pagar('Clase en Vivo 2', 12000)" style="background:#c9a84c; color:#0a0a0a; border:none; padding:0.6rem 1.2rem; border-radius:2px; font-size:0.75rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer;">Reservar lugar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOSOTROS -->
+<section id="nosotros" style="padding:6rem 4rem; max-width:1200px; margin:0 auto; border-top:1px solid #2a2a2a;">
+  <p class="section-label">Quiénes somos</p>
+  <h2 class="section-title">El equipo <em style="font-style:normal;color:#c9a84c;">Ojeda & Araujo</em></h2>
+  <div class="divider"></div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center;">
+    <div>
+      <p style="color:#888880; line-height:1.8; margin-bottom:1.5rem;">Somos una consultora especializada en formación profesional. Nuestro objetivo es transformar conocimiento en herramientas concretas que podés aplicar desde el primer día.</p>
+      <p style="color:#888880; line-height:1.8; margin-bottom:2rem;">Con años de experiencia en el campo, diseñamos cursos prácticos con contenido actualizado y acompañamiento personalizado.</p>
+      <div style="display:flex; gap:3rem;">
+        <div><div style="font-family:'Cormorant Garamond',serif; font-size:2rem; color:#c9a84c;">+5</div><div style="color:#888880; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em;">Años de experiencia</div></div>
+        <div><div style="font-family:'Cormorant Garamond',serif; font-size:2rem; color:#c9a84c;">500+</div><div style="color:#888880; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em;">Alumnos</div></div>
+        <div><div style="font-family:'Cormorant Garamond',serif; font-size:2rem; color:#c9a84c;">12</div><div style="color:#888880; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em;">Cursos</div></div>
+      </div>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:1rem;">
+      <div style="background:#161616; border:1px solid #2a2a2a; border-radius:4px; padding:1.5rem; display:flex; align-items:center; gap:1rem;">
+        <div style="width:50px; height:50px; background:linear-gradient(135deg,#c9a84c,#8a6a2a); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:1.1rem; color:#0a0a0a;">O</div>
+        <div><div style="font-weight:500;">Ojeda</div><div style="color:#888880; font-size:0.8rem;">Co-fundador & Docente</div></div>
+      </div>
+      <div style="background:#161616; border:1px solid #2a2a2a; border-radius:4px; padding:1.5rem; display:flex; align-items:center; gap:1rem;">
+        <div style="width:50px; height:50px; background:linear-gradient(135deg,#c9a84c,#8a6a2a); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:1.1rem; color:#0a0a0a;">A</div>
+        <div><div style="font-weight:500;">Araujo</div><div style="color:#888880; font-size:0.8rem;">Co-fundador & Docente</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" style="padding:6rem 4rem; max-width:1200px; margin:0 auto; border-top:1px solid #2a2a2a;">
+  <p class="section-label">Hablemos</p>
+  <h2 class="section-title">¿Tenés <em style="font-style:normal;color:#c9a84c;">preguntas?</em></h2>
+  <div class="divider"></div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:4rem;">
+    <div>
+      <p style="color:#888880; line-height:1.8; margin-bottom:2rem;">Escribinos por WhatsApp o email. Te respondemos en menos de 24 horas.</p>
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <a href="https://wa.me/5491100000000" target="_blank" style="display:flex; align-items:center; gap:1rem; background:#161616; border:1px solid #2a2a2a; border-radius:4px; padding:1rem 1.5rem; text-decoration:none; color:#f5f5f0; transition:border-color 0.3s;" onmouseover="this.style.borderColor='#c9a84c'" onmouseout="this.style.borderColor='#2a2a2a'">
+          <span style="font-size:1.3rem;">💬</span>
+          <div><div style="font-size:0.85rem; font-weight:500;">WhatsApp</div><div style="color:#888880; font-size:0.75rem;">+54 9 11 0000-0000</div></div>
+        </a>
+        <a href="mailto:info@ojedaaraujo.com" style="display:flex; align-items:center; gap:1rem; background:#161616; border:1px solid #2a2a2a; border-radius:4px; padding:1rem 1.5rem; text-decoration:none; color:#f5f5f0; transition:border-color 0.3s;" onmouseover="this.style.borderColor='#c9a84c'" onmouseout="this.style.borderColor='#2a2a2a'">
+          <span style="font-size:1.3rem;">📧</span>
+          <div><div style="font-size:0.85rem; font-weight:500;">Email</div><div style="color:#888880; font-size:0.75rem;">info@ojedaaraujo.com</div></div>
+        </a>
+      </div>
+    </div>
+    <div style="background:#161616; border:1px solid #2a2a2a; border-radius:4px; padding:2rem;">
+      <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:400; margin-bottom:1.5rem;">Envianos un mensaje</h3>
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <input type="text" placeholder="Tu nombre" style="background:#0a0a0a; border:1px solid #2a2a2a; border-radius:2px; padding:0.8rem 1rem; color:#f5f5f0; font-family:'DM Sans',sans-serif; font-size:0.9rem; outline:none; transition:border-color 0.3s;" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='#2a2a2a'">
+        <input type="email" placeholder="Tu email" style="background:#0a0a0a; border:1px solid #2a2a2a; border-radius:2px; padding:0.8rem 1rem; color:#f5f5f0; font-family:'DM Sans',sans-serif; font-size:0.9rem; outline:none; transition:border-color 0.3s;" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='#2a2a2a'">
+        <textarea placeholder="Tu consulta..." rows="4" style="background:#0a0a0a; border:1px solid #2a2a2a; border-radius:2px; padding:0.8rem 1rem; color:#f5f5f0; font-family:'DM Sans',sans-serif; font-size:0.9rem; outline:none; resize:none; transition:border-color 0.3s;" onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='#2a2a2a'"></textarea>
+        <a href="https://wa.me/5491100000000" target="_blank" class="btn-primary" style="text-align:center;">Enviar por WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="border-top:1px solid #2a2a2a; padding:3rem 4rem; display:flex; justify-content:space-between; align-items:center; max-width:100%;">
+  <div style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:#c9a84c;">Ojeda & Araujo</div>
+  <div style="color:#888880; font-size:0.8rem;">© 2025 Consultora Ojeda & Araujo. Todos los derechos reservados.</div>
+  <div style="display:flex; gap:1.5rem;">
+    <a href="#" style="color:#888880; font-size:0.8rem; text-decoration:none;" onmouseover="this.style.color='#c9a84c'" onmouseout="this.style.color='#888880'">Instagram</a>
+    <a href="#" style="color:#888880; font-size:0.8rem; text-decoration:none;" onmouseover="this.style.color='#c9a84c'" onmouseout="this.style.color='#888880'">WhatsApp</a>
+  </div>
+</footer>
+
+<div id="modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.85); z-index:1000; align-items:center; justify-content:center;">
+  <div style="background:#161616; border:1px solid #2a2a2a; border-radius:4px; padding:2.5rem; max-width:420px; width:90%; position:relative;">
+    <button onclick="cerrarModal()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; color:#888880; font-size:1.2rem; cursor:pointer;">✕</button>
+    <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; margin-bottom:0.5rem;" id="modal-titulo"></h3>
+    <p style="color:#888880; font-size:0.85rem; margin-bottom:1.5rem;">Vas a ser redirigido a MercadoPago para completar tu compra de forma segura.</p>
+    <div style="background:#0a0a0a; border:1px solid #2a2a2a; border-radius:2px; padding:1rem; margin-bottom:1.5rem; display:flex; justify-content:space-between; align-items:center;">
+      <span style="color:#888880; font-size:0.85rem;">Total</span>
+      <span style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; color:#c9a84c;" id="modal-precio"></span>
+    </div>
+    <a id="btn-mp" href="#" target="_blank" class="btn-primary" style="display:block; text-align:center; width:100%;">Pagar con MercadoPago</a>
+    <p style="color:#888880; font-size:0.7rem; text-align:center; margin-top:1rem;">🔒 Pago seguro — Aceptamos todas las tarjetas y transferencia</p>
+  </div>
+</div>
+
+<script>
+const LINKS_MP = {
+  'Curso 1':       'https://mpago.la/TU-LINK-CURSO-1',
+  'Curso 2':       'https://mpago.la/TU-LINK-CURSO-2',
+  'Curso 3':       'https://mpago.la/TU-LINK-CURSO-3',
+  'Clase en Vivo 1': 'https://mpago.la/TU-LINK-CLASE-1',
+  'Clase en Vivo 2': 'https://mpago.la/TU-LINK-CLASE-2',
+};
+function pagar(nombre, precio) {
+  document.getElementById('modal-titulo').textContent = nombre;
+  document.getElementById('modal-precio').textContent = '$' + precio.toLocaleString('es-AR');
+  document.getElementById('btn-mp').href = LINKS_MP[nombre] || '#';
+  const modal = document.getElementById('modal');
+  modal.style.display = 'flex';
+}
+function cerrarModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) cerrarModal();
+});
+</script>
+</body>
+</html>
