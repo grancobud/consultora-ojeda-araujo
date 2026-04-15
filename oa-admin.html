@@ -306,6 +306,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 .csv-row{display:flex;gap:.5rem;padding:.3rem 0;border-bottom:1px solid rgba(78,196,140,0.04);font-size:.72rem;}
 .csv-cell{flex:1;color:var(--textm);font-family:var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -364,6 +365,10 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
   <div class="top">
     <div class="top-title" id="ptitle">Panel <em>Principal</em></div>
     <div class="top-actions">
+      <button class="bsm" onclick="syncFromSupabase()" title="Sincronizar con Supabase" style="display:flex;align-items:center;gap:.35rem;">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 8a7 7 0 0112.9-3.8M15 8a7 7 0 01-12.9 3.8"/><path d="M14 1v4h-4M2 15v-4h4"/></svg>
+        Sync
+      </button>
       <button class="btn-new" id="btn-top-action" onclick="openModal()">
         <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M8 2v12M2 8h12"/></svg>
         Nuevo Curso
@@ -735,6 +740,126 @@ function getDB(k, def){ return LS.get(k) || def; }
 function setDB(k,v){ LS.set(k,v); }
 
 // ══════════════════════════════════════════════════════
+//  SUPABASE — dual mode (Supabase + localStorage fallback)
+// ══════════════════════════════════════════════════════
+
+const SUPABASE_URL = 'https://zhdcwcpitegxmewxvqcl.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Jt-be16ffF0GgG0pdNFlnw_yrF0kpko';
+const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+// CURSOS — read from Supabase, cache in localStorage
+async function getCursosAsync() {
+  if (!sb) return getDB('cursos', []);
+  try {
+    const { data, error } = await sb.from('cursos').select('*').order('created_at');
+    if (error) throw error;
+    const cursos = data.map(c => ({
+      id: c.id, nombre: c.nombre, categoria: c.categoria, desc: c.descripcion,
+      precio: c.precio, estado: c.estado, mp: c.mp_link, dur: c.duracion,
+      docente: c.docente, imagen: c.imagen_url, created: c.created_at
+    }));
+    LS.set('cursos', cursos);
+    return cursos;
+  } catch(e) {
+    console.warn('Supabase error cursos, using cache:', e);
+    return getDB('cursos', []);
+  }
+}
+
+// Save curso to Supabase
+async function saveCursoToSupabase(obj) {
+  if (!sb) return;
+  try {
+    const dbObj = {
+      id: obj.id, nombre: obj.nombre, categoria: obj.categoria,
+      descripcion: obj.desc, precio: obj.precio, estado: obj.estado,
+      mp_link: obj.mp, duracion: obj.dur, docente: obj.docente
+    };
+    const { error } = await sb.from('cursos').upsert(dbObj);
+    if (error) console.error('Error saving curso to Supabase:', error);
+  } catch(e) { console.error('saveCursoToSupabase:', e); }
+}
+
+// Delete curso from Supabase
+async function delCursoFromSupabase(id) {
+  if (!sb) return;
+  try {
+    const { error } = await sb.from('cursos').delete().eq('id', id);
+    if (error) console.error('Error deleting curso from Supabase:', error);
+  } catch(e) { console.error('delCursoFromSupabase:', e); }
+}
+
+// ALUMNOS — read from Supabase perfiles + compras
+async function getAlumnosAsync() {
+  if (!sb) return getDB('alumnos', []);
+  try {
+    const { data: compras } = await sb.from('compras').select('*');
+    const { data: perfiles } = await sb.from('perfiles').select('*');
+    const cursos = getCursos();
+    const alumnos = (perfiles || []).map(p => {
+      const userCompras = (compras || []).filter(c => c.user_id === p.id);
+      const curso = userCompras[0] ? cursos.find(c => c.id === userCompras[0].curso_id) : null;
+      return {
+        id: p.id, nombre: p.nombre, email: p.email,
+        cursoId: userCompras[0]?.curso_id || '',
+        cursoNombre: curso?.nombre || 'Sin curso',
+        monto: userCompras.reduce((a, c) => a + (c.monto || 0), 0),
+        ts: p.created_at
+      };
+    });
+    LS.set('alumnos', alumnos);
+    return alumnos;
+  } catch(e) {
+    console.warn('Supabase error alumnos:', e);
+    return getDB('alumnos', []);
+  }
+}
+
+// INGRESOS — read from compras table
+async function getIngresosAsync() {
+  if (!sb) return getDB('ingresos', []);
+  try {
+    const { data, error } = await sb.from('compras').select('*').order('created_at', { ascending: false });
+    if (error) throw error;
+    const cursos = getCursos();
+    const perfiles = getDB('perfiles_cache', []);
+    const ingresos = data.map(c => ({
+      id: c.id, nombre: (perfiles.find(p => p.id === c.user_id) || {}).nombre || 'Usuario',
+      email: '', cursoId: c.curso_id,
+      cursoNombre: (cursos.find(x => x.id === c.curso_id) || {}).nombre || c.curso_id,
+      monto: c.monto, metodo: c.metodo_pago, ts: c.created_at
+    }));
+    LS.set('ingresos', ingresos);
+    return ingresos;
+  } catch(e) {
+    console.warn('Supabase error ingresos:', e);
+    return getDB('ingresos', []);
+  }
+}
+
+// Sync all from Supabase (manual refresh)
+async function syncFromSupabase() {
+  if (!sb) { toast('Supabase no disponible', 'r'); return; }
+  toast('Sincronizando...');
+  try {
+    const cursos = await getCursosAsync();
+    LS.set('cursos', cursos);
+    // Cache perfiles for name resolution
+    try {
+      const { data: perfiles } = await sb.from('perfiles').select('*');
+      LS.set('perfiles_cache', perfiles || []);
+    } catch(e) {}
+    await getAlumnosAsync();
+    await getIngresosAsync();
+    updateAll();
+    toast('Sincronizado con Supabase');
+    addActividad('Datos sincronizados desde Supabase', 'b');
+  } catch(e) {
+    toast('Error al sincronizar: ' + e.message, 'r');
+  }
+}
+
+// ══════════════════════════════════════════════════════
 //  HELPERS
 // ══════════════════════════════════════════════════════
 
@@ -844,6 +969,7 @@ function saveCurso(){
     addActividad(`Curso <strong>"${nombre}"</strong> creado`,'g');
   }
   setCursos(cursos);
+  saveCursoToSupabase(obj); // async — fire and forget
   closeModal();
   toast(editingCursoId?'Curso actualizado':'Curso creado correctamente');
   updateAll();
@@ -853,6 +979,7 @@ function delCurso(id){
   if(!confirm('¿Eliminar este curso?'))return;
   const cursos=getCursos().filter(x=>x.id!==id);
   setCursos(cursos);
+  delCursoFromSupabase(id); // async — fire and forget
   addActividad('Curso eliminado','r');
   toast('Curso eliminado','r');
   updateAll();
@@ -1423,12 +1550,28 @@ function seedCursosIfEmpty(){
 //  BOOT
 // ══════════════════════════════════════════════════════
 
-window.addEventListener('DOMContentLoaded',()=>{
+window.addEventListener('DOMContentLoaded', async ()=>{
+  // Seed localStorage defaults as fallback (in case Supabase is slow/down)
   seedCursosIfEmpty();
+
+  // Try loading from Supabase first
+  if (sb) {
+    try {
+      const cursos = await getCursosAsync();
+      if (cursos.length) LS.set('cursos', cursos);
+      // Cache perfiles for name resolution
+      try {
+        const { data: perfiles } = await sb.from('perfiles').select('*');
+        LS.set('perfiles_cache', perfiles || []);
+      } catch(e) {}
+    } catch(e) { console.warn('Boot Supabase load failed, using localStorage:', e); }
+  }
+
   updateMetrics();
   renderDashCursos();
   updateRings();
   renderActividad();
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 });
 
 // ══ BUFFER ═══════════════════════════════════════════════════
