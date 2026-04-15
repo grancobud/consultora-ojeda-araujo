@@ -3,7 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OA Formación — Panel Admin</title>
+<title>OA Formacion — Panel Admin</title>
+<meta name="description" content="Panel de administracion de Ojeda Araujo & Asociados. Gestion de cursos, alumnos, ingresos y archivos.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%230F6E56'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='18' font-family='serif' font-weight='bold' fill='%23f0f4f0'%3EOA%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#0F6E56">
+<!-- Google Analytics 4 — Reemplazar G-XXXXXXXXXX con tu Measurement ID real -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -248,7 +255,11 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 ::-webkit-scrollbar-thumb{background:var(--borderb);border-radius:2px;}
 
 @media(max-width:1180px){.metrics{grid-template-columns:repeat(2,1fr);}.g2{grid-template-columns:1fr;}.al-grid{grid-template-columns:1fr 1fr;}}
-@media(max-width:860px){.sb{transform:translateX(-100%);}.main{margin-left:0;}}
+.sb-toggle{display:none;position:fixed;top:.7rem;left:.7rem;z-index:200;background:var(--s2);border:1px solid var(--borderb);border-radius:var(--r);padding:.45rem .55rem;cursor:pointer;flex-direction:column;gap:3px;}.sb-toggle span{display:block;width:18px;height:2px;background:var(--gl);border-radius:2px;transition:all .3s;}.sb-toggle.open span:nth-child(1){transform:rotate(45deg) translate(3px,3px);}.sb-toggle.open span:nth-child(2){opacity:0;}.sb-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(3px,-3px);}
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:90;backdrop-filter:blur(3px);}
+.sb.sb-open{transform:translateX(0)!important;}
+.mc-ico i[data-lucide],.nf-ico i[data-lucide]{width:18px;height:18px;stroke:currentColor;}
+@media(max-width:860px){.sb{transform:translateX(-100%);transition:transform .3s;}.main{margin-left:0;}.sb-toggle{display:flex;}.top{padding-left:3.5rem;}}
 /* ── MEJORAS ─── */
 .nf-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;}
 .nf-card{background:var(--s2);border:1px solid var(--border);border-radius:var(--r2);padding:1.2rem 1.3rem;display:flex;gap:1rem;align-items:flex-start;transition:border-color .25s;}
@@ -298,7 +309,9 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 </head>
 <body>
 
-<aside class="sb">
+<button class="sb-toggle" id="sb-toggle" onclick="toggleSidebar()" aria-label="Menu"><span></span><span></span><span></span></button>
+<div class="sb-overlay" id="sb-overlay" onclick="toggleSidebar()"></div>
+<aside class="sb" id="sidebar">
   <div class="sb-logo">
     <div class="sb-badge"><div class="sb-dot"></div>Admin</div>
     <div class="sb-name">Ojeda Araujo</div>
@@ -362,34 +375,34 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
   <div id="p-dash" class="content">
     <div class="metrics">
       <div class="mc">
-        <div class="mc-top"><div class="mc-lbl">Alumnos Activos</div><div class="mc-ico g">👥</div></div>
+        <div class="mc-top"><div class="mc-lbl">Alumnos Activos</div><div class="mc-ico g"><i data-lucide="users"></i></div></div>
         <div class="mc-num" id="n-alumnos">0</div>
         <div class="mc-trend nt" id="t-alumnos">— sin datos aún</div>
         <div class="mc-bar"><div class="mc-fill g" id="b-alumnos" style="width:0%"></div></div>
       </div>
       <div class="mc gold">
-        <div class="mc-top"><div class="mc-lbl">Ingresos ARS</div><div class="mc-ico gold">💰</div></div>
+        <div class="mc-top"><div class="mc-lbl">Ingresos ARS</div><div class="mc-ico gold"><i data-lucide="dollar-sign"></i></div></div>
         <div class="mc-num" id="n-ingresos">$0</div>
         <div class="mc-trend nt" id="t-ingresos">— registrá pagos</div>
         <div class="mc-bar"><div class="mc-fill gold" id="b-ingresos" style="width:0%"></div></div>
       </div>
       <div class="mc blue">
-        <div class="mc-top"><div class="mc-lbl">Cursos Activos</div><div class="mc-ico b">📚</div></div>
+        <div class="mc-top"><div class="mc-lbl">Cursos Activos</div><div class="mc-ico b"><i data-lucide="book-open"></i></div></div>
         <div class="mc-num" id="n-cursos">0</div>
         <div class="mc-trend nt" id="t-cursos">— creá el primero</div>
         <div class="mc-bar"><div class="mc-fill b" id="b-cursos" style="width:0%"></div></div>
       </div>
       <div class="mc red">
-        <div class="mc-top"><div class="mc-lbl">Archivos Totales</div><div class="mc-ico r">📁</div></div>
+        <div class="mc-top"><div class="mc-lbl">Archivos Totales</div><div class="mc-ico r"><i data-lucide="folder"></i></div></div>
         <div class="mc-num" id="n-arch">0</div>
         <div class="mc-trend nt" id="t-arch">— subí materiales</div>
         <div class="mc-bar"><div class="mc-fill r" id="b-arch" style="width:0%"></div></div>
       </div>
     </div>
     <div class="nf-row">
-      <div class="nf-card"><div class="nf-ico g">📥</div><div><div class="nf-title">Importar alumnos</div><div class="nf-desc">Cargá un CSV y los alumnos se registran solos.</div><button class="nf-btn" onclick="openModalImport()">Subir archivo →</button></div></div>
-      <div class="nf-card"><div class="nf-ico g">💬</div><div><div class="nf-title">WhatsApp masivo</div><div class="nf-desc">Enviá un mensaje a todos los alumnos de un curso.</div><button class="nf-btn" onclick="openModalWA()">Seleccionar curso →</button></div></div>
-      <div class="nf-card"><div class="nf-ico b">📄</div><div><div class="nf-title">Certificados PDF</div><div class="nf-desc">Generá el certificado de un alumno con un click.</div><button class="nf-btn" onclick="nav('alumnos',document.querySelectorAll('.sb-item')[3])">Ver alumnos →</button></div></div>
+      <div class="nf-card"><div class="nf-ico g"><i data-lucide="download"></i></div><div><div class="nf-title">Importar alumnos</div><div class="nf-desc">Cargá un CSV y los alumnos se registran solos.</div><button class="nf-btn" onclick="openModalImport()">Subir archivo →</button></div></div>
+      <div class="nf-card"><div class="nf-ico g"><i data-lucide="message-circle"></i></div><div><div class="nf-title">WhatsApp masivo</div><div class="nf-desc">Enviá un mensaje a todos los alumnos de un curso.</div><button class="nf-btn" onclick="openModalWA()">Seleccionar curso →</button></div></div>
+      <div class="nf-card"><div class="nf-ico b"><i data-lucide="file-text"></i></div><div><div class="nf-title">Certificados PDF</div><div class="nf-desc">Generá el certificado de un alumno con un click.</div><button class="nf-btn" onclick="nav('alumnos',document.querySelectorAll('.sb-item')[3])">Ver alumnos →</button></div></div>
     </div>
     <div class="g2">
       <div class="panel">
@@ -410,9 +423,8 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
           <div class="act"><div class="adot g"></div><div class="atxt">Panel iniciado. Bienvenido.</div><div class="atme">ahora</div></div>
         </div>
         <div class="ph" style="border-top:1px solid var(--border)"><div class="pt">Ingresos <em>por curso</em></div></div>
-        <div class="chart-wrap">
-          <div class="bars" id="cbars"></div>
-          <div class="blbls" id="clbls"></div>
+        <div class="chart-wrap" style="padding:1rem 1.1rem;">
+          <canvas id="income-chart" height="180"></canvas>
         </div>
       </div>
     </div>
@@ -443,9 +455,9 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
   <!-- ARCHIVOS -->
   <div id="p-arch" class="content" style="display:none">
     <div class="nf-row">
-      <div class="nf-card"><div class="nf-ico g">📥</div><div><div class="nf-title">Importar alumnos</div><div class="nf-desc">Cargá un CSV y los alumnos se registran solos.</div><button class="nf-btn" onclick="openModalImport()">Subir archivo →</button></div></div>
-      <div class="nf-card"><div class="nf-ico g">💬</div><div><div class="nf-title">WhatsApp masivo</div><div class="nf-desc">Enviá un mensaje a todos los alumnos de un curso.</div><button class="nf-btn" onclick="openModalWA()">Seleccionar curso →</button></div></div>
-      <div class="nf-card"><div class="nf-ico b">📄</div><div><div class="nf-title">Certificados PDF</div><div class="nf-desc">Generá el certificado de un alumno con un click.</div><button class="nf-btn" onclick="nav('alumnos',document.querySelectorAll('.sb-item')[3])">Ver alumnos →</button></div></div>
+      <div class="nf-card"><div class="nf-ico g"><i data-lucide="download"></i></div><div><div class="nf-title">Importar alumnos</div><div class="nf-desc">Cargá un CSV y los alumnos se registran solos.</div><button class="nf-btn" onclick="openModalImport()">Subir archivo →</button></div></div>
+      <div class="nf-card"><div class="nf-ico g"><i data-lucide="message-circle"></i></div><div><div class="nf-title">WhatsApp masivo</div><div class="nf-desc">Enviá un mensaje a todos los alumnos de un curso.</div><button class="nf-btn" onclick="openModalWA()">Seleccionar curso →</button></div></div>
+      <div class="nf-card"><div class="nf-ico b"><i data-lucide="file-text"></i></div><div><div class="nf-title">Certificados PDF</div><div class="nf-desc">Generá el certificado de un alumno con un click.</div><button class="nf-btn" onclick="nav('alumnos',document.querySelectorAll('.sb-item')[3])">Ver alumnos →</button></div></div>
     </div>
     <div class="g2">
       <div class="panel" style="animation-delay:0s">
@@ -456,7 +468,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
         </div>
         <div class="up-zone" id="dropzone" onclick="document.getElementById('finput').click()">
           <input type="file" id="finput" multiple style="display:none" accept=".pdf,.ppt,.pptx,.mp4,.jpg,.jpeg,.png,.docx" onchange="handleFiles(this.files)">
-          <span class="up-ico">⬆</span>
+          <span class="up-ico"><i data-lucide="upload" style="width:28px;height:28px;stroke:var(--gl)"></i></span>
           <div class="up-title">Arrastrá o hacé clic para subir</div>
           <div class="up-sub">Seleccioná el curso primero.<br>Hasta 500MB por archivo.</div>
           <div class="up-chips"><span class="chip">PDF</span><span class="chip">PPT</span><span class="chip">MP4</span><span class="chip">JPG/PNG</span><span class="chip">DOCX</span></div>
@@ -1262,26 +1274,8 @@ function updateMetrics(){
   document.getElementById('pill-arch').textContent=archivos.length;
   document.getElementById('pill-alumnos').textContent=alumnos.length;
 
-  // Chart por curso
-  const cb=document.getElementById('cbars'),cl=document.getElementById('clbls');
-  if(cb&&cl){
-    cb.innerHTML='';cl.innerHTML='';
-    const top=cursos.slice(0,16);
-    if(!top.length){cb.innerHTML='<div style="color:var(--textd);font-size:.7rem;padding:.5rem">Sin cursos</div>';return;}
-    const vals=top.map(c=>ingresos.filter(i=>i.cursoId===c.id).reduce((a,b)=>a+(b.monto||0),0));
-    const mx=Math.max(...vals,1);
-    top.forEach((c,i)=>{
-      const b=document.createElement('div');
-      b.className='bar';b.style.height='0';
-      b.dataset.v=fmtARS(vals[i]);
-      cb.appendChild(b);
-      setTimeout(()=>b.style.height=(vals[i]/mx*100)+'%',300+i*60);
-      const l=document.createElement('div');
-      l.className='blbl';
-      l.textContent=c.nombre.slice(0,4);
-      cl.appendChild(l);
-    });
-  }
+  // Chart.js por curso
+  renderIncomeChart(cursos,ingresos);
 }
 
 function updateRings(){
@@ -1524,6 +1518,43 @@ nav = function(name, el) {
 
 // cerrar nuevos modales
 ['mbg-import','mbg-wa','mbg-cert'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');});});
+
+// ══ SIDEBAR TOGGLE MOBILE ══════════════════════════════
+function toggleSidebar(){
+  const sb=document.getElementById('sidebar');
+  const btn=document.getElementById('sb-toggle');
+  const ov=document.getElementById('sb-overlay');
+  const open=sb.classList.toggle('sb-open');
+  btn.classList.toggle('open',open);
+  ov.style.display=open?'block':'none';
+}
+
+// ══ CHART.JS INCOME CHART ══════════════════════════════
+let incomeChartInstance=null;
+function renderIncomeChart(cursos,ingresos){
+  const canvas=document.getElementById('income-chart');
+  if(!canvas||typeof Chart==='undefined')return;
+  if(incomeChartInstance){incomeChartInstance.destroy();}
+  const top=cursos.slice(0,12);
+  if(!top.length)return;
+  const labels=top.map(c=>c.nombre.length>18?c.nombre.slice(0,18)+'...':c.nombre);
+  const data=top.map(c=>ingresos.filter(i=>i.cursoId===c.id).reduce((a,b)=>a+(b.monto||0),0));
+  incomeChartInstance=new Chart(canvas,{
+    type:'bar',
+    data:{labels,datasets:[{label:'Ingresos ARS',data,backgroundColor:'rgba(78,196,140,0.4)',borderColor:'rgba(78,196,140,0.8)',borderWidth:1,borderRadius:3,barPercentage:0.7}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return '$'+ctx.raw.toLocaleString('es-AR');}}}},scales:{x:{ticks:{color:'#3d5944',font:{size:9,family:'DM Mono'},maxRotation:45},grid:{display:false}},y:{ticks:{color:'#3d5944',font:{size:9,family:'DM Mono'},callback:function(v){return '$'+v.toLocaleString('es-AR');}},grid:{color:'rgba(78,196,140,0.06)'}}}}
+  });
+}
+
+// ══ LUCIDE INIT ═════════════════════════════════════════
+function initLucide(){if(typeof lucide!=='undefined')lucide.createIcons();}
+</script>
+<!-- CDN Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script>
+// Init after CDN loads
+initLucide();
 </script>
 </body>
 </html>
