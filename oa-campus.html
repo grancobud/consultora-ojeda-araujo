@@ -10,6 +10,7 @@
 <meta name="theme-color" content="#0F6E56">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
 <style>
 :root{
   --v:#0F6E56;--v2:#1D9E75;--v3:#085041;--v4:#5DCAA5;
@@ -370,6 +371,13 @@ function renderDashboard(perfil, cursos, compras, progreso) {
 
   // Catalog
   renderCatalogo(cursos, misCursoIds);
+
+  // Confetti si hay cursos completados
+  if (typeof confetti !== 'undefined' && completados.length > 0) {
+    setTimeout(function() {
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#0F6E56', '#1D9E75', '#5DCAA5', '#c9a84c', '#e8c97a'] });
+    }, 1500);
+  }
 }
 
 function renderMisCursos(misCursos, progreso) {
