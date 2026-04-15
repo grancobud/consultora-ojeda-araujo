@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
 <style>
 :root{
   --v:#0F6E56;--v2:#1D9E75;--v3:#085041;--v4:#5DCAA5;
@@ -106,6 +107,8 @@ main{margin-top:60px;flex:1;padding:2.5rem;max-width:1200px;width:100%;margin-le
 .mc-foot{padding:.7rem 1rem;border-top:1px solid var(--borde);display:flex;justify-content:flex-end;}
 .btn-continuar{background:var(--v);color:var(--blanco);border:1px solid var(--v2);padding:.45rem 1.1rem;border-radius:2px;font-size:.7rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .3s;font-family:'Outfit',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;}
 .btn-continuar:hover{background:var(--v2);}
+.btn-cert{background:var(--oro);color:var(--negro);border:none;padding:.5rem 1rem;border-radius:2px;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .3s;font-family:'Outfit',sans-serif;margin-top:.5rem;display:inline-flex;align-items:center;gap:.4rem;}
+.btn-cert:hover{background:var(--oro2);transform:translateY(-1px);}
 .btn-continuar svg{width:14px;height:14px;}
 
 /* ---- CATALOG CARD ---- */
@@ -367,7 +370,7 @@ function renderDashboard(perfil, cursos, compras, progreso) {
   animateNumber('stat-completados', completados.length);
 
   // My courses
-  renderMisCursos(misCursos, progreso);
+  renderMisCursos(misCursos, progreso, nombre);
 
   // Catalog
   renderCatalogo(cursos, misCursoIds);
@@ -380,7 +383,7 @@ function renderDashboard(perfil, cursos, compras, progreso) {
   }
 }
 
-function renderMisCursos(misCursos, progreso) {
+function renderMisCursos(misCursos, progreso, nombre) {
   const grid = document.getElementById('mis-cursos-grid');
 
   if (misCursos.length === 0) {
@@ -433,6 +436,10 @@ function renderMisCursos(misCursos, progreso) {
             ${pct > 0 ? 'Continuar' : 'Comenzar'}
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           </a>
+          ${(prog && prog.completado) ? `<button onclick="generarCertificado('${escapeHtml(curso.titulo).replace(/'/g, "\\'")}', '${escapeHtml(nombre).replace(/'/g, "\\'")}')" class="btn-cert">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Descargar Certificado
+          </button>` : ''}
         </div>
       </div>`;
   }).join('');
@@ -566,6 +573,132 @@ async function logout() {
     console.error('Logout error:', e);
   }
   window.location.href = 'oa-login.html';
+}
+
+/* ============================================================
+   CERTIFICADO PDF
+   ============================================================ */
+function generarCertificado(cursoNombre, alumnoNombre) {
+  if (typeof jspdf === 'undefined' && typeof window.jspdf === 'undefined') {
+    alert('Error cargando generador de PDF. Intenta de nuevo.');
+    return;
+  }
+  var jsPDF = window.jspdf.jsPDF;
+  var doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+  var w = 297, h = 210;
+
+  // Background
+  doc.setFillColor(8, 12, 10);
+  doc.rect(0, 0, w, h, 'F');
+
+  // Border
+  doc.setDrawColor(15, 110, 86);
+  doc.setLineWidth(1.5);
+  doc.rect(10, 10, w - 20, h - 20);
+
+  // Inner border
+  doc.setDrawColor(93, 202, 165);
+  doc.setLineWidth(0.3);
+  doc.rect(14, 14, w - 28, h - 28);
+
+  // Gold line top
+  doc.setDrawColor(201, 168, 76);
+  doc.setLineWidth(0.8);
+  doc.line(w/2 - 40, 35, w/2 + 40, 35);
+
+  // Logo text
+  doc.setTextColor(93, 202, 165);
+  doc.setFontSize(11);
+  doc.setFont('helvetica', 'normal');
+  doc.text('OJEDA ARAUJO & ASOCIADOS', w/2, 28, { align: 'center' });
+
+  // Subtitle
+  doc.setTextColor(122, 140, 128);
+  doc.setFontSize(8);
+  doc.text('PLATAFORMA DE FORMACION PROFESIONAL', w/2, 33, { align: 'center' });
+
+  // Certificate title
+  doc.setTextColor(201, 168, 76);
+  doc.setFontSize(28);
+  doc.setFont('times', 'italic');
+  doc.text('Certificado de Finalizacion', w/2, 58, { align: 'center' });
+
+  // Gold line
+  doc.setDrawColor(201, 168, 76);
+  doc.setLineWidth(0.5);
+  doc.line(w/2 - 50, 64, w/2 + 50, 64);
+
+  // "Se certifica que"
+  doc.setTextColor(170, 191, 176);
+  doc.setFontSize(12);
+  doc.setFont('helvetica', 'normal');
+  doc.text('Se certifica que', w/2, 80, { align: 'center' });
+
+  // Student name
+  doc.setTextColor(240, 244, 240);
+  doc.setFontSize(26);
+  doc.setFont('times', 'bold');
+  doc.text(alumnoNombre, w/2, 95, { align: 'center' });
+
+  // Line under name
+  doc.setDrawColor(93, 202, 165);
+  doc.setLineWidth(0.3);
+  doc.line(w/2 - 60, 100, w/2 + 60, 100);
+
+  // "ha completado satisfactoriamente"
+  doc.setTextColor(170, 191, 176);
+  doc.setFontSize(12);
+  doc.setFont('helvetica', 'normal');
+  doc.text('ha completado satisfactoriamente el curso', w/2, 112, { align: 'center' });
+
+  // Course name
+  doc.setTextColor(93, 202, 165);
+  doc.setFontSize(18);
+  doc.setFont('times', 'bolditalic');
+  if (cursoNombre.length > 50) {
+    doc.setFontSize(14);
+  }
+  doc.text(cursoNombre, w/2, 126, { align: 'center', maxWidth: 200 });
+
+  // Date
+  var hoy = new Date();
+  var fecha = hoy.toLocaleDateString('es-AR', { day: '2-digit', month: 'long', year: 'numeric' });
+  doc.setTextColor(122, 140, 128);
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'normal');
+  doc.text('Fecha de emision: ' + fecha, w/2, 148, { align: 'center' });
+
+  // Certificate ID
+  var certId = 'OA-' + Date.now().toString(36).toUpperCase();
+  doc.setFontSize(7);
+  doc.setTextColor(61, 89, 68);
+  doc.text('ID: ' + certId, w/2, 155, { align: 'center' });
+
+  // Footer
+  doc.setDrawColor(201, 168, 76);
+  doc.setLineWidth(0.5);
+  doc.line(w/2 - 30, 170, w/2 + 30, 170);
+
+  doc.setTextColor(201, 168, 76);
+  doc.setFontSize(9);
+  doc.setFont('times', 'italic');
+  doc.text('Ojeda Araujo & Asociados', w/2, 177, { align: 'center' });
+
+  doc.setTextColor(122, 140, 128);
+  doc.setFontSize(7);
+  doc.setFont('helvetica', 'normal');
+  doc.text('Agro · Regulacion · Sustentabilidad · www.oa-consultora.com', w/2, 183, { align: 'center' });
+
+  // Corner decorations (small green dots)
+  doc.setFillColor(15, 110, 86);
+  doc.circle(20, 20, 1.5, 'F');
+  doc.circle(w - 20, 20, 1.5, 'F');
+  doc.circle(20, h - 20, 1.5, 'F');
+  doc.circle(w - 20, h - 20, 1.5, 'F');
+
+  // Save
+  var filename = 'Certificado_' + cursoNombre.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 30) + '.pdf';
+  doc.save(filename);
 }
 
 /* ============================================================

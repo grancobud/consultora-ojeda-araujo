@@ -29,6 +29,9 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"EducationalOrganization","name":"Ojeda Araujo & Asociados","url":"https://grancobud.github.io/consultora-ojeda-araujo/","description":"Consultora especializada en formacion profesional: agronegocios, cannabis medicinal, mercados de carbono, regulacion y certificaciones.","contactPoint":{"@type":"ContactPoint","telephone":"+54-9-379-405-8223","contactType":"customer service","availableLanguage":"Spanish"},"address":{"@type":"PostalAddress","addressCountry":"AR"}}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Necesito conocimientos previos?","acceptedAnswer":{"@type":"Answer","text":"No. Nuestros cursos estan disenados para profesionales de cualquier nivel."}},{"@type":"Question","name":"¿Los cursos tienen certificado?","acceptedAnswer":{"@type":"Answer","text":"Si. Al completar un curso, podes descargar tu certificado digital de finalizacion."}},{"@type":"Question","name":"¿El acceso es permanente?","acceptedAnswer":{"@type":"Answer","text":"Si. Una vez que adquiris un curso, tenes acceso de por vida al material."}}]}
+</script>
 <!-- Google Analytics 4 — Reemplazar G-E8Z10GD8SD con tu Measurement ID real de analytics.google.com -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-E8Z10GD8SD"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-E8Z10GD8SD');</script>
@@ -84,12 +87,38 @@ footer{background:var(--oscuro);border-top:1px solid var(--borde);padding:2.5rem
 .fu{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}.fu.vis{opacity:1;transform:translateY(0);}
 .swal-dark{border:1px solid #1c2620!important;font-family:'Outfit',sans-serif!important;}
 .swal2-title{font-family:'Playfair Display',serif!important;font-weight:400!important;}
-@media(max-width:1100px){nav{padding:1.1rem 2.5rem;}.hero{padding:8rem 2.5rem 5rem;}.hero h1{font-size:2.9rem;}.hero-stats{right:2.5rem;bottom:3rem;gap:2rem;}.wrap{padding:5rem 2.5rem;}.cursos-grid{grid-template-columns:1fr 1fr;}.dif-grid{grid-template-columns:1fr 1fr;gap:2rem;}.dif-wrap{padding:4rem 2.5rem;}.nost-grid{grid-template-columns:1fr;gap:3rem;}.nost-img{aspect-ratio:16/9;}.ctgrid{grid-template-columns:1fr;gap:3rem;}footer{padding:2rem 2.5rem;}}
+/* TESTIMONIOS */
+.test-slider{position:relative;overflow:hidden;margin-top:1rem;}
+.test-track{display:flex;gap:1.4rem;transition:transform .5s cubic-bezier(.4,0,.2,1);padding:.5rem 0;}
+.test-card{min-width:calc(33.333% - 1rem);background:var(--card);border:1px solid var(--borde);border-radius:3px;padding:2rem;flex-shrink:0;transition:border-color .3s;}
+.test-card:hover{border-color:var(--v2);}
+.test-stars{color:var(--oro);font-size:1rem;letter-spacing:2px;margin-bottom:1rem;}
+.test-text{color:var(--gris2);font-size:.88rem;line-height:1.85;font-weight:300;font-style:italic;margin-bottom:1.5rem;}
+.test-author{display:flex;align-items:center;gap:.8rem;}
+.test-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--v),var(--v3));display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:600;color:var(--blanco);flex-shrink:0;}
+.test-name{font-weight:500;font-size:.85rem;}.test-role{color:var(--gris);font-size:.72rem;margin-top:.1rem;}
+.test-nav{display:flex;align-items:center;justify-content:center;gap:1rem;margin-top:2rem;}
+.test-btn{background:transparent;border:1px solid var(--borde2);color:var(--gris);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem;transition:all .3s;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;}
+.test-btn:hover{border-color:var(--v4);color:var(--v4);}
+.test-dots{display:flex;gap:.4rem;}
+.test-dot{width:8px;height:8px;border-radius:50%;background:var(--borde2);cursor:pointer;transition:all .3s;}
+.test-dot.active{background:var(--v4);transform:scale(1.2);}
+/* FAQ */
+.faq-list{max-width:800px;}
+.faq-item{border:1px solid var(--borde);border-radius:3px;margin-bottom:.6rem;overflow:hidden;transition:border-color .3s;cursor:pointer;}
+.faq-item:hover{border-color:var(--v2);}
+.faq-item.open{border-color:var(--v2);}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.4rem;font-weight:500;font-size:.9rem;}
+.faq-icon{color:var(--v4);font-size:1.2rem;transition:transform .3s;font-weight:300;}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease;padding:0 1.4rem;color:var(--gris2);font-size:.85rem;line-height:1.85;font-weight:300;}
+.faq-item.open .faq-a{max-height:300px;padding:0 1.4rem 1.2rem;}
+@media(max-width:1100px){nav{padding:1.1rem 2.5rem;}.hero{padding:8rem 2.5rem 5rem;}.hero h1{font-size:2.9rem;}.hero-stats{right:2.5rem;bottom:3rem;gap:2rem;}.wrap{padding:5rem 2.5rem;}.cursos-grid{grid-template-columns:1fr 1fr;}.dif-grid{grid-template-columns:1fr 1fr;gap:2rem;}.dif-wrap{padding:4rem 2.5rem;}.nost-grid{grid-template-columns:1fr;gap:3rem;}.nost-img{aspect-ratio:16/9;}.ctgrid{grid-template-columns:1fr;gap:3rem;}.test-card{min-width:calc(50% - .7rem);}footer{padding:2rem 2.5rem;}}
 .nav-ham{display:none;background:none;border:none;cursor:pointer;padding:.5rem;flex-direction:column;gap:4px;}.nav-ham span{display:block;width:22px;height:2px;background:var(--v4);border-radius:2px;transition:all .3s;}
 .nav-ham.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}.nav-ham.open span:nth-child(2){opacity:0;}.nav-ham.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
 .nav-mobile{display:none;position:absolute;top:100%;left:0;right:0;background:rgba(8,12,10,.96);border-bottom:1px solid var(--borde);backdrop-filter:blur(16px);padding:1.5rem 2rem;flex-direction:column;gap:1.2rem;}.nav-mobile.show{display:flex;}
 .nav-mobile a{color:var(--gris);text-decoration:none;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;font-weight:500;transition:color .3s;padding:.4rem 0;}.nav-mobile a:hover{color:var(--v4);}
-@media(max-width:640px){.cursos-grid{grid-template-columns:1fr;}.dif-grid{grid-template-columns:1fr 1fr;}.hero h1{font-size:2.3rem;}.hero-stats{position:relative;right:auto;bottom:auto;margin-top:3rem;flex-wrap:wrap;gap:1.5rem;}.nav-links{display:none;}.nav-ham{display:flex;}.nav-cta{display:none;}}
+@media(max-width:640px){.cursos-grid{grid-template-columns:1fr;}.dif-grid{grid-template-columns:1fr 1fr;}.hero h1{font-size:2.3rem;}.hero-stats{position:relative;right:auto;bottom:auto;margin-top:3rem;flex-wrap:wrap;gap:1.5rem;}.nav-links{display:none;}.nav-ham{display:flex;}.nav-cta{display:none;}.test-card{min-width:100%;}}
 </style>
 </head>
 <body>
@@ -106,6 +135,8 @@ footer{background:var(--oscuro);border-top:1px solid var(--borde);padding:2.5rem
     <a href="#vivo" onclick="document.getElementById('nav-mob').classList.remove('show');document.querySelector('.nav-ham').classList.remove('open')">Sesiones</a>
     <a href="#nosotros" onclick="document.getElementById('nav-mob').classList.remove('show');document.querySelector('.nav-ham').classList.remove('open')">Nosotros</a>
     <a href="#contacto" onclick="document.getElementById('nav-mob').classList.remove('show');document.querySelector('.nav-ham').classList.remove('open')">Contacto</a>
+    <a href="#testimonios" onclick="document.getElementById('nav-mob').classList.remove('show');document.querySelector('.nav-ham').classList.remove('open')">Testimonios</a>
+    <a href="#faq" onclick="document.getElementById('nav-mob').classList.remove('show');document.querySelector('.nav-ham').classList.remove('open')">FAQ</a>
     <a href="oa-login.html" style="color:var(--oro);font-weight:600;">Campus Virtual →</a>
   </div>
 </nav>
@@ -185,6 +216,82 @@ footer{background:var(--oscuro);border-top:1px solid var(--borde);padding:2.5rem
           <div><div class="nsnum">7</div><div class="nslbl">Categorías</div></div>
           <div><div class="nsnum">AL</div><div class="nslbl">Regional</div></div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divline"></div>
+<section id="testimonios">
+  <div class="wrap">
+    <div class="eyebrow fu">Lo que dicen nuestros alumnos</div>
+    <h2 class="sec-title fu">Testimonios <em>reales</em></h2>
+    <div class="goldbar fu"></div>
+    <div class="test-slider fu" id="test-slider">
+      <div class="test-track" id="test-track">
+        <div class="test-card">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-text">"El curso de cannabis medicinal me dio las herramientas para entender toda la regulacion. Excelente material y docentes muy accesibles."</p>
+          <div class="test-author"><div class="test-av">ML</div><div><div class="test-name">Maria Laura G.</div><div class="test-role">Farmaceutica — Buenos Aires</div></div></div>
+        </div>
+        <div class="test-card">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-text">"Hice el curso de GlobalGAP y a los 3 meses logre la certificacion para mi campo. La guia paso a paso fue clave."</p>
+          <div class="test-author"><div class="test-av">RC</div><div><div class="test-name">Roberto C.</div><div class="test-role">Productor — Entre Rios</div></div></div>
+        </div>
+        <div class="test-card">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-text">"El curso de ESG me abrio la puerta al financiamiento verde. Ya presentamos nuestro primer proyecto de creditos de carbono."</p>
+          <div class="test-author"><div class="test-av">AS</div><div><div class="test-name">Ana S.</div><div class="test-role">Ing. Ambiental — Cordoba</div></div></div>
+        </div>
+        <div class="test-card">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-text">"La formacion en mercados de carbono fue muy practica. Los consultores conocen el sector de primera mano."</p>
+          <div class="test-author"><div class="test-av">JP</div><div><div class="test-name">Juan Pablo M.</div><div class="test-role">Consultor — Paraguay</div></div></div>
+        </div>
+        <div class="test-card">
+          <div class="test-stars">★★★★★</div>
+          <p class="test-text">"Introduccion a la IA fue exactamente lo que necesitaba. Claro, practico y sin tecnicismos innecesarios. Lo recomiendo."</p>
+          <div class="test-author"><div class="test-av">DF</div><div><div class="test-name">Daniela F.</div><div class="test-role">Administradora — Corrientes</div></div></div>
+        </div>
+      </div>
+      <div class="test-nav">
+        <button class="test-btn" onclick="slideTests(-1)">←</button>
+        <div class="test-dots" id="test-dots"></div>
+        <button class="test-btn" onclick="slideTests(1)">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divline"></div>
+<section id="faq">
+  <div class="wrap">
+    <div class="eyebrow fu">Resolvemos tus dudas</div>
+    <h2 class="sec-title fu">Preguntas <em>frecuentes</em></h2>
+    <div class="goldbar fu"></div>
+    <div class="faq-list fu">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q"><span>¿Necesito conocimientos previos?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">No. Nuestros cursos estan disenados para profesionales de cualquier nivel. Cada modulo parte de lo basico y avanza progresivamente.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q"><span>¿Como accedo al material?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">Una vez que completas el pago, recibis acceso inmediato a todos los materiales PDF descargables y al campus virtual donde podes hacer seguimiento de tu avance.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q"><span>¿Los cursos tienen certificado?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">Si. Al completar un curso, podes descargar tu certificado digital de finalizacion emitido por Ojeda Araujo & Asociados.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q"><span>¿Puedo consultar con un especialista?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">Absolutamente. Ofrecemos sesiones de consultoria personalizada por WhatsApp o email. Nuestros consultores estan activos en el sector y pueden asesorarte en temas especificos.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q"><span>¿Que metodos de pago aceptan?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">Aceptamos todas las tarjetas de credito y debito, transferencia bancaria y pago en efectivo a traves de MercadoPago. Tambien podes consultar por pago directo via transferencia.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q"><span>¿El acceso es permanente?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">Si. Una vez que adquiris un curso, tenes acceso de por vida al material. Ademas, si actualizamos el contenido, recibis las actualizaciones sin costo adicional.</div>
       </div>
     </div>
   </div>
@@ -321,6 +428,43 @@ function renderCursos(){
 var obs2=new IntersectionObserver(function(entries,observer){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');observer.unobserve(e.target);}});},{threshold:0.1});
 document.querySelectorAll('.fu').forEach(function(el){obs2.observe(el);});
 window.addEventListener('DOMContentLoaded',function(){renderCursos();if(typeof AOS!=='undefined')AOS.init({duration:700,once:true,offset:80});});
+// ══ TESTIMONIOS SLIDER ══
+var testIdx = 0;
+var cardsPerView = window.innerWidth > 1100 ? 3 : window.innerWidth > 640 ? 2 : 1;
+function slideTests(dir) {
+  var cards = document.querySelectorAll('.test-card');
+  var total = cards.length;
+  testIdx = Math.max(0, Math.min(testIdx + dir, total - cardsPerView));
+  var track = document.getElementById('test-track');
+  var cardWidth = cards[0].offsetWidth + 22; // gap
+  track.style.transform = 'translateX(-' + (testIdx * cardWidth) + 'px)';
+  updateDots();
+}
+function updateDots() {
+  var dots = document.getElementById('test-dots');
+  var total = document.querySelectorAll('.test-card').length;
+  var numDots = total - cardsPerView + 1;
+  dots.innerHTML = '';
+  for (var i = 0; i < numDots; i++) {
+    var d = document.createElement('div');
+    d.className = 'test-dot' + (i === testIdx ? ' active' : '');
+    d.onclick = (function(idx) { return function() { testIdx = idx; slideTests(0); }; })(i);
+    dots.appendChild(d);
+  }
+}
+window.addEventListener('resize', function() {
+  cardsPerView = window.innerWidth > 1100 ? 3 : window.innerWidth > 640 ? 2 : 1;
+  slideTests(0);
+});
+setTimeout(updateDots, 100);
+
+// ══ FAQ ACCORDION ══
+function toggleFaq(el) {
+  var wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(function(f) { f.classList.remove('open'); });
+  if (!wasOpen) el.classList.add('open');
+}
+
 // ══ EXIT INTENT POPUP ══
 var exitShown = false;
 document.addEventListener('mouseout', function(e) {
