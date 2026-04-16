@@ -851,11 +851,96 @@ async function syncFromSupabase() {
     } catch(e) {}
     await getAlumnosAsync();
     await getIngresosAsync();
+    const archivos = await getArchivosAsync();
+    LS.set('archivos', archivos);
+    const actividad = await getActividadAsync();
+    LS.set('actividad', actividad);
     updateAll();
     toast('Sincronizado con Supabase');
     addActividad('Datos sincronizados desde Supabase', 'b');
   } catch(e) {
     toast('Error al sincronizar: ' + e.message, 'r');
+  }
+}
+
+// ARCHIVOS — Supabase
+async function getArchivosAsync() {
+  if (!sb) return getDB('archivos', []);
+  try {
+    const { data, error } = await sb.from('archivos').select('*').order('created_at', { ascending: false });
+    if (error) throw error;
+    const archivos = data.map(a => ({
+      id: a.id, n: a.nombre, e: a.extension, s: a.tamano,
+      c: a.curso_id, cn: a.curso_nombre, ts: a.created_at
+    }));
+    LS.set('archivos', archivos);
+    return archivos;
+  } catch(e) {
+    console.warn('Supabase archivos error:', e);
+    return getDB('archivos', []);
+  }
+}
+
+async function saveArchivoToSupabase(obj) {
+  if (!sb) return;
+  try {
+    await sb.from('archivos').upsert({
+      id: obj.id, nombre: obj.n, extension: obj.e, tamano: obj.s,
+      curso_id: obj.c, curso_nombre: obj.cn
+    });
+  } catch(e) { console.warn('Error saving archivo:', e); }
+}
+
+async function delArchivoFromSupabase(id) {
+  if (!sb) return;
+  try {
+    await sb.from('archivos').delete().eq('id', id);
+  } catch(e) { console.warn('Error deleting archivo:', e); }
+}
+
+// CONFIG — Supabase
+async function getConfigAsync() {
+  if (!sb) return getDB('config', {});
+  try {
+    const { data, error } = await sb.from('configuracion').select('*');
+    if (error) throw error;
+    const cfg = {};
+    (data || []).forEach(r => { cfg[r.clave] = r.valor; });
+    LS.set('config', cfg);
+    return cfg;
+  } catch(e) {
+    return getDB('config', {});
+  }
+}
+
+async function saveConfigToSupabase(cfg) {
+  if (!sb) return;
+  try {
+    const entries = Object.entries(cfg).map(([clave, valor]) => ({ clave, valor: valor || '' }));
+    for (const entry of entries) {
+      await sb.from('configuracion').upsert(entry);
+    }
+  } catch(e) { console.warn('Error saving config:', e); }
+}
+
+// ACTIVIDAD — Supabase
+async function addActividadSupabase(msg, color) {
+  if (!sb) return;
+  try {
+    await sb.from('actividad').insert({ mensaje: msg, color: color || 'g' });
+  } catch(e) { console.warn('Error saving actividad:', e); }
+}
+
+async function getActividadAsync() {
+  if (!sb) return getDB('actividad', []);
+  try {
+    const { data, error } = await sb.from('actividad').select('*').order('created_at', { ascending: false }).limit(30);
+    if (error) throw error;
+    const acts = (data || []).map(a => ({ msg: a.mensaje, color: a.color, ts: a.created_at }));
+    LS.set('actividad', acts);
+    return acts;
+  } catch(e) {
+    return getDB('actividad', []);
   }
 }
 
@@ -888,6 +973,7 @@ function addActividad(msg,color='g'){
   if(acts.length>30)acts.pop();
   setDB('actividad',acts);
   renderActividad();
+  addActividadSupabase(msg,color);
 }
 
 function renderActividad(){
@@ -1061,6 +1147,7 @@ function handleFiles(fl){
       ts:new Date().toISOString(),
     };
     files.unshift(nf);
+    saveArchivoToSupabase(nf);
     addActividad(`Archivo <em>${f.name}</em> subido a ${nf.cn}`,'gold');
   });
   setFiles(files);
@@ -1108,6 +1195,7 @@ function renderCBD(){
 function delFile(id){
   const files=getFiles().filter(f=>f.id!==id);
   setFiles(files);
+  delArchivoFromSupabase(id);
   toast('Archivo eliminado','r');
   renderFiles(files);
   renderCBD();
@@ -1300,8 +1388,8 @@ function renderIngresos(){
 //  CONFIG
 // ══════════════════════════════════════════════════════
 
-function loadConfig(){
-  const cfg=getDB('config',{});
+async function loadConfig(){
+  const cfg = await getConfigAsync();
   document.getElementById('cfg-wa').value=cfg.wa||'+54 9 379 405-8223';
   document.getElementById('cfg-email').value=cfg.email||'contactos@oa-consultora.com';
   document.getElementById('cfg-web').value=cfg.web||'https://www.oa-consultora.com';
@@ -1339,6 +1427,7 @@ function saveConfig(){
   setCursos(cursos);
   toast('Configuración guardada');
   addActividad('Configuración actualizada','b');
+  saveConfigToSupabase(cfg);
 }
 
 function exportData(){
@@ -1565,6 +1654,8 @@ window.addEventListener('DOMContentLoaded', async ()=>{
         LS.set('perfiles_cache', perfiles || []);
       } catch(e) {}
     } catch(e) { console.warn('Boot Supabase load failed, using localStorage:', e); }
+    try { await getArchivosAsync(); } catch(e) {}
+    try { await getActividadAsync(); } catch(e) {}
   }
 
   updateMetrics();
