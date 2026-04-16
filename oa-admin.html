@@ -310,6 +310,25 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
 </head>
 <body>
 
+<!-- ADMIN AUTH OVERLAY -->
+<div id="admin-auth" style="position:fixed;inset:0;z-index:10000;background:var(--bg);display:flex;align-items:center;justify-content:center;">
+  <div style="background:var(--s2);border:1px solid var(--borderb);border-radius:var(--r2);padding:2.5rem;max-width:400px;width:90%;text-align:center;">
+    <div style="display:inline-flex;align-items:center;gap:.45rem;background:rgba(78,196,140,0.07);border:1px solid rgba(78,196,140,0.18);border-radius:var(--r);padding:.22rem .7rem;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gl);font-weight:500;margin-bottom:1rem;">
+      <div style="width:5px;height:5px;background:var(--gl);border-radius:50%;animation:blink 2.5s infinite;"></div>
+      Admin
+    </div>
+    <h2 style="font-family:var(--serif);font-size:1.3rem;font-weight:300;margin-bottom:.3rem;">Ojeda Araujo</h2>
+    <p style="font-size:.65rem;color:var(--textm);letter-spacing:.12em;text-transform:uppercase;margin-bottom:2rem;">Panel de Administracion</p>
+    <div style="display:flex;flex-direction:column;gap:.8rem;">
+      <input type="email" id="admin-email" placeholder="Email" style="background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:.7rem 1rem;color:var(--text);font-family:var(--sans);font-size:.85rem;outline:none;width:100%;" />
+      <input type="password" id="admin-pass" placeholder="Contrasena" style="background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:.7rem 1rem;color:var(--text);font-family:var(--sans);font-size:.85rem;outline:none;width:100%;" onkeydown="if(event.key==='Enter')adminLogin()" />
+      <button onclick="adminLogin()" style="background:var(--g);color:var(--text);border:1px solid var(--gm);border-radius:var(--r);padding:.7rem;font-size:.82rem;font-weight:500;cursor:pointer;font-family:var(--sans);letter-spacing:.05em;transition:all .2s;">Entrar</button>
+      <p id="admin-error" style="color:var(--red);font-size:.75rem;display:none;margin-top:.3rem;"></p>
+    </div>
+    <p style="color:var(--textd);font-size:.65rem;margin-top:1.5rem;">Acceso restringido a administradores</p>
+  </div>
+</div>
+
 <button class="sb-toggle" id="sb-toggle" onclick="toggleSidebar()" aria-label="Menu"><span></span><span></span><span></span></button>
 <div class="sb-overlay" id="sb-overlay" onclick="toggleSidebar()"></div>
 <aside class="sb" id="sidebar">
@@ -357,7 +376,8 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;back
   </nav>
   <div class="sb-foot">
     <div class="sb-av">OA</div>
-    <div><div class="sb-uname">Admin</div><div class="sb-urole">Super usuario</div></div>
+    <div style="flex:1"><div class="sb-uname">Admin</div><div class="sb-urole">Super usuario</div></div>
+    <button onclick="adminLogout()" title="Cerrar sesion" style="background:none;border:none;color:var(--textd);cursor:pointer;font-size:.9rem;transition:color .2s;" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--textd)'">&#x23FB;</button>
   </div>
 </aside>
 
@@ -746,6 +766,84 @@ function setDB(k,v){ LS.set(k,v); }
 const SUPABASE_URL = 'https://zhdcwcpitegxmewxvqcl.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_Jt-be16ffF0GgG0pdNFlnw_yrF0kpko';
 const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+const ADMIN_EMAILS = ['gastonrpersoglia@gmail.com','grupoconsultoraconsultora@gmail.com'];
+
+async function checkAdminAuth() {
+  if (!sb) { hideAuthOverlay(); return; }
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session && ADMIN_EMAILS.includes(session.user.email.toLowerCase())) {
+      hideAuthOverlay();
+      return;
+    }
+  } catch(e) {}
+  document.getElementById('admin-auth').style.display = 'flex';
+}
+
+async function adminLogin() {
+  const email = document.getElementById('admin-email').value.trim().toLowerCase();
+  const pass = document.getElementById('admin-pass').value;
+  const errEl = document.getElementById('admin-error');
+  errEl.style.display = 'none';
+  errEl.style.color = 'var(--red)';
+
+  if (!email || !pass) {
+    errEl.textContent = 'Completa email y contrasena';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  if (!ADMIN_EMAILS.includes(email)) {
+    errEl.textContent = 'No tenes permisos de administrador';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  try {
+    const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+    if (error) {
+      if (error.message.includes('Invalid login') || error.message.includes('invalid')) {
+        const { data: signUpData, error: signUpError } = await sb.auth.signUp({
+          email, password: pass,
+          options: { data: { nombre: 'Admin OA' } }
+        });
+        if (signUpError) {
+          errEl.textContent = 'Email o contrasena incorrectos';
+          errEl.style.display = 'block';
+          return;
+        }
+        if (signUpData.user && !signUpData.session) {
+          errEl.textContent = 'Cuenta creada. Revisa tu email para confirmar.';
+          errEl.style.display = 'block';
+          errEl.style.color = 'var(--gl)';
+          return;
+        }
+        hideAuthOverlay();
+        return;
+      }
+      errEl.textContent = error.message;
+      errEl.style.display = 'block';
+      return;
+    }
+    hideAuthOverlay();
+  } catch(e) {
+    errEl.textContent = 'Error de conexion';
+    errEl.style.display = 'block';
+  }
+}
+
+function hideAuthOverlay() {
+  const el = document.getElementById('admin-auth');
+  if (el) el.style.display = 'none';
+}
+
+async function adminLogout() {
+  if (sb) await sb.auth.signOut();
+  document.getElementById('admin-auth').style.display = 'flex';
+  document.getElementById('admin-email').value = '';
+  document.getElementById('admin-pass').value = '';
+}
 
 // CURSOS — read from Supabase, cache in localStorage
 async function getCursosAsync() {
@@ -1640,6 +1738,8 @@ function seedCursosIfEmpty(){
 // ══════════════════════════════════════════════════════
 
 window.addEventListener('DOMContentLoaded', async ()=>{
+  await checkAdminAuth();
+
   // Seed localStorage defaults as fallback (in case Supabase is slow/down)
   seedCursosIfEmpty();
 
