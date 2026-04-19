@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ojeda Araujo & Asociados — Formación en Bioeconomía LATAM</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═════════════════════════════════════════════════════════
+   TOKENS — three directions share a root palette, then
+   each direction overrides ambience + rhythm.
+   ═════════════════════════════════════════════════════════ */
+:root {
+  /* Brand */
+  --v: #0F6E56;
+  --v2: #1D9E75;
+  --v3: #085041;
+  --v4: #5DCAA5;
+  --gold: #c9a84c;
+  --gold2: #e8c97a;
+  --terra: #c9734c;
+
+  /* Dark (default) */
+  --bg: #080c0a;
+  --bg2: #0e1410;
+  --card: #111813;
+  --card2: #161e18;
+  --border: #1c2620;
+  --border2: #2a3d33;
+  --ink: #f0f4f0;
+  --ink2: #c6d0c8;
+  --mute: #7a8c80;
+  --mute2: #aabfb0;
+  --accent: var(--gold);
+  --accent2: var(--gold2);
+
+  /* Type */
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'Inter', -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+
+  /* Rhythm */
+  --pad-x: clamp(1.5rem, 5vw, 5rem);
+  --pad-y: clamp(4rem, 8vw, 7rem);
+
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  --bg: #f4f1ea;         /* parchment */
+  --bg2: #ebe6db;
+  --card: #ffffff;
+  --card2: #f8f5ee;
+  --border: #d9d2c3;
+  --border2: #b9b1a0;
+  --ink: #1a1f1a;
+  --ink2: #3a4a3e;
+  --mute: #6b6f65;
+  --mute2: #41483e;
+  color-scheme: light;
+}
+
+html[data-accent="verdigris"] { --accent: #5DCAA5; --accent2: #8de0bf; }
+html[data-accent="terracotta"] { --accent: #c9734c; --accent2: #e29a78; }
+
+/* ═════════════════════════════════════════════════════════
+   RESET / BASE
+   ═════════════════════════════════════════════════════════ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-feature-settings: 'ss01','cv11';
+  overflow-x: hidden;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  transition: background .5s ease, color .5s ease;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { font-family: inherit; cursor: pointer; }
+::selection { background: var(--accent); color: var(--bg); }
+
+/* tiny utility */
+.mono { font-family: var(--mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
+.hairline { height: 1px; background: var(--border); }
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.on { opacity: 1; transform: translateY(0); }
+
+/* ═════════════════════════════════════════════════════════
+   TOP RIBBON + NAV
+   ═════════════════════════════════════════════════════════ */
+.ribbon {
+  background: var(--v3);
+  color: var(--mute2);
+  font-size: .72rem;
+  letter-spacing: .08em;
+  padding: .45rem var(--pad-x);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+  text-transform: uppercase;
+}
+.ribbon .ticker {
+  display: flex;
+  gap: 2.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+  flex: 1;
+  margin-right: 1.5rem;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, black 8%, black 92%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, black 8%, black 92%, transparent 100%);
+}
+.ribbon .ticker-inner {
+  display: flex;
+  gap: 3rem;
+  animation: ticker 50s linear infinite;
+}
+.ribbon .ticker-inner span { color: var(--mute2); flex-shrink: 0; }
+.ribbon .ticker-inner b { color: var(--accent2); font-weight: 500; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+nav.top {
+  position: relative;
+  z-index: 100;
+  background: color-mix(in oklab, var(--bg) 88%, transparent);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem var(--pad-x);
+  gap: 2rem;
+}
+.nav-logo { display: flex; align-items: center; gap: .8rem; flex-shrink: 0; }
+.nav-mark {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--v3);
+  border: 1px solid var(--v2);
+  display: grid; place-items: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent2);
+  font-size: .95rem;
+  letter-spacing: -.02em;
+  position: relative;
+}
+.nav-mark::after {
+  content:''; position:absolute; inset:-3px;
+  border-radius:50%; border:1px solid var(--border2);
+}
+.nav-brand { font-family: var(--serif); font-weight: 500; font-size: 1.02rem; letter-spacing: -.01em; }
+.nav-sub { font-family: var(--mono); font-size: .6rem; letter-spacing: .22em; text-transform: uppercase; color: var(--mute); margin-top: .1rem; }
+.nav-links { display: flex; gap: 1.8rem; list-style: none; }
+.nav-links a {
+  font-size: .78rem; letter-spacing: .02em;
+  color: var(--mute2); transition: color .25s;
+  padding: .4rem 0; position: relative;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a::after {
+  content:''; position:absolute; left:0; right:0; bottom:0;
+  height:1px; background: var(--accent); transform: scaleX(0);
+  transform-origin: left; transition: transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-right { display: flex; align-items: center; gap: .8rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .6rem 1.2rem;
+  font-size: .78rem;
+  letter-spacing: .02em;
+  border-radius: 2px;
+  transition: all .3s;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.btn-primary { background: var(--accent); color: #1a1a1a; font-weight: 500; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent2); border-color: var(--accent2); transform: translateY(-1px); }
+.btn-ghost { border-color: var(--border2); color: var(--ink2); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.btn-solid { background: var(--v); color: #f0f4f0; border-color: var(--v2); font-weight: 500; }
+.btn-solid:hover { background: var(--v2); }
+
+/* ═════════════════════════════════════════════════════════
+   SECTION / WRAP
+   ═════════════════════════════════════════════════════════ */
+.wrap { padding: var(--pad-y) var(--pad-x); max-width: 1380px; margin: 0 auto; }
+.wrap-wide { padding: var(--pad-y) var(--pad-x); max-width: 1600px; margin: 0 auto; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: .7rem;
+  font-family: var(--mono); font-size: .68rem; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 1rem;
+}
+.eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+.sec-title {
+  font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 3.6vw, 3.1rem);
+  line-height: 1.08; letter-spacing: -.02em;
+  margin-bottom: .7rem; text-wrap: balance;
+}
+.sec-title em { font-style: italic; color: var(--accent); font-weight: 400; }
+.sec-sub { color: var(--mute2); max-width: 560px; font-size: .95rem; line-height: 1.8; font-weight: 300; }
+.goldbar { width: 40px; height: 1px; background: var(--accent); margin: 1.2rem 0 2rem; }
+
+/* ═════════════════════════════════════════════════════════
+   HERO — shared base, overridden per direction below
+   ═════════════════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  padding: clamp(4rem, 8vw, 7rem) var(--pad-x) clamp(3rem, 6vw, 5rem);
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.hero-kicker {
+  font-family: var(--mono); font-size: .72rem;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: .8rem;
+}
+.hero-kicker .dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--v4);
+  box-shadow: 0 0 12px var(--v4); animation: blink 2.4s infinite;
+}
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+
+.hero h1 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(2.4rem, 6vw, 5.2rem);
+  line-height: 1.02; letter-spacing: -.028em;
+  text-wrap: balance;
+}
+.hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.hero-desc {
+  color: var(--mute2); max-width: 560px;
+  font-size: 1.02rem; line-height: 1.75; font-weight: 300;
+  margin: 1.8rem 0 2.4rem;
+}
+.hero-btns { display: flex; gap: .8rem; flex-wrap: wrap; }
+
+/* ═════════════════════════════════════════════════════════
+   DIRECTION A — EDITORIAL REFORMA (default)
+     A cleaner restatement of the current design: editorial
+     hero with a large serif headline, a course catalogue as a
+     fine-grained grid, stats as hairline-separated figures.
+   ═════════════════════════════════════════════════════════ */
+body[data-dir="A"] .hero { min-height: 88vh; display: grid; place-content: center start; }
+body[data-dir="A"] .hero-inner { max-width: 920px; }
+body[data-dir="A"] .hero h1 { font-size: clamp(2.8rem, 6.4vw, 5.4rem); }
+body[data-dir="A"] .hero-plate {
+  display: grid; grid-template-columns: 1.3fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: end; margin-top: 3.5rem;
+  padding-top: 2.5rem; border-top: 1px solid var(--border);
+}
+body[data-dir="A"] .hero-plate-right {
+  display: grid; grid-template-columns: repeat(2,1fr); gap: 1.6rem;
+}
+body[data-dir="A"] .fig {
+  border-left: 1px solid var(--border2); padding-left: 1rem;
+}
+body[data-dir="A"] .fig-num {
+  font-family: var(--serif); font-size: 2.2rem; font-weight: 400;
+  letter-spacing: -.02em; color: var(--accent);
+}
+body[data-dir="A"] .fig-lbl { font-family: var(--mono); font-size: .62rem; color: var(--mute); letter-spacing: .14em; text-transform: uppercase; margin-top: .3rem; }
+body[data-dir="A"] .fig-desc { color: var(--ink2); font-size: .78rem; line-height: 1.65; margin-top: .45rem; font-weight: 300; }
+
+body[data-dir="A"] .hero-bg {
+  position: absolute; inset: 0; z-index: -1;
+  background: radial-gradient(ellipse at 85% 20%, color-mix(in oklab, var(--v) 28%, transparent) 0%, transparent 55%),
+              radial-gradient(ellipse at 15% 80%, color-mix(in oklab, var(--accent) 12%, transparent) 0%, transparent 60%);
+}
+body[data-dir="A"] .hero-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--border) 60%, transparent) 1px, transparent 1px);
+  background-size: 120px 100%;
+  opacity: .4;
+}
+
+/* ═════════════════════════════════════════════════════════
+   DIRECTION B — DOSSIER / BIOECONOMÍA INDEX
+     Editorial dossier. Numbered sections, tabular course
+     listing, single column narrative with running sidenotes.
+   ═════════════════════════════════════════════════════════ */
+body[data-dir="B"] nav.top { border-bottom-style: double; border-bottom-width: 3px; }
+body[data-dir="B"] .hero {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 3rem;
+  padding-top: clamp(3rem, 6vw, 5rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+body[data-dir="B"] .hero-inner { grid-column: 2; min-width: 0; }
+body[data-dir="B"] .hero-bg,
+body[data-dir="B"] .hero-visual { grid-column: 1 / -1; }
+body[data-dir="B"] .hero-chapter {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--mono);
+  font-size: .7rem;
+  letter-spacing: .4em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-top: 2rem;
+  border-right: 1px solid var(--border);
+  align-self: stretch;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+body[data-dir="B"] .hero h1 {
+  font-size: clamp(2.2rem, 5.4vw, 4.4rem);
+  max-width: 12ch;
+}
+body[data-dir="B"] .hero-pair {
+  display: grid; grid-template-columns: 1.1fr .9fr; gap: 4rem;
+  margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid var(--border);
+}
+body[data-dir="B"] .hero-pair-lead { font-family: var(--serif); font-size: 1.35rem; font-style: italic; font-weight: 400; line-height: 1.45; color: var(--ink); }
+body[data-dir="B"] .hero-pair-body { color: var(--ink2); font-size: .92rem; line-height: 1.85; font-weight: 300; }
+body[data-dir="B"] .hero-pair-body p + p { margin-top: 1rem; }
+
+body[data-dir="B"] .sec-title { border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 2rem; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+body[data-dir="B"] .sec-title::after {
+  content: attr(data-chapter);
+  font-family: var(--mono);
+  font-size: .65rem;
+  letter-spacing: .2em;
+  color: var(--mute);
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding-top: .4rem;
+}
+
+/* ═════════════════════════════════════════════════════════
+   DIRECTION C — TERROIR / ESTUDIO
+     Warm, atmospheric. Large oversized serif, image-forward,
+     course cards become specimen sheets with accent seals.
+   ═════════════════════════════════════════════════════════ */
+body[data-dir="C"] .hero {
+  min-height: 92vh;
+  display: grid;
+  align-items: center;
+  position: relative;
+}
+body[data-dir="C"] .hero-visual {
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(circle at 78% 50%, color-mix(in oklab, var(--accent) 22%, transparent) 0%, transparent 45%),
+    radial-gradient(circle at 20% 90%, color-mix(in oklab, var(--v3) 55%, transparent) 0%, transparent 55%),
+    var(--bg);
+}
+body[data-dir="C"] .hero-visual::before {
+  content: '';
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 420px; height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, color-mix(in oklab, var(--accent2) 55%, transparent) 0%, color-mix(in oklab, var(--accent) 40%, transparent) 30%, transparent 70%);
+  filter: blur(40px);
+  opacity: .7;
+}
+body[data-dir="C"] .hero-visual::after {
+  content: '';
+  position: absolute;
+  right: 8%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 360px; height: 360px;
+  border: 1px solid var(--border2);
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, color-mix(in oklab, var(--v) 70%, var(--bg2)) 0%, var(--bg2) 80%);
+  box-shadow: inset 0 0 80px color-mix(in oklab, var(--accent) 20%, transparent);
+}
+body[data-dir="C"] .hero-inner { max-width: 640px; position: relative; z-index: 1; }
+body[data-dir="C"] .hero h1 {
+  font-size: clamp(3rem, 8vw, 6.4rem);
+  font-weight: 300;
+  line-height: 0.96;
+  letter-spacing: -.035em;
+}
+body[data-dir="C"] .hero h1 .glyph {
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  color: var(--accent);
+  position: relative;
+}
+body[data-dir="C"] .hero h1 .glyph::after {
+  content: '';
+  position: absolute; bottom: .05em; left: -.05em; right: -.05em; height: 3px;
+  background: var(--accent);
+  opacity: .45;
+}
+body[data-dir="C"] .marker-row {
+  display: flex; align-items: center; gap: 1.2rem;
+  margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+  color: var(--mute); font-family: var(--mono); font-size: .7rem; letter-spacing: .15em; text-transform: uppercase;
+}
+body[data-dir="C"] .seal {
+  width: 80px; height: 80px; border-radius: 50%;
+  border: 1px solid var(--accent);
+  display: grid; place-items: center;
+  font-family: var(--serif); font-style: italic; color: var(--accent);
+  font-size: .68rem; line-height: 1.15;
+  text-align: center;
+  padding: .5rem;
+  position: relative;
+  flex-shrink: 0;
+}
+body[data-dir="C"] .seal::before {
+  content: ''; position: absolute; inset: 4px; border-radius: 50%; border: 1px dashed color-mix(in oklab, var(--accent) 50%, transparent);
+}
+
+/* ═════════════════════════════════════════════════════════
+   PRINCIPLES STRIP (shared, but styled per dir)
+   ═════════════════════════════════════════════════════════ */
+.principles { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.principles-grid {
+  max-width: 1380px; margin: 0 auto;
+  padding: clamp(3rem, 5vw, 5rem) var(--pad-x);
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.4rem, 3vw, 3rem);
+}
+.principle {
+  border-left: 1px solid var(--border2);
+  padding-left: 1.2rem;
+}
+.principle-num {
+  font-family: var(--serif); font-weight: 500;
+  font-size: 2.4rem;
+  letter-spacing: -.02em;
+  color: var(--accent);
+  line-height: 1;
+}
+.principle-kicker {
+  font-family: var(--mono); font-size: .62rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--mute); margin: .35rem 0 .3rem;
+}
+.principle-title { font-family: var(--serif); font-size: 1.08rem; font-weight: 500; margin-top: .5rem; margin-bottom: .3rem; letter-spacing: -.01em; }
+.principle-desc { color: var(--ink2); font-size: .82rem; line-height: 1.65; font-weight: 300; }
+
+body[data-dir="B"] .principles-grid { grid-template-columns: repeat(2, 1fr); max-width: 1000px; }
+body[data-dir="B"] .principle { border-left: none; border-top: 1px solid var(--border); padding: 1.5rem 0 0; display: grid; grid-template-columns: 120px 1fr; gap: 1.5rem; }
+
+/* ═════════════════════════════════════════════════════════
+   COURSE GRID — default editorial card
+   ═════════════════════════════════════════════════════════ */
+.course-controls {
+  display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-end;
+  justify-content: space-between; margin-bottom: 2.5rem;
+}
+.chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+.chip {
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--mute2);
+  padding: .42rem 1rem;
+  font-family: var(--mono);
+  font-size: .66rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: all .25s;
+}
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+.chip.active { background: var(--v); border-color: var(--v2); color: #f0f4f0; }
+.sort {
+  display: flex; align-items: center; gap: .8rem;
+  font-family: var(--mono); font-size: .68rem; letter-spacing: .14em;
+  color: var(--mute); text-transform: uppercase;
+}
+.sort select {
+  background: transparent; border: 1px solid var(--border2);
+  color: var(--ink); font-family: var(--sans); font-size: .78rem;
+  padding: .4rem .8rem; border-radius: 2px;
+  letter-spacing: .01em; outline: none;
+}
+
+.grid-A { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+
+.ccard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: border-color .3s, transform .3s, box-shadow .3s;
+  position: relative;
+}
+.ccard:hover {
+  border-color: var(--border2);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -20px color-mix(in oklab, var(--v) 40%, transparent);
+}
+.ccard.hidden { display: none; }
+.ccard-image {
+  aspect-ratio: 16/10;
+  background: linear-gradient(135deg, var(--v3), var(--card2));
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.ccard-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(45deg, color-mix(in oklab, var(--accent) 12%, transparent) 0, color-mix(in oklab, var(--accent) 12%, transparent) 1px, transparent 1px, transparent 14px),
+    radial-gradient(circle at 65% 35%, color-mix(in oklab, var(--accent) 35%, transparent) 0%, transparent 55%);
+}
+.ccard-image::after {
+  content: attr(data-placeholder);
+  position: absolute;
+  bottom: 1rem; left: 1rem;
+  font-family: var(--mono); font-size: .6rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--mute);
+  background: color-mix(in oklab, var(--bg) 80%, transparent);
+  padding: .25rem .55rem; border-radius: 2px;
+}
+.ccard-image .glyph {
+  position: absolute; top: 1rem; right: 1rem;
+  font-family: var(--serif); font-style: italic; font-size: 1.6rem;
+  color: var(--accent2);
+  opacity: .85;
+}
+.ccard-meta { display: flex; align-items: center; justify-content: space-between; padding: .85rem 1.2rem; border-bottom: 1px solid var(--border); }
+.ccard-cat { font-family: var(--mono); font-size: .6rem; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+.ccard-num { font-family: var(--mono); font-size: .62rem; color: var(--mute); letter-spacing: .12em; }
+.ccard-body { padding: 1.2rem 1.2rem .8rem; flex: 1; }
+.ccard-title { font-family: var(--serif); font-size: 1.18rem; font-weight: 500; line-height: 1.28; letter-spacing: -.01em; margin-bottom: .55rem; text-wrap: balance; }
+.ccard-desc { color: var(--mute2); font-size: .82rem; line-height: 1.62; font-weight: 300; }
+.ccard-foot {
+  padding: .9rem 1.2rem 1.2rem;
+  margin-top: auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; border-top: 1px solid var(--border);
+}
+.ccard-price { font-family: var(--serif); font-size: 1.4rem; color: var(--accent); font-weight: 500; letter-spacing: -.01em; }
+.ccard-price small { font-family: var(--mono); font-size: .55rem; letter-spacing: .15em; color: var(--mute); text-transform: uppercase; display: block; }
+
+/* ─── Direction B: course catalog as a tabular index ─── */
+body[data-dir="B"] .grid-A { display: block; border-top: 1px solid var(--border); }
+body[data-dir="B"] .ccard {
+  background: transparent; border: none;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  display: grid; grid-template-columns: 60px 80px 1fr 160px 140px auto;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.2rem 0;
+  transform: none !important;
+}
+body[data-dir="B"] .ccard:hover { background: color-mix(in oklab, var(--card) 55%, transparent); box-shadow: none; }
+body[data-dir="B"] .ccard-image {
+  aspect-ratio: 1/1;
+  width: 60px; height: 60px; border-radius: 2px;
+  border: 1px solid var(--border2);
+  grid-column: 1;
+  order: 1;
+}
+body[data-dir="B"] .ccard-image::after { display: none; }
+body[data-dir="B"] .ccard-image .glyph { top: 50%; right: 50%; transform: translate(50%,-50%); font-size: 1.2rem; }
+body[data-dir="B"] .ccard-meta {
+  padding: 0; border: none; display: block; grid-column: 2; order: 2;
+}
+body[data-dir="B"] .ccard-cat { display: block; font-size: .56rem; }
+body[data-dir="B"] .ccard-num { display: block; font-size: .7rem; color: var(--mute2); margin-top: .3rem; font-family: var(--serif); font-style: italic; letter-spacing: 0; }
+body[data-dir="B"] .ccard-body { padding: 0; grid-column: 3; order: 3; }
+body[data-dir="B"] .ccard-title { font-size: 1.05rem; margin-bottom: .2rem; }
+body[data-dir="B"] .ccard-desc { font-size: .78rem; line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+body[data-dir="B"] .ccard-foot {
+  padding: 0; margin: 0; border: none; grid-column: 4 / span 3; order: 4;
+  display: contents;
+}
+body[data-dir="B"] .ccard-price { grid-column: 4; text-align: right; font-size: 1.15rem; order: 4; }
+body[data-dir="B"] .ccard-price small { display: inline; font-size: .55rem; margin-left: .4rem; }
+body[data-dir="B"] .ccard-dur { grid-column: 5; font-family: var(--mono); font-size: .7rem; color: var(--mute); letter-spacing: .1em; order: 5; }
+body[data-dir="B"] .ccard-btn-wrap { grid-column: 6; order: 6; }
+
+/* ─── Direction C: course as specimen sheet ─── */
+body[data-dir="C"] .grid-A { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+body[data-dir="C"] .ccard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+body[data-dir="C"] .ccard:hover {
+  border-color: var(--accent);
+  box-shadow: 0 30px 60px -30px color-mix(in oklab, var(--accent) 50%, transparent);
+}
+body[data-dir="C"] .ccard::before {
+  content: '';
+  position: absolute; top: 0; right: 0;
+  width: 60px; height: 60px;
+  background:
+    linear-gradient(135deg, transparent 49%, var(--accent) 50%, transparent 51%),
+    linear-gradient(135deg, transparent 48%, var(--accent) 49%, transparent 50%);
+  opacity: .25;
+}
+body[data-dir="C"] .ccard-image { aspect-ratio: 4/5; }
+body[data-dir="C"] .ccard-image .glyph {
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 5rem; opacity: .55;
+}
+body[data-dir="C"] .ccard-title { font-size: 1.32rem; font-weight: 400; font-style: italic; }
+
+/* ═════════════════════════════════════════════════════════
+   WHO WE ARE / TEAM
+   ═════════════════════════════════════════════════════════ */
+.team-split {
+  display: grid; grid-template-columns: 1.1fr 1fr;
+  gap: clamp(3rem, 6vw, 6rem); align-items: center;
+}
+.team-portrait {
+  aspect-ratio: 4/5;
+  background: var(--card);
+  border: 1px solid var(--border2);
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+  background-image:
+    radial-gradient(circle at 50% 35%, color-mix(in oklab, var(--v2) 50%, transparent) 0%, transparent 55%),
+    repeating-linear-gradient(135deg, color-mix(in oklab, var(--accent) 6%, transparent) 0, color-mix(in oklab, var(--accent) 6%, transparent) 2px, transparent 2px, transparent 18px);
+}
+.team-portrait::before {
+  content: attr(data-label);
+  position: absolute; bottom: 1rem; left: 1rem;
+  font-family: var(--mono); font-size: .6rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--mute);
+  background: color-mix(in oklab, var(--bg) 80%, transparent);
+  padding: .3rem .65rem; border-radius: 2px;
+}
+.team-portrait::after {
+  content: ''; position: absolute; inset: 14px; border: 1px solid color-mix(in oklab, var(--accent) 30%, transparent); border-radius: 2px;
+}
+.team-badge {
+  position: absolute; bottom: -1.2rem; right: -1.2rem;
+  background: var(--v3); border: 1px solid var(--v2);
+  padding: 1rem 1.3rem; border-radius: 3px; text-align: center;
+}
+.team-badge-num { font-family: var(--serif); font-size: 1.6rem; color: var(--accent2); font-weight: 500; }
+.team-badge-lbl { font-family: var(--mono); font-size: .58rem; color: var(--mute2); letter-spacing: .14em; text-transform: uppercase; margin-top: .15rem; }
+
+.team-cards { display: flex; flex-direction: column; gap: .7rem; margin: 2rem 0; }
+.tcard {
+  display: flex; align-items: center; gap: 1rem;
+  background: var(--card); border: 1px solid var(--border);
+  padding: .9rem 1.2rem; border-radius: 3px; transition: border-color .3s;
+}
+.tcard:hover { border-color: var(--border2); }
+.tav {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--v), var(--v3));
+  display: grid; place-items: center;
+  font-family: var(--serif); font-weight: 500; color: var(--accent2); font-size: 1rem;
+  border: 1px solid var(--v2);
+}
+.tname { font-weight: 500; font-size: .92rem; }
+.trole { font-family: var(--mono); font-size: .66rem; color: var(--mute); letter-spacing: .08em; text-transform: uppercase; margin-top: .1rem; }
+
+.team-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4rem; padding-top: 1.6rem; border-top: 1px solid var(--border); margin-top: 1.6rem; }
+.metric-num { font-family: var(--serif); font-size: 1.7rem; color: var(--accent); font-weight: 500; letter-spacing: -.02em; }
+.metric-lbl { font-family: var(--mono); font-size: .6rem; color: var(--mute); letter-spacing: .14em; text-transform: uppercase; margin-top: .2rem; }
+
+/* ═════════════════════════════════════════════════════════
+   CONSULTING / SESSIONS
+   ═════════════════════════════════════════════════════════ */
+.consult-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 5vw, 5rem); align-items: center; }
+.service { background: var(--card); border: 1px solid var(--border); padding: 1.5rem; border-radius: 3px; display: flex; gap: 1rem; align-items: flex-start; transition: border-color .3s; margin-bottom: .8rem; }
+.service:hover { border-color: var(--accent); }
+.service-glyph {
+  width: 46px; height: 46px; flex-shrink: 0;
+  background: color-mix(in oklab, var(--v) 15%, transparent);
+  border: 1px solid color-mix(in oklab, var(--v2) 35%, transparent);
+  display: grid; place-items: center;
+  font-family: var(--serif); font-style: italic; font-size: 1.4rem;
+  color: var(--accent);
+  border-radius: 3px;
+}
+.service-title { font-weight: 500; font-size: .93rem; margin-bottom: .3rem; }
+.service-desc { color: var(--mute2); font-size: .8rem; line-height: 1.6; font-weight: 300; }
+
+/* ═════════════════════════════════════════════════════════
+   TESTIMONIALS — pull-quote style
+   ═════════════════════════════════════════════════════════ */
+.testimonials { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.quote-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.4rem; margin-top: 1rem; }
+.quote {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 2rem 1.7rem 1.5rem;
+  border-radius: 3px;
+  position: relative;
+  transition: border-color .3s;
+}
+.quote:hover { border-color: var(--border2); }
+.quote::before {
+  content: '"';
+  position: absolute; top: .3rem; left: .8rem;
+  font-family: var(--serif); font-style: italic;
+  font-size: 4.5rem; line-height: 1; color: var(--accent); opacity: .4;
+  pointer-events: none;
+}
+.quote-stars { color: var(--accent); letter-spacing: 2px; font-size: .85rem; margin-bottom: .8rem; }
+.quote-text { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1rem; line-height: 1.55; color: var(--ink); margin-bottom: 1.6rem; text-wrap: pretty; }
+.quote-who { display: flex; align-items: center; gap: .75rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.qav { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--v), var(--v3)); display: grid; place-items: center; font-family: var(--serif); font-weight: 500; color: var(--accent2); font-size: .8rem; }
+.qname { font-size: .82rem; font-weight: 500; }
+.qrole { font-family: var(--mono); font-size: .62rem; letter-spacing: .08em; color: var(--mute); text-transform: uppercase; margin-top: .1rem; }
+
+body[data-dir="B"] .quote-grid { grid-template-columns: 1fr; max-width: 800px; }
+body[data-dir="B"] .quote { padding: 2.5rem 0; border-left: none; border-right: none; border-radius: 0; background: transparent; }
+body[data-dir="B"] .quote-text { font-size: 1.4rem; line-height: 1.5; }
+body[data-dir="B"] .quote:first-child { border-top: none; }
+
+body[data-dir="C"] .quote { border-top: 3px double var(--accent); }
+
+/* ═════════════════════════════════════════════════════════
+   FAQ
+   ═════════════════════════════════════════════════════════ */
+.faq-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; align-items: flex-start; }
+.faq-list { display: flex; flex-direction: column; }
+.faq-item {
+  border-top: 1px solid var(--border);
+  padding: 1.4rem 0;
+  cursor: pointer;
+  transition: padding .3s;
+}
+.faq-item:last-child { border-bottom: 1px solid var(--border); }
+.faq-q {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 1.5rem;
+  font-family: var(--serif);
+  font-size: 1.08rem; font-weight: 500; letter-spacing: -.01em;
+}
+.faq-q .plus { font-family: var(--sans); font-size: 1.2rem; color: var(--accent); font-weight: 300; transition: transform .3s; flex-shrink: 0; }
+.faq-item.open .plus { transform: rotate(45deg); }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height .4s ease, margin .4s ease;
+  color: var(--mute2); font-size: .88rem; line-height: 1.72; font-weight: 300;
+}
+.faq-item.open .faq-a { max-height: 220px; margin-top: .9rem; }
+
+/* ═════════════════════════════════════════════════════════
+   CONTACT / CTA
+   ═════════════════════════════════════════════════════════ */
+.cta-block {
+  padding: clamp(3rem, 6vw, 6rem) var(--pad-x);
+  background: var(--v3);
+  color: #f0f4f0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--v2);
+  border-bottom: 1px solid var(--v2);
+}
+.cta-block h2 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(2rem, 4.4vw, 3.4rem);
+  letter-spacing: -.02em; line-height: 1.1; text-wrap: balance;
+}
+.cta-block h2 em { font-style: italic; color: var(--accent2); }
+.cta-block p { color: #b9d4c6; max-width: 560px; margin: 1.2rem auto 2rem; font-weight: 300; font-size: 1rem; line-height: 1.75; }
+.cta-block::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 30%, color-mix(in oklab, var(--accent) 16%, transparent) 0%, transparent 45%),
+    radial-gradient(ellipse at 80% 70%, color-mix(in oklab, var(--v4) 22%, transparent) 0%, transparent 50%);
+  pointer-events: none;
+}
+.cta-block > * { position: relative; z-index: 1; }
+
+/* ═════════════════════════════════════════════════════════
+   FOOTER
+   ═════════════════════════════════════════════════════════ */
+footer {
+  padding: clamp(3rem, 5vw, 5rem) var(--pad-x) 2rem;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+}
+.foot-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; max-width: 1380px; margin: 0 auto 3rem; }
+.foot-brand .nav-brand { font-size: 1.2rem; margin-bottom: .2rem; }
+.foot-about { color: var(--mute2); font-size: .85rem; line-height: 1.7; font-weight: 300; margin-top: 1rem; max-width: 340px; }
+.foot-col h5 { font-family: var(--mono); font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+.foot-col ul { list-style: none; display: flex; flex-direction: column; gap: .6rem; }
+.foot-col a { color: var(--mute2); font-size: .85rem; transition: color .25s; }
+.foot-col a:hover { color: var(--ink); }
+.foot-bottom {
+  max-width: 1380px; margin: 0 auto;
+  padding-top: 2rem; border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  font-family: var(--mono); font-size: .65rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mute);
+}
+
+/* ═════════════════════════════════════════════════════════
+   TWEAKS PANEL (hidden unless activated)
+   ═════════════════════════════════════════════════════════ */
+#tweaks-panel {
+  position: fixed; bottom: 20px; right: 20px;
+  z-index: 500;
+  background: var(--card);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 1rem 1.1rem;
+  width: 280px;
+  font-family: var(--sans);
+  display: none;
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,.6);
+}
+#tweaks-panel.show { display: block; }
+#tweaks-panel h4 {
+  font-family: var(--serif); font-weight: 500; font-size: .95rem;
+  margin-bottom: .9rem;
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+#tweaks-panel h4 small { font-family: var(--mono); font-size: .6rem; letter-spacing: .15em; color: var(--mute); text-transform: uppercase; font-weight: 400; }
+.tw-group { margin-bottom: .9rem; }
+.tw-group label { font-family: var(--mono); font-size: .6rem; letter-spacing: .15em; color: var(--mute); text-transform: uppercase; margin-bottom: .4rem; display: block; }
+.tw-row { display: flex; gap: .3rem; }
+.tw-btn {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--mute2);
+  padding: .4rem .5rem;
+  font-family: var(--mono); font-size: .65rem; letter-spacing: .08em; text-transform: uppercase;
+  border-radius: 2px;
+  transition: all .2s;
+}
+.tw-btn:hover { border-color: var(--accent); color: var(--accent); }
+.tw-btn.on { background: var(--v); border-color: var(--v2); color: #f0f4f0; }
+.tw-swatch { width: 16px; height: 16px; border-radius: 50%; display: inline-block; vertical-align: -3px; margin-right: .3rem; }
+
+/* Tiny language toggle & theme toggle always visible in nav */
+.topctl {
+  display: flex; align-items: center; gap: .4rem;
+  font-family: var(--mono); font-size: .65rem; letter-spacing: .1em; color: var(--mute); text-transform: uppercase;
+  padding-right: .4rem;
+  border-right: 1px solid var(--border);
+  margin-right: .2rem;
+}
+.topctl button {
+  background: transparent; border: 1px solid transparent;
+  padding: .3rem .55rem; color: var(--mute2);
+  font-family: var(--mono); font-size: .65rem; letter-spacing: .12em; text-transform: uppercase;
+  border-radius: 2px;
+  transition: all .2s;
+}
+.topctl button.on { color: var(--accent); border-color: var(--border2); }
+.topctl button:hover { color: var(--ink); }
+
+.theme-toggle {
+  background: transparent; border: 1px solid var(--border2);
+  width: 34px; height: 34px; border-radius: 50%;
+  display: grid; place-items: center; color: var(--mute2);
+  transition: all .25s;
+}
+.theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+.theme-toggle svg { width: 16px; height: 16px; }
+
+/* ═════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═════════════════════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .nav-links { display: none; }
+  .nav-sub { display: none; }
+  .grid-A { grid-template-columns: repeat(2,1fr) !important; }
+  .team-split, .consult-grid, .faq-grid, .foot-grid { grid-template-columns: 1fr !important; gap: 2.5rem; }
+  .principles-grid { grid-template-columns: repeat(2,1fr); }
+  body[data-dir="B"] .hero { grid-template-columns: 32px 1fr; gap: 1rem; }
+  body[data-dir="B"] .hero-chapter { font-size: .62rem; }
+  body[data-dir="B"] .hero-pair { grid-template-columns: 1fr; gap: 2rem; }
+  body[data-dir="A"] .hero-plate { grid-template-columns: 1fr; gap: 2.5rem; }
+  body[data-dir="A"] .hero-plate-right { grid-template-columns: 1fr 1fr; }
+  body[data-dir="C"] .hero-visual::before,
+  body[data-dir="C"] .hero-visual::after { width: 260px; height: 260px; opacity: .5; }
+  body[data-dir="B"] .ccard { grid-template-columns: 60px 1fr; grid-auto-rows: auto; gap: .6rem 1rem; }
+  body[data-dir="B"] .ccard-meta { grid-column: 2; }
+  body[data-dir="B"] .ccard-body { grid-column: 1 / -1; }
+  body[data-dir="B"] .ccard-price { grid-column: 1 / -1; text-align: left; }
+  body[data-dir="B"] .ccard-dur { grid-column: 1 / -1; }
+  body[data-dir="B"] .ccard-btn-wrap { grid-column: 1 / -1; }
+  .team-metrics { grid-template-columns: repeat(2,1fr); }
+  .quote-grid { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 640px) {
+  .grid-A { grid-template-columns: 1fr !important; }
+  .principles-grid { grid-template-columns: 1fr; }
+  .team-metrics { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .foot-grid { grid-template-columns: 1fr; }
+  nav.top { padding: .75rem 1rem; }
+  .ribbon { display: none; }
+  .nav-sub { display: none; }
+  .hero h1 { font-size: clamp(2rem, 10vw, 3rem); }
+  .topctl { display: none; }
+  .btn-ghost { display: none; }
+}
+
+</style>
+</head>
+<body data-dir="A">
+
+<!-- ═════════════ RIBBON (removed per request) ═════════════ -->
+<div class="ribbon" data-screen-label="Ribbon" style="display:none;">
+  <span style="flex-shrink:0;" data-i18n="ribbon_region">Buenos Aires · Montevideo · Asunción · Bogotá</span>
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span data-i18n="t1">Nueva cohorte · <b>Introducción a la IA</b> · abre el 05/05</span>
+      <span data-i18n="t2">Informe gratuito · <b>Mercados VCM LATAM Q2</b></span>
+      <span data-i18n="t3">Admisión abierta · <b>GMP/BPM Cannabis</b> · 12 plazas</span>
+      <span data-i18n="t4">Nuevo dossier · <b>ESG en el agro</b> — descarga libre</span>
+      <!-- duplicated for seamless loop -->
+      <span data-i18n="t1">Nueva cohorte · <b>Introducción a la IA</b> · abre el 05/05</span>
+      <span data-i18n="t2">Informe gratuito · <b>Mercados VCM LATAM Q2</b></span>
+      <span data-i18n="t3">Admisión abierta · <b>GMP/BPM Cannabis</b> · 12 plazas</span>
+      <span data-i18n="t4">Nuevo dossier · <b>ESG en el agro</b> — descarga libre</span>
+    </div>
+  </div>
+  <span style="flex-shrink:0;" data-i18n="ribbon_year">№ 07 · MMXXVI</span>
+</div>
+
+<!-- ═════════════ NAV ═════════════ -->
+<nav class="top" data-screen-label="Nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-mark">OA</div>
+    <div>
+      <div class="nav-brand">Ojeda Araujo <em style="font-style:italic;color:var(--accent);">&amp;</em> Asociados</div>
+      <div class="nav-sub" data-i18n="nav_sub">Agro · Regulación · Sustentabilidad</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#catalogo" data-i18n="nav_courses">Cursos</a></li>
+    <li><a href="#consultoria" data-i18n="nav_consult">Consultoría</a></li>
+    <li><a href="#equipo" data-i18n="nav_team">Equipo</a></li>
+    <li><a href="#testimonios" data-i18n="nav_test">Testimonios</a></li>
+    <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="topctl">
+      <button class="lang-btn on" data-lang="es">ES</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" id="theme-icon"><path d="M21 12.79A9 9 0 1 1 11.21 3A7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <a href="#" class="btn btn-ghost" data-i18n="nav_campus">Campus →</a>
+    <a href="#catalogo" class="btn btn-primary" data-i18n="nav_cta">Ver Cursos</a>
+  </div>
+</nav>
+
+<!-- ═════════════ HERO ═════════════ -->
+<section class="hero" data-screen-label="Hero">
+  <div class="hero-bg"></div>
+  <div class="hero-visual"></div>
+  <div class="hero-chapter" data-dir-show="B">§ 01 · Apertura · MMXXVI · Consultora OA</div>
+
+  <div class="hero-inner">
+    <div class="hero-kicker">
+      <span class="dot"></span>
+      <span data-i18n="hero_eyebrow">Plataforma de formación profesional · Bioeconomía LATAM</span>
+    </div>
+
+    <!-- Dir A / B headline -->
+    <h1 data-dir-show="A,B">
+      <span data-i18n="hero_h1a">Conocimiento</span>
+      <em data-i18n="hero_h1b"> que transforma </em>
+      <span data-i18n="hero_h1c">el sector bioeconómico</span>
+    </h1>
+    <!-- Dir C headline: oversized with glyph -->
+    <h1 data-dir-show="C">
+      <span data-i18n="hero_c1">Saber de</span>
+      <span class="glyph" data-i18n="hero_c2">terroir</span><br>
+      <span data-i18n="hero_c3">para una economía viva</span>
+    </h1>
+
+    <p class="hero-desc" data-dir-show="A,C" data-i18n="hero_desc">
+      Formación especializada en agronegocios, cannabis medicinal, mercados de carbono, regulación normativa y gestión de organizaciones — desarrollada por consultores activos en el sector bioeconómico latinoamericano.
+    </p>
+
+    <!-- Direction B: editorial pair instead of plain desc -->
+    <div class="hero-pair" data-dir-show="B">
+      <div class="hero-pair-lead" data-i18n="hero_lead">
+        Un dossier abierto de diez y seis cursos, trece sesiones de consultoría y una década de expediente regulatorio — dispuesto como un índice legible.
+      </div>
+      <div class="hero-pair-body">
+        <p data-i18n="hero_body1">Nuestros consultores no son instructores de tiempo completo. Son técnicos activos — auditores, agrónomos, juristas, asesores ambientales — que documentan su práctica para quienes vienen atrás.</p>
+        <p data-i18n="hero_body2">Cada curso es un registro; cada sesión, una consulta. Presencia regional permanente en Argentina, Uruguay, Paraguay y Colombia.</p>
+      </div>
+    </div>
+
+    <div class="hero-btns">
+      <a href="#catalogo" class="btn btn-primary" data-i18n="hero_cta1">Explorar el catálogo →</a>
+      <a href="#consultoria" class="btn btn-ghost" data-i18n="hero_cta2">Solicitar consultoría</a>
+    </div>
+
+    <!-- Direction A plate -->
+    <div class="hero-plate" data-dir-show="A">
+      <div>
+        <div class="mono" data-i18n="hero_plate_k">Índice de la edición</div>
+        <p style="font-family:var(--serif); font-style:italic; font-weight:400; font-size:1.15rem; line-height:1.5; margin-top:.6rem; color:var(--ink2); max-width:420px;" data-i18n="hero_plate_body">
+          Agronegocios, cannabis medicinal, carbono y ESG, regulación sanitaria, certificaciones, inversiones y gestión pública — dieciséis expedientes técnicos.
+        </p>
+      </div>
+      <div class="hero-plate-right">
+        <div class="fig"><div class="fig-num">500+</div><div class="fig-lbl" data-i18n="fig_students">Profesionales formados</div></div>
+        <div class="fig"><div class="fig-num">16</div><div class="fig-lbl" data-i18n="fig_programs">Programas activos</div></div>
+        <div class="fig"><div class="fig-num">04</div><div class="fig-lbl" data-i18n="fig_countries">Países presencia</div></div>
+        <div class="fig"><div class="fig-num">100%</div><div class="fig-lbl" data-i18n="fig_real">Casos reales</div></div>
+      </div>
+    </div>
+
+    <!-- Direction C marker row w/ seal -->
+    <div class="marker-row" data-dir-show="C">
+      <div class="seal">
+        Est.<br>
+        <span style="font-family:var(--sans); font-style:normal; font-weight:500; font-size:1rem; color:var(--ink);">2019</span><br>
+        OA&amp;A
+      </div>
+      <div>
+        <div data-i18n="seal_1">Dieciséis expedientes</div>
+        <div style="margin-top:.3rem; color:var(--ink2); font-family:var(--sans); font-size:.78rem; letter-spacing:0; text-transform:none; font-weight:300;" data-i18n="seal_2">Archivo vivo de bioeconomía latinoamericana, disponible en línea y por sesión directa.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ PRINCIPLES STRIP ═════════════ -->
+<section class="principles" data-screen-label="Principles">
+  <div class="principles-grid">
+    <div class="principle reveal">
+      <div class="principle-num">01</div>
+      <div class="principle-kicker" data-i18n="prin1_k">Trayectoria</div>
+      <div class="principle-title" data-i18n="prin1_t">Consultores en ejercicio</div>
+      <div class="principle-desc" data-i18n="prin1_d">Más de cinco años asesorando al sector. Cada contenido nace de un caso real en curso.</div>
+    </div>
+    <div class="principle reveal">
+      <div class="principle-num">02</div>
+      <div class="principle-kicker" data-i18n="prin2_k">Cobertura</div>
+      <div class="principle-title" data-i18n="prin2_t">Presencia regional</div>
+      <div class="principle-desc" data-i18n="prin2_d">Argentina, Uruguay, Paraguay y Colombia — con extensiones a Brasil y México por proyecto.</div>
+    </div>
+    <div class="principle reveal">
+      <div class="principle-num">03</div>
+      <div class="principle-kicker" data-i18n="prin3_k">Enfoque</div>
+      <div class="principle-title" data-i18n="prin3_t">Técnico · Regulatorio · Financiero</div>
+      <div class="principle-desc" data-i18n="prin3_d">De la viabilidad técnica al cumplimiento normativo y al acceso a financiamiento verde.</div>
+    </div>
+    <div class="principle reveal">
+      <div class="principle-num">04</div>
+      <div class="principle-kicker" data-i18n="prin4_k">Recursos</div>
+      <div class="principle-title" data-i18n="prin4_t">Materiales descargables</div>
+      <div class="principle-desc" data-i18n="prin4_d">PDF, checklists y plantillas. Acceso permanente y actualizaciones sin costo.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ CATALOGUE ═════════════ -->
+<section id="catalogo" data-screen-label="Catalog">
+  <div class="wrap-wide">
+    <div class="eyebrow" data-i18n="cat_eye">Catálogo de cursos</div>
+    <h2 class="sec-title reveal" data-chapter="§ 02 · CURSOS">
+      <span><span data-i18n="cat_t1">Dieciséis expedientes</span> <em data-i18n="cat_t2">técnicos</em></span>
+    </h2>
+    <div class="goldbar"></div>
+    <p class="sec-sub reveal" data-i18n="cat_sub">Materiales PDF descargables, acceso permanente y contenido actualizado por profesionales activos en el sector bioeconómico hispanoamericano.</p>
+
+    <div class="course-controls reveal" style="margin-top:2.5rem;">
+      <div class="chips" id="chips"></div>
+      <div class="sort">
+        <span data-i18n="sort">Orden</span>
+        <select id="sort">
+          <option value="featured" data-i18n="sort_feat">Destacados</option>
+          <option value="price-asc" data-i18n="sort_pa">Precio ↑</option>
+          <option value="price-desc" data-i18n="sort_pd">Precio ↓</option>
+          <option value="newest" data-i18n="sort_new">Más recientes</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid-A" id="grid"></div>
+  </div>
+</section>
+
+<!-- ═════════════ TEAM / NOSOTROS ═════════════ -->
+<section id="equipo" data-screen-label="Team" style="border-top: 1px solid var(--border);">
+  <div class="wrap">
+    <div class="team-split">
+      <div style="position:relative;">
+        <div class="team-portrait reveal" data-label="Co-fundadores · Ojeda & Araujo">
+          <!-- placeholder 'portrait' - no fake SVG-drawn face -->
+        </div>
+        <div class="team-badge reveal">
+          <div class="team-badge-num">06</div>
+          <div class="team-badge-lbl" data-i18n="badge_areas">Áreas de expertise</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="eyebrow" data-i18n="team_eye">Quiénes somos</div>
+        <h2 class="sec-title" data-chapter="§ 03 · EQUIPO">
+          <span><span data-i18n="team_t1">El equipo</span> <em data-i18n="team_t2">Ojeda &amp; Araujo</em></span>
+        </h2>
+        <div class="goldbar"></div>
+        <p style="color:var(--ink2); line-height:1.85; font-weight:300; font-size:.95rem;" data-i18n="team_body">Consultora especializada en servicios técnicos y estratégicos para empresas, productores e inversores del sector bioeconómico latinoamericano. No vendemos diplomas; compartimos expediente.</p>
+        <div class="team-cards">
+          <div class="tcard"><div class="tav">O</div><div><div class="tname">Ojeda</div><div class="trole" data-i18n="role1">Co-fundador · Consultor Senior · Regulación</div></div></div>
+          <div class="tcard"><div class="tav">A</div><div><div class="tname">Araujo</div><div class="trole" data-i18n="role2">Co-fundador · Consultor Senior · Agronegocios</div></div></div>
+          <div class="tcard"><div class="tav" style="background:linear-gradient(135deg,var(--accent),var(--v3)); color:#1a1a1a;">+</div><div><div class="tname" data-i18n="team_plus">Red asociada · 12 especialistas</div><div class="trole" data-i18n="team_plus_role">Cannabis · Carbono · ESG · Certificaciones · IA · Gestión Pública</div></div></div>
+        </div>
+        <div class="team-metrics">
+          <div><div class="metric-num">+5</div><div class="metric-lbl" data-i18n="m1">Años</div></div>
+          <div><div class="metric-num">500+</div><div class="metric-lbl" data-i18n="m2">Alumnos</div></div>
+          <div><div class="metric-num">16</div><div class="metric-lbl" data-i18n="m3">Cursos</div></div>
+          <div><div class="metric-num">04</div><div class="metric-lbl" data-i18n="m4">Países</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ CONSULTING ═════════════ -->
+<section id="consultoria" data-screen-label="Consulting" style="border-top: 1px solid var(--border);">
+  <div class="wrap">
+    <div class="consult-grid">
+      <div class="reveal">
+        <div class="eyebrow" data-i18n="cons_eye">Consultoría personalizada</div>
+        <h2 class="sec-title" data-chapter="§ 04 · SESIONES">
+          <span data-i18n="cons_t1">¿Necesitás una</span> <em data-i18n="cons_t2">sesión específica</em>?
+        </h2>
+        <div class="goldbar"></div>
+        <p style="color:var(--ink2); line-height:1.85; font-weight:300; font-size:.95rem; margin-bottom:1.5rem;" data-i18n="cons_body">Si tu proyecto requiere un abordaje particular — regulatorio, técnico, de inversión o de gestión — podés solicitar una sesión directamente con nuestros consultores. Respuesta en menos de veinticuatro horas.</p>
+        <div style="display:flex; gap:.7rem; flex-wrap:wrap;">
+          <a href="#" class="btn btn-primary" data-i18n="cons_cta1">Escribinos por WhatsApp →</a>
+          <a href="#" class="btn btn-ghost" data-i18n="cons_cta2">Enviar un email</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="service"><div class="service-glyph">§</div><div><div class="service-title" data-i18n="s1_t">Diagnóstico regulatorio</div><div class="service-desc" data-i18n="s1_d">Revisión de tu situación normativa y hoja de ruta para regularizarla — por jurisdicción.</div></div></div>
+        <div class="service"><div class="service-glyph">∞</div><div><div class="service-title" data-i18n="s2_t">Asesoría técnica específica</div><div class="service-desc" data-i18n="s2_d">Cannabis, carbono, certificaciones o agronegocios según la necesidad concreta del proyecto.</div></div></div>
+        <div class="service"><div class="service-glyph">≈</div><div><div class="service-title" data-i18n="s3_t">Evaluación de inversión</div><div class="service-desc" data-i18n="s3_d">Análisis técnico-regulatorio de proyectos antes de tomar decisiones de capital.</div></div></div>
+        <div class="service"><div class="service-glyph">ƒ</div><div><div class="service-title" data-i18n="s4_t">Formación in-company</div><div class="service-desc" data-i18n="s4_d">Programas hechos a medida para equipos internos, en modalidad remota o presencial.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ TESTIMONIALS ═════════════ -->
+<section id="testimonios" class="testimonials" data-screen-label="Testimonials">
+  <div class="wrap">
+    <div class="eyebrow" data-i18n="test_eye">Lo que dicen los alumnos</div>
+    <h2 class="sec-title reveal" data-chapter="§ 05 · CAMPO">
+      <span><span data-i18n="test_t1">Testimonios</span> <em data-i18n="test_t2">del campo</em></span>
+    </h2>
+    <div class="goldbar"></div>
+
+    <div class="quote-grid" id="quotes">
+      <div class="quote reveal">
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-text" data-i18n="q1">El curso de cannabis medicinal me dio las herramientas para entender toda la regulación. Excelente material y docentes accesibles.</p>
+        <div class="quote-who"><div class="qav">ML</div><div><div class="qname">María Laura G.</div><div class="qrole" data-i18n="q1r">Farmacéutica · Buenos Aires</div></div></div>
+      </div>
+      <div class="quote reveal">
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-text" data-i18n="q2">Hice GlobalGAP y a los tres meses logré la certificación para el campo. La guía paso a paso fue clave.</p>
+        <div class="quote-who"><div class="qav">RC</div><div><div class="qname">Roberto C.</div><div class="qrole" data-i18n="q2r">Productor · Entre Ríos</div></div></div>
+      </div>
+      <div class="quote reveal">
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-text" data-i18n="q3">El curso de ESG me abrió la puerta al financiamiento verde. Ya presentamos nuestro primer proyecto de créditos de carbono.</p>
+        <div class="quote-who"><div class="qav">AS</div><div><div class="qname">Ana S.</div><div class="qrole" data-i18n="q3r">Ing. Ambiental · Córdoba</div></div></div>
+      </div>
+      <div class="quote reveal">
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-text" data-i18n="q4">La formación en mercados de carbono fue muy práctica. Los consultores conocen el sector de primera mano.</p>
+        <div class="quote-who"><div class="qav">JP</div><div><div class="qname">Juan Pablo M.</div><div class="qrole" data-i18n="q4r">Consultor · Paraguay</div></div></div>
+      </div>
+      <div class="quote reveal">
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-text" data-i18n="q5">Introducción a la IA fue exactamente lo que necesitaba. Claro, práctico y sin tecnicismos innecesarios.</p>
+        <div class="quote-who"><div class="qav">DF</div><div><div class="qname">Daniela F.</div><div class="qrole" data-i18n="q5r">Administradora · Corrientes</div></div></div>
+      </div>
+      <div class="quote reveal">
+        <div class="quote-stars">★★★★★</div>
+        <p class="quote-text" data-i18n="q6">Trabajamos con OA en un due diligence técnico-regulatorio. Rigor, claridad y plazos cumplidos.</p>
+        <div class="quote-who"><div class="qav">LV</div><div><div class="qname">Lucas V.</div><div class="qrole" data-i18n="q6r">Fondo Agroindustrial · Uruguay</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ FAQ ═════════════ -->
+<section id="faq" data-screen-label="FAQ" style="border-top:1px solid var(--border);">
+  <div class="wrap">
+    <div class="faq-grid">
+      <div class="reveal">
+        <div class="eyebrow" data-i18n="faq_eye">Dudas frecuentes</div>
+        <h2 class="sec-title" data-chapter="§ 06 · FAQ" style="display:block;">
+          <span><span data-i18n="faq_t1">Preguntas</span> <em data-i18n="faq_t2">frecuentes</em></span>
+        </h2>
+        <div class="goldbar"></div>
+        <p style="color:var(--ink2); line-height:1.8; font-weight:300; font-size:.92rem; margin-top:1.2rem;" data-i18n="faq_sub">Si no está acá, escribinos por WhatsApp o email. Respondemos en menos de 24 h.</p>
+      </div>
+
+      <div class="faq-list" id="faq">
+        <!-- populated by JS for language swap -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ CTA ═════════════ -->
+<section class="cta-block" data-screen-label="CTA">
+  <div class="eyebrow" style="justify-content:center; color:var(--accent2);"><span data-i18n="cta_eye">Siguiente paso</span></div>
+  <h2><span data-i18n="cta_t1">Empezá con un</span> <em data-i18n="cta_t2">diagnóstico</em> <span data-i18n="cta_t3">gratuito</span></h2>
+  <p data-i18n="cta_body">Agendá una llamada breve con un consultor. Sin costo, sin compromiso — sólo para entender si podemos ayudarte y cómo.</p>
+  <div style="display:flex; gap:.7rem; flex-wrap:wrap; justify-content:center;">
+    <a href="#" class="btn btn-primary" data-i18n="cta_b1">Agendar llamada →</a>
+    <a href="#catalogo" class="btn btn-ghost" style="border-color:color-mix(in oklab, var(--ink) 30%, transparent); color:var(--ink);" data-i18n="cta_b2">Ver cursos</a>
+  </div>
+</section>
+
+<!-- ═════════════ FOOTER ═════════════ -->
+<footer data-screen-label="Footer">
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="nav-logo" style="margin-bottom:.3rem;"><div class="nav-mark">OA</div><div><div class="nav-brand">Ojeda Araujo</div><div class="nav-sub" data-i18n="foot_sub">& Asociados</div></div></div>
+      <p class="foot-about" data-i18n="foot_about">Consultora y plataforma de formación en bioeconomía latinoamericana. Cursos, sesiones y diagnósticos por consultores en ejercicio.</p>
+    </div>
+    <div class="foot-col">
+      <h5 data-i18n="foot_c1">Plataforma</h5>
+      <ul>
+        <li><a href="#catalogo" data-i18n="foot_l1">Catálogo de cursos</a></li>
+        <li><a href="#consultoria" data-i18n="foot_l2">Consultoría</a></li>
+        <li><a href="#" data-i18n="foot_l3">Campus Virtual</a></li>
+        <li><a href="#" data-i18n="foot_l4">Certificación digital</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5 data-i18n="foot_c2">Áreas</h5>
+      <ul>
+        <li><a href="#" data-i18n="cat_agronegocios">Agronegocios</a></li>
+        <li><a href="#" data-i18n="cat_cannabis">Cannabis Medicinal</a></li>
+        <li><a href="#" data-i18n="cat_carbono">Carbono &amp; ESG</a></li>
+        <li><a href="#" data-i18n="cat_regulacion">Regulación</a></li>
+        <li><a href="#" data-i18n="cat_certificaciones">Certificaciones</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5 data-i18n="foot_c3">Contacto</h5>
+      <ul>
+        <li><a href="#" data-i18n="foot_wa">WhatsApp · +54 9 379 405-8223</a></li>
+        <li><a href="#" data-i18n="foot_em">contactos@oa-consultora.com</a></li>
+        <li><a href="#" data-i18n="foot_web">oa-consultora.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div>© 2026 · Ojeda Araujo &amp; Asociados</div>
+    <div data-i18n="foot_tag">Agro · Regulación · Sustentabilidad</div>
+  </div>
+</footer>
+
+<!-- ═════════════ TWEAKS PANEL ═════════════ -->
+<div id="tweaks-panel">
+  <h4><span data-i18n="tw_title">Tweaks</span><small>OA · v3</small></h4>
+  <div class="tw-group">
+    <label data-i18n="tw_dir">Dirección</label>
+    <div class="tw-row">
+      <button class="tw-btn tw-dir on" data-dir="A">A · Reforma</button>
+      <button class="tw-btn tw-dir" data-dir="B">B · Dossier</button>
+      <button class="tw-btn tw-dir" data-dir="C">C · Terroir</button>
+    </div>
+  </div>
+  <div class="tw-group">
+    <label data-i18n="tw_theme">Tema</label>
+    <div class="tw-row">
+      <button class="tw-btn tw-theme on" data-theme="dark">Dark</button>
+      <button class="tw-btn tw-theme" data-theme="light">Parchment</button>
+    </div>
+  </div>
+  <div class="tw-group">
+    <label data-i18n="tw_accent">Acento</label>
+    <div class="tw-row">
+      <button class="tw-btn tw-accent on" data-accent="gold"><span class="tw-swatch" style="background:#c9a84c;"></span>Oro</button>
+      <button class="tw-btn tw-accent" data-accent="verdigris"><span class="tw-swatch" style="background:#5DCAA5;"></span>Verde</button>
+      <button class="tw-btn tw-accent" data-accent="terracotta"><span class="tw-swatch" style="background:#c9734c;"></span>Terra</button>
+    </div>
+  </div>
+  <div class="tw-group">
+    <label data-i18n="tw_lang">Idioma</label>
+    <div class="tw-row">
+      <button class="tw-btn tw-lang on" data-lang="es">Español</button>
+      <button class="tw-btn tw-lang" data-lang="en">English</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════════ SCRIPTS ═════════════ -->
+<script>
+// ═════════════ TWEAK DEFAULTS (editable via host) ═════════════
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "direction": "C",
+  "theme": "dark",
+  "accent": "gold",
+  "lang": "es"
+}/*EDITMODE-END*/;
+
+// ═════════════ DATA ═════════════
+const CURSOS = [
+  {id:'c01', cat:'agronegocios',    es:{n:'Fundamentos de Agronegocios en América Latina',   d:'Cadenas de valor, planificación estratégica y análisis de mercados para el sector primario y agroindustrial.', dur:'24h · 6 módulos'}, en:{n:'Agribusiness Fundamentals in Latin America',                d:'Value chains, strategic planning and market analysis for the primary and agri-industrial sector.', dur:'24h · 6 modules'},  p:15000, g:'§'},
+  {id:'c02', cat:'agronegocios',    es:{n:'Digitalización del Agro: Herramientas Prácticas',  d:'Tecnologías aplicadas al campo: precisión, trazabilidad digital y toma de decisiones basada en datos.',      dur:'18h · 4 módulos'}, en:{n:'Farm Digitalization: Practical Tools',                      d:'Precision agriculture, digital traceability and data-driven decision making.',                         dur:'18h · 4 modules'},  p:18000, g:'∞'},
+  {id:'c03', cat:'cannabis',        es:{n:'Marco Regulatorio Cannabis Medicinal — Argentina',  d:'Normativa vigente, licencias ANMAT, trámites de habilitación y cumplimiento para cultivo y exportación.',   dur:'20h · 5 módulos'}, en:{n:'Medical Cannabis Regulation — Argentina',                 d:'Current regulation, ANMAT licensing, authorization and compliance for cultivation and export.',        dur:'20h · 5 modules'},  p:22000, g:'R'},
+  {id:'c04', cat:'cannabis',        es:{n:'GMP/BPM y BPF para Cannabis',                       d:'Buenas Prácticas de Manufactura aplicadas a instalaciones cannábicas: documentación, procesos, auditorías.',dur:'30h · 7 módulos'}, en:{n:'GMP/BPM and BPF for Cannabis',                             d:'Good Manufacturing Practices for cannabis facilities: documentation, processes, audits.',               dur:'30h · 7 modules'},  p:25000, g:'Q'},
+  {id:'c05', cat:'carbono',         es:{n:'Introducción a los Mercados de Carbono Voluntarios',d:'Funcionamiento de los mercados VCM, créditos de carbono, certificadoras y acceso para proyectos agro.',     dur:'16h · 4 módulos'}, en:{n:'Introduction to Voluntary Carbon Markets',                 d:'How VCM markets work, carbon credits, certifiers and access for agricultural projects.',               dur:'16h · 4 modules'},  p:20000, g:'C'},
+  {id:'c06', cat:'carbono',         es:{n:'Estrategias ESG para el Sector Agroindustrial',     d:'Diseño e implementación de estrategias ambientales, sociales y de gobernanza. Reporte y financiamiento.', dur:'22h · 5 módulos'}, en:{n:'ESG Strategy for Agri-Industry',                            d:'Design and implementation of ESG strategies. Impact reporting and access to green finance.',            dur:'22h · 5 modules'},  p:20000, g:'E'},
+  {id:'c07', cat:'regulacion',      es:{n:'Habilitaciones y Cumplimiento Sanitario',           d:'SENASA, ANMAT y organismos provinciales: requisitos, procedimientos y gestión para agroindustria.',         dur:'20h · 5 módulos'}, en:{n:'Permits and Sanitary Compliance',                         d:'SENASA, ANMAT and provincial bodies: requirements, procedures and management for agri-industry.',      dur:'20h · 5 modules'},  p:18000, g:'§'},
+  {id:'c08', cat:'regulacion',      es:{n:'Acceso a Mercados: Barreras Regulatorias LATAM',    d:'Normativa comparada AR · UY · CO. Requisitos de exportación, trazabilidad y estrategias de cumplimiento.', dur:'22h · 5 módulos'}, en:{n:'Market Access: LATAM Regulatory Barriers',                 d:'Comparative regulation across AR · UY · CO. Export requirements, traceability and compliance.',        dur:'22h · 5 modules'},  p:22000, g:'M'},
+  {id:'c09', cat:'certificaciones', es:{n:'GlobalG.A.P.: Implementación Paso a Paso',          d:'Guía práctica para la certificación en producción primaria: requisitos, checklist, auditorías y mantenimiento.', dur:'18h · 4 módulos'}, en:{n:'GlobalG.A.P.: Step-by-Step Implementation',          d:'Practical guide to certification in primary production: requirements, checklists, audits.',             dur:'18h · 4 modules'},  p:18000, g:'G'},
+  {id:'c10', cat:'certificaciones', es:{n:'ISO 9001 para Agroindustria',                       d:'Implementación del sistema de gestión de calidad ISO 9001:2015 en organizaciones agroindustriales.',     dur:'24h · 6 módulos'}, en:{n:'ISO 9001 for Agri-Industry',                               d:'Implementing ISO 9001:2015 quality management in agri-industrial organizations.',                       dur:'24h · 6 modules'},  p:20000, g:'I'},
+  {id:'c11', cat:'inversiones',     es:{n:'Due Diligence Técnico-Regulatorio',                 d:'Metodología para evaluación integral de inversiones en activos agropecuarios y bioindustriales.',            dur:'28h · 7 módulos'}, en:{n:'Technical & Regulatory Due Diligence',                     d:'Method for integrated assessment of investments in agricultural and bio-industrial assets.',            dur:'28h · 7 modules'},  p:28000, g:'D'},
+  {id:'c12', cat:'inversiones',     es:{n:'Estructuración de Proyectos Agroindustriales',      d:'De la idea al plan de negocios: factibilidad, estructuración financiera y acceso a financiamiento verde.',  dur:'26h · 6 módulos'}, en:{n:'Structuring Agri-Industrial Projects',                     d:'From idea to business plan: feasibility, financial structuring and green financing access.',            dur:'26h · 6 modules'},  p:25000, g:'P'},
+  {id:'c13', cat:'gestion',         es:{n:'Cuando el Recurso Humano Tiene Nombre',             d:'Aspectos ético-políticos de la gestión de personas en el empleo estatal.',                                   dur:'14h · 4 módulos'}, en:{n:'When the Human Resource Has a Name',                        d:'Ethical and political dimensions of people management in public employment.',                          dur:'14h · 4 modules'},  p:15000, g:'H'},
+  {id:'c14', cat:'gestion',         es:{n:'Modernización del Estado y Empleo Público',         d:'Revisión crítica del discurso modernizador. Cultura organizacional y agenda en clave de derechos.',         dur:'14h · 4 módulos'}, en:{n:'State Modernization & Public Employment',                  d:'Critical review of the modernization narrative. Organizational culture and rights-based agenda.',       dur:'14h · 4 modules'},  p:15000, g:'E'},
+  {id:'c15', cat:'gestion',         es:{n:'Gestión con Perspectiva de Género en el Estado',     d:'Trabajo estatal, tareas de cuidado y agenda de género. Impacto en productividad y cultura organizacional.',dur:'14h · 4 módulos'}, en:{n:'Gender-Aware Management in Public Sector',                  d:'Public work, care labor and gender agenda. Impact on productivity and organizational culture.',         dur:'14h · 4 modules'},  p:15000, g:'G'},
+  {id:'c16', cat:'tecnologia',      es:{n:'Introducción a la Inteligencia Artificial',         d:'Qué es la IA, cómo funciona y cómo usarla en tu trabajo y vida cotidiana. Sin conocimientos previos.',     dur:'12h · 4 módulos'}, en:{n:'Introduction to Artificial Intelligence',                  d:'What AI is, how it works and how to use it at work and in daily life. No prior knowledge required.',    dur:'12h · 4 modules'},  p:50000, g:'AI'}
+];
+
+const CAT_LABEL = {
+  es: { todos:'Todos', agronegocios:'Agronegocios', cannabis:'Cannabis Medicinal', carbono:'Carbono & ESG', regulacion:'Regulación', certificaciones:'Certificaciones', inversiones:'Inversiones', gestion:'Gestión & Trabajo', tecnologia:'Tecnología & IA' },
+  en: { todos:'All',   agronegocios:'Agribusiness', cannabis:'Medical Cannabis',   carbono:'Carbon & ESG',   regulacion:'Regulation', certificaciones:'Certifications',  inversiones:'Investment',  gestion:'Management',        tecnologia:'Technology & AI' }
+};
+
+const FAQS = {
+  es: [
+    { q:'¿Necesito conocimientos previos?',           a:'No. Nuestros cursos están diseñados para profesionales de cualquier nivel. Cada módulo parte de lo básico y avanza progresivamente.' },
+    { q:'¿Cómo accedo al material?',                  a:'Una vez completado el pago, recibís acceso inmediato a todos los materiales PDF descargables y al campus virtual.' },
+    { q:'¿Los cursos tienen certificado?',            a:'Sí. Al completar un curso podés descargar tu certificado digital de finalización emitido por Ojeda Araujo & Asociados.' },
+    { q:'¿Puedo consultar con un especialista?',      a:'Absolutamente. Ofrecemos sesiones de consultoría personalizada por WhatsApp o email. Nuestros consultores están activos en el sector.' },
+    { q:'¿Qué métodos de pago aceptan?',              a:'Todas las tarjetas de crédito y débito, transferencia bancaria y pago en efectivo a través de MercadoPago. También pago directo por transferencia.' },
+    { q:'¿El acceso es permanente?',                  a:'Sí. Una vez adquirido el curso tenés acceso de por vida al material. Las actualizaciones son sin costo adicional.' }
+  ],
+  en: [
+    { q:'Do I need previous knowledge?',              a:'No. Our courses are designed for professionals at any level. Each module starts from the basics and progresses step by step.' },
+    { q:'How do I access the material?',              a:'Once payment is complete you get immediate access to all downloadable PDF materials and the virtual campus.' },
+    { q:'Do the courses include a certificate?',      a:'Yes. Upon completion you can download your digital certificate issued by Ojeda Araujo & Associates.' },
+    { q:'Can I consult with a specialist?',           a:'Absolutely. We offer personalized consulting sessions via WhatsApp or email. Our consultants are active in the field.' },
+    { q:'What payment methods do you accept?',        a:'All credit and debit cards, bank transfer and cash payment via MercadoPago. Direct bank transfer is also available.' },
+    { q:'Is access permanent?',                       a:'Yes. Once you purchase a course you have lifetime access to the material. Updates are free of charge.' }
+  ]
+};
+
+const I18N = {
+  es: {
+    ribbon_region:'Buenos Aires · Montevideo · Asunción · Bogotá',
+    ribbon_year:'№ 07 · MMXXVI',
+    t1:'Nueva cohorte · <b>Introducción a la IA</b> · abre el 05/05',
+    t2:'Informe gratuito · <b>Mercados VCM LATAM Q2</b>',
+    t3:'Admisión abierta · <b>GMP/BPM Cannabis</b> · 12 plazas',
+    t4:'Nuevo dossier · <b>ESG en el agro</b> — descarga libre',
+    nav_sub:'Agro · Regulación · Sustentabilidad',
+    nav_courses:'Cursos', nav_consult:'Consultoría', nav_team:'Equipo', nav_test:'Testimonios', nav_faq:'FAQ',
+    nav_campus:'Campus →', nav_cta:'Ver Cursos',
+    hero_eyebrow:'Plataforma de formación profesional · Bioeconomía LATAM',
+    hero_h1a:'Conocimiento', hero_h1b:' que transforma ', hero_h1c:'el sector bioeconómico',
+    hero_c1:'Saber de', hero_c2:'terroir', hero_c3:'para una economía viva',
+    hero_desc:'Formación especializada en agronegocios, cannabis medicinal, mercados de carbono, regulación normativa y gestión de organizaciones — desarrollada por consultores activos en el sector bioeconómico latinoamericano.',
+    hero_lead:'Un dossier abierto de diez y seis cursos, trece sesiones de consultoría y una década de expediente regulatorio — dispuesto como un índice legible.',
+    hero_body1:'Nuestros consultores no son instructores de tiempo completo. Son técnicos activos — auditores, agrónomos, juristas, asesores ambientales — que documentan su práctica para quienes vienen atrás.',
+    hero_body2:'Cada curso es un registro; cada sesión, una consulta. Presencia regional permanente en Argentina, Uruguay, Paraguay y Colombia.',
+    hero_cta1:'Explorar el catálogo →', hero_cta2:'Solicitar consultoría',
+    hero_plate_k:'Índice de la edición',
+    hero_plate_body:'Agronegocios, cannabis medicinal, carbono y ESG, regulación sanitaria, certificaciones, inversiones y gestión pública — dieciséis expedientes técnicos.',
+    fig_students:'Profesionales formados', fig_programs:'Programas activos', fig_countries:'Países presencia', fig_real:'Casos reales',
+    seal_1:'Dieciséis expedientes',
+    seal_2:'Archivo vivo de bioeconomía latinoamericana, disponible en línea y por sesión directa.',
+    prin1_k:'Trayectoria', prin1_t:'Consultores en ejercicio', prin1_d:'Más de cinco años asesorando al sector. Cada contenido nace de un caso real en curso.',
+    prin2_k:'Cobertura',   prin2_t:'Presencia regional',       prin2_d:'Argentina, Uruguay, Paraguay y Colombia — con extensiones a Brasil y México por proyecto.',
+    prin3_k:'Enfoque',     prin3_t:'Técnico · Regulatorio · Financiero', prin3_d:'De la viabilidad técnica al cumplimiento normativo y al acceso a financiamiento verde.',
+    prin4_k:'Recursos',    prin4_t:'Materiales descargables',  prin4_d:'PDF, checklists y plantillas. Acceso permanente y actualizaciones sin costo.',
+    cat_eye:'Catálogo de cursos', cat_t1:'Dieciséis expedientes', cat_t2:'técnicos',
+    cat_sub:'Materiales PDF descargables, acceso permanente y contenido actualizado por profesionales activos en el sector bioeconómico hispanoamericano.',
+    sort:'Orden', sort_feat:'Destacados', sort_pa:'Precio ↑', sort_pd:'Precio ↓', sort_new:'Más recientes',
+    team_eye:'Quiénes somos', team_t1:'El equipo', team_t2:'Ojeda & Araujo',
+    team_body:'Consultora especializada en servicios técnicos y estratégicos para empresas, productores e inversores del sector bioeconómico latinoamericano. No vendemos diplomas; compartimos expediente.',
+    role1:'Co-fundador · Consultor Senior · Regulación', role2:'Co-fundador · Consultor Senior · Agronegocios',
+    team_plus:'Red asociada · 12 especialistas', team_plus_role:'Cannabis · Carbono · ESG · Certificaciones · IA · Gestión Pública',
+    badge_areas:'Áreas de expertise', m1:'Años', m2:'Alumnos', m3:'Cursos', m4:'Países',
+    cons_eye:'Consultoría personalizada', cons_t1:'¿Necesitás una', cons_t2:'sesión específica',
+    cons_body:'Si tu proyecto requiere un abordaje particular — regulatorio, técnico, de inversión o de gestión — podés solicitar una sesión directamente con nuestros consultores. Respuesta en menos de veinticuatro horas.',
+    cons_cta1:'Escribinos por WhatsApp →', cons_cta2:'Enviar un email',
+    s1_t:'Diagnóstico regulatorio',  s1_d:'Revisión de tu situación normativa y hoja de ruta para regularizarla — por jurisdicción.',
+    s2_t:'Asesoría técnica específica', s2_d:'Cannabis, carbono, certificaciones o agronegocios según la necesidad concreta del proyecto.',
+    s3_t:'Evaluación de inversión',  s3_d:'Análisis técnico-regulatorio de proyectos antes de tomar decisiones de capital.',
+    s4_t:'Formación in-company',     s4_d:'Programas hechos a medida para equipos internos, en modalidad remota o presencial.',
+    test_eye:'Lo que dicen los alumnos', test_t1:'Testimonios', test_t2:'del campo',
+    q1:'El curso de cannabis medicinal me dio las herramientas para entender toda la regulación. Excelente material y docentes accesibles.', q1r:'Farmacéutica · Buenos Aires',
+    q2:'Hice GlobalGAP y a los tres meses logré la certificación para el campo. La guía paso a paso fue clave.',                              q2r:'Productor · Entre Ríos',
+    q3:'El curso de ESG me abrió la puerta al financiamiento verde. Ya presentamos nuestro primer proyecto de créditos de carbono.',          q3r:'Ing. Ambiental · Córdoba',
+    q4:'La formación en mercados de carbono fue muy práctica. Los consultores conocen el sector de primera mano.',                            q4r:'Consultor · Paraguay',
+    q5:'Introducción a la IA fue exactamente lo que necesitaba. Claro, práctico y sin tecnicismos innecesarios.',                             q5r:'Administradora · Corrientes',
+    q6:'Trabajamos con OA en un due diligence técnico-regulatorio. Rigor, claridad y plazos cumplidos.',                                      q6r:'Fondo Agroindustrial · Uruguay',
+    faq_eye:'Dudas frecuentes', faq_t1:'Preguntas', faq_t2:'frecuentes',
+    faq_sub:'Si no está acá, escribinos por WhatsApp o email. Respondemos en menos de 24 h.',
+    cta_eye:'Siguiente paso', cta_t1:'Empezá con un', cta_t2:'diagnóstico', cta_t3:'gratuito',
+    cta_body:'Agendá una llamada breve con un consultor. Sin costo, sin compromiso — sólo para entender si podemos ayudarte y cómo.',
+    cta_b1:'Agendar llamada →', cta_b2:'Ver cursos',
+    foot_sub:'& Asociados',
+    foot_about:'Consultora y plataforma de formación en bioeconomía latinoamericana. Cursos, sesiones y diagnósticos por consultores en ejercicio.',
+    foot_c1:'Plataforma', foot_l1:'Catálogo de cursos', foot_l2:'Consultoría', foot_l3:'Campus Virtual', foot_l4:'Certificación digital',
+    foot_c2:'Áreas', cat_agronegocios:'Agronegocios', cat_cannabis:'Cannabis Medicinal', cat_carbono:'Carbono & ESG', cat_regulacion:'Regulación', cat_certificaciones:'Certificaciones',
+    foot_c3:'Contacto', foot_wa:'WhatsApp · +54 9 379 405-8223', foot_em:'contactos@oa-consultora.com', foot_web:'oa-consultora.com',
+    foot_tag:'Agro · Regulación · Sustentabilidad',
+    tw_title:'Tweaks', tw_dir:'Dirección', tw_theme:'Tema', tw_accent:'Acento', tw_lang:'Idioma',
+    buy:'Comprar', preview:'Vista previa', chapter_cat:'§ 02 · CURSOS', chapter_team:'§ 03 · EQUIPO', chapter_cons:'§ 04 · SESIONES', chapter_test:'§ 05 · CAMPO', chapter_faq:'§ 06 · FAQ',
+    price_arg:'ARS · acceso permanente'
+  },
+  en: {
+    ribbon_region:'Buenos Aires · Montevideo · Asunción · Bogotá',
+    ribbon_year:'№ 07 · MMXXVI',
+    t1:'New cohort · <b>Intro to AI</b> · opens May 5',
+    t2:'Free report · <b>LATAM VCM Markets Q2</b>',
+    t3:'Admissions open · <b>GMP/BPM Cannabis</b> · 12 seats',
+    t4:'New dossier · <b>ESG in agriculture</b> — free download',
+    nav_sub:'Agri · Regulation · Sustainability',
+    nav_courses:'Courses', nav_consult:'Consulting', nav_team:'Team', nav_test:'Testimonials', nav_faq:'FAQ',
+    nav_campus:'Campus →', nav_cta:'Browse courses',
+    hero_eyebrow:'Professional training platform · LATAM Bioeconomy',
+    hero_h1a:'Knowledge', hero_h1b:' that transforms ', hero_h1c:'the bioeconomy sector',
+    hero_c1:'Terroir', hero_c2:'knowledge', hero_c3:'for a living economy',
+    hero_desc:'Specialized training in agribusiness, medical cannabis, carbon markets, regulation and public management — by consultants active in the Latin American bioeconomy.',
+    hero_lead:'An open dossier of sixteen courses, thirteen consulting sessions and a decade of regulatory practice — laid out as a readable index.',
+    hero_body1:'Our consultants are not full-time instructors. They are working practitioners — auditors, agronomists, jurists, environmental advisors — who document their field work for the next generation.',
+    hero_body2:'Each course is a record; each session, a consultation. Permanent regional presence in Argentina, Uruguay, Paraguay and Colombia.',
+    hero_cta1:'Explore the catalog →', hero_cta2:'Request consulting',
+    hero_plate_k:'In this edition',
+    hero_plate_body:'Agribusiness, medical cannabis, carbon and ESG, sanitary regulation, certifications, investment and public management — sixteen technical dossiers.',
+    fig_students:'Professionals trained', fig_programs:'Active programs', fig_countries:'Countries', fig_real:'Real cases',
+    seal_1:'Sixteen dossiers',
+    seal_2:'A living archive of Latin American bioeconomy, available online and by direct session.',
+    prin1_k:'Record',    prin1_t:'Practitioners, not lecturers', prin1_d:'Five+ years advising the sector. Every piece of content grew from a live case.',
+    prin2_k:'Coverage',  prin2_t:'Regional presence',           prin2_d:'Argentina, Uruguay, Paraguay and Colombia — with extensions to Brazil and Mexico by project.',
+    prin3_k:'Approach',  prin3_t:'Technical · Regulatory · Financial', prin3_d:'From technical viability to regulatory compliance and access to green finance.',
+    prin4_k:'Resources', prin4_t:'Downloadable materials',      prin4_d:'PDFs, checklists and templates. Lifetime access, free updates.',
+    cat_eye:'Course catalog', cat_t1:'Sixteen technical', cat_t2:'dossiers',
+    cat_sub:'Downloadable PDF materials, lifetime access and content kept current by professionals active across the Latin American bioeconomy.',
+    sort:'Sort', sort_feat:'Featured', sort_pa:'Price ↑', sort_pd:'Price ↓', sort_new:'Newest',
+    team_eye:'Who we are', team_t1:'The team', team_t2:'Ojeda & Araujo',
+    team_body:'A consultancy specialised in technical and strategic services for companies, producers and investors in the Latin American bioeconomy. We do not sell diplomas; we share practice.',
+    role1:'Co-founder · Senior Consultant · Regulation', role2:'Co-founder · Senior Consultant · Agribusiness',
+    team_plus:'Associate network · 12 specialists', team_plus_role:'Cannabis · Carbon · ESG · Certifications · AI · Public Management',
+    badge_areas:'Expertise areas', m1:'Years', m2:'Students', m3:'Courses', m4:'Countries',
+    cons_eye:'Personalized consulting', cons_t1:'Need a', cons_t2:'specific session',
+    cons_body:'If your project needs a particular approach — regulatory, technical, investment or management — you can book a session directly with our consultants. Response within 24 h.',
+    cons_cta1:'Message us on WhatsApp →', cons_cta2:'Send an email',
+    s1_t:'Regulatory diagnostic',      s1_d:'A review of your compliance status and a road-map to regularize it — by jurisdiction.',
+    s2_t:'Specific technical advice',  s2_d:'Cannabis, carbon, certifications or agribusiness, tailored to the actual need of your project.',
+    s3_t:'Investment assessment',      s3_d:'Technical & regulatory analysis of projects before capital decisions are made.',
+    s4_t:'In-company training',        s4_d:'Tailored programs for internal teams, remote or on-site.',
+    test_eye:'What students say', test_t1:'Field', test_t2:'testimonials',
+    q1:'The medical cannabis course gave me the tools to understand the whole regulation. Great materials and accessible faculty.', q1r:'Pharmacist · Buenos Aires',
+    q2:'I took GlobalGAP and got my farm certified within three months. The step-by-step guide was key.',                           q2r:'Farmer · Entre Ríos',
+    q3:'The ESG course opened the door to green financing. We just submitted our first carbon credits project.',                    q3r:'Environmental Eng. · Córdoba',
+    q4:'The carbon markets training was very practical. Consultants really know the sector first-hand.',                            q4r:'Consultant · Paraguay',
+    q5:'Intro to AI was exactly what I needed. Clear, practical and free of unnecessary jargon.',                                   q5r:'Administrator · Corrientes',
+    q6:'We worked with OA on a technical & regulatory due diligence. Rigor, clarity, on-time delivery.',                            q6r:'Agri Fund · Uruguay',
+    faq_eye:'Frequent doubts', faq_t1:'Questions', faq_t2:'answered',
+    faq_sub:'If it\u2019s not here, write us via WhatsApp or email. We reply within 24 h.',
+    cta_eye:'Next step', cta_t1:'Start with a', cta_t2:'free', cta_t3:'diagnostic',
+    cta_body:'Book a brief call with a consultant. No cost, no commitment — just to understand whether we can help, and how.',
+    cta_b1:'Book a call →', cta_b2:'Browse courses',
+    foot_sub:'& Associates',
+    foot_about:'A consultancy and training platform in Latin American bioeconomy. Courses, sessions and diagnostics by working consultants.',
+    foot_c1:'Platform', foot_l1:'Course catalog', foot_l2:'Consulting', foot_l3:'Virtual Campus', foot_l4:'Digital certification',
+    foot_c2:'Areas',    cat_agronegocios:'Agribusiness', cat_cannabis:'Medical Cannabis', cat_carbono:'Carbon & ESG', cat_regulacion:'Regulation', cat_certificaciones:'Certifications',
+    foot_c3:'Contact',  foot_wa:'WhatsApp · +54 9 379 405-8223', foot_em:'contactos@oa-consultora.com', foot_web:'oa-consultora.com',
+    foot_tag:'Agri · Regulation · Sustainability',
+    tw_title:'Tweaks', tw_dir:'Direction', tw_theme:'Theme', tw_accent:'Accent', tw_lang:'Language',
+    buy:'Enroll', preview:'Preview', chapter_cat:'§ 02 · COURSES', chapter_team:'§ 03 · TEAM', chapter_cons:'§ 04 · SESSIONS', chapter_test:'§ 05 · FIELD', chapter_faq:'§ 06 · FAQ',
+    price_arg:'ARS · lifetime access'
+  }
+};
+
+// ═════════════ STATE ═════════════
+const saved = (() => {
+  try { return JSON.parse(localStorage.getItem('oa-tweaks') || '{}'); } catch { return {}; }
+})();
+const state = { ...TWEAK_DEFAULTS, ...saved, filter: 'todos', sort: 'featured' };
+
+function persist() {
+  localStorage.setItem('oa-tweaks', JSON.stringify({
+    direction: state.direction, theme: state.theme, accent: state.accent, lang: state.lang
+  }));
+}
+
+// ═════════════ APPLY ═════════════
+function applyDirection() {
+  document.body.setAttribute('data-dir', state.direction);
+  document.querySelectorAll('[data-dir-show]').forEach(el => {
+    const allow = el.getAttribute('data-dir-show').split(',').map(s=>s.trim());
+    el.style.display = allow.includes(state.direction) ? '' : 'none';
+  });
+  document.querySelectorAll('.tw-dir').forEach(b => b.classList.toggle('on', b.dataset.dir === state.direction));
+  applyChapters();
+}
+function applyTheme() {
+  document.documentElement.setAttribute('data-theme', state.theme);
+  document.querySelectorAll('.tw-theme').forEach(b => b.classList.toggle('on', b.dataset.theme === state.theme));
+  // Icon toggle
+  const icon = document.getElementById('theme-icon');
+  if (state.theme === 'light') {
+    icon.innerHTML = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>';
+  } else {
+    icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3A7 7 0 0 0 21 12.79z"/>';
+  }
+}
+function applyAccent() {
+  if (state.accent === 'gold') document.documentElement.removeAttribute('data-accent');
+  else document.documentElement.setAttribute('data-accent', state.accent);
+  document.querySelectorAll('.tw-accent').forEach(b => b.classList.toggle('on', b.dataset.accent === state.accent));
+}
+function applyLang() {
+  const L = I18N[state.lang];
+  document.documentElement.lang = state.lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (L[key] !== undefined) el.innerHTML = L[key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('on', b.dataset.lang === state.lang));
+  document.querySelectorAll('.tw-lang').forEach(b => b.classList.toggle('on', b.dataset.lang === state.lang));
+  renderChips();
+  renderGrid();
+  renderFaq();
+  applyChapters();
+}
+function applyChapters() {
+  const L = I18N[state.lang];
+  const map = { catalogo: L.chapter_cat, equipo: L.chapter_team, consultoria: L.chapter_cons, testimonios: L.chapter_test, faq: L.chapter_faq };
+  document.querySelectorAll('.sec-title[data-chapter]').forEach(el => {
+    const section = el.closest('section');
+    if (section && map[section.id]) el.setAttribute('data-chapter', map[section.id]);
+  });
+}
+
+// ═════════════ RENDER ═════════════
+function renderChips() {
+  const L = I18N[state.lang];
+  const cats = ['todos', ...new Set(CURSOS.map(c => c.cat))];
+  const chips = document.getElementById('chips');
+  chips.innerHTML = cats.map(cat =>
+    `<button class="chip${state.filter === cat ? ' active' : ''}" data-cat="${cat}">${CAT_LABEL[state.lang][cat] || cat}</button>`
+  ).join('');
+  chips.querySelectorAll('.chip').forEach(btn => {
+    btn.addEventListener('click', () => { state.filter = btn.dataset.cat; renderChips(); renderGrid(); });
+  });
+}
+
+function sortCourses(list) {
+  const arr = list.slice();
+  if (state.sort === 'price-asc')  arr.sort((a,b) => a.p - b.p);
+  else if (state.sort === 'price-desc') arr.sort((a,b) => b.p - a.p);
+  else if (state.sort === 'newest') arr.reverse();
+  return arr;
+}
+
+function renderGrid() {
+  const L = I18N[state.lang];
+  const visible = sortCourses(
+    CURSOS.filter(c => state.filter === 'todos' || c.cat === state.filter)
+  );
+  const grid = document.getElementById('grid');
+  grid.innerHTML = visible.map((c, i) => {
+    const meta = c[state.lang];
+    const cat = CAT_LABEL[state.lang][c.cat] || c.cat;
+    const num = String(CURSOS.indexOf(c) + 1).padStart(2, '0');
+    return `
+      <article class="ccard reveal" data-cat="${c.cat}">
+        <div class="ccard-image" data-placeholder="${cat}">
+          <span class="glyph">${c.g}</span>
+        </div>
+        <div class="ccard-meta">
+          <span class="ccard-cat">${cat}</span>
+          <span class="ccard-num">№ ${num}</span>
+        </div>
+        <div class="ccard-body">
+          <h3 class="ccard-title">${meta.n}</h3>
+          <p class="ccard-desc">${meta.d}</p>
+        </div>
+        <div class="ccard-dur">${meta.dur}</div>
+        <div class="ccard-foot">
+          <div class="ccard-price">$${c.p.toLocaleString(state.lang === 'es' ? 'es-AR' : 'en-US')}<small>${L.price_arg}</small></div>
+          <div class="ccard-btn-wrap"><button class="btn btn-solid" onclick="buy('${c.id}')">${L.buy}</button></div>
+        </div>
+      </article>
+    `;
+  }).join('');
+  observeReveals();
+}
+
+function renderFaq() {
+  const list = document.getElementById('faq');
+  list.innerHTML = FAQS[state.lang].map(f => `
+    <div class="faq-item">
+      <div class="faq-q"><span>${f.q}</span><span class="plus">+</span></div>
+      <div class="faq-a">${f.a}</div>
+    </div>
+  `).join('');
+  list.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const was = item.classList.contains('open');
+      list.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!was) item.classList.add('open');
+    });
+  });
+}
+
+function buy(id) {
+  const c = CURSOS.find(x => x.id === id);
+  const meta = c[state.lang];
+  alert(`${meta.n}\n\n$${c.p.toLocaleString(state.lang === 'es' ? 'es-AR' : 'en-US')} ${I18N[state.lang].price_arg}\n\n(Demo — integración MercadoPago pendiente)`);
+}
+window.buy = buy;
+
+// ═════════════ REVEAL OBSERVER ═════════════
+let revealObs;
+function observeReveals() {
+  if (!revealObs) {
+    revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); revealObs.unobserve(e.target); } });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px' });
+  }
+  document.querySelectorAll('.reveal:not(.on)').forEach(el => revealObs.observe(el));
+}
+
+// ═════════════ SORT ═════════════
+document.getElementById('sort').addEventListener('change', (e) => { state.sort = e.target.value; renderGrid(); });
+
+// ═════════════ TWEAK WIRING ═════════════
+document.querySelectorAll('.tw-dir').forEach(b => b.addEventListener('click', () => {
+  state.direction = b.dataset.dir; applyDirection(); persist(); notifyHost();
+}));
+document.querySelectorAll('.tw-theme').forEach(b => b.addEventListener('click', () => {
+  state.theme = b.dataset.theme; applyTheme(); persist(); notifyHost();
+}));
+document.querySelectorAll('.tw-accent').forEach(b => b.addEventListener('click', () => {
+  state.accent = b.dataset.accent; applyAccent(); persist(); notifyHost();
+}));
+document.querySelectorAll('.tw-lang, .lang-btn').forEach(b => b.addEventListener('click', () => {
+  state.lang = b.dataset.lang; applyLang(); persist(); notifyHost();
+}));
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  state.theme = state.theme === 'dark' ? 'light' : 'dark'; applyTheme(); persist(); notifyHost();
+});
+
+function notifyHost() {
+  try {
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: {
+      direction: state.direction, theme: state.theme, accent: state.accent, lang: state.lang
+    }}, '*');
+  } catch {}
+}
+
+// ═════════════ EDIT-MODE HOST PROTOCOL ═════════════
+window.addEventListener('message', (e) => {
+  if (!e.data || typeof e.data !== 'object') return;
+  if (e.data.type === '__activate_edit_mode')   document.getElementById('tweaks-panel').classList.add('show');
+  if (e.data.type === '__deactivate_edit_mode') document.getElementById('tweaks-panel').classList.remove('show');
+});
+try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch {}
+
+// ═════════════ INIT ═════════════
+applyAccent();
+applyTheme();
+applyDirection();
+applyLang();
+observeReveals();
+</script>
+</body>
+</html>
